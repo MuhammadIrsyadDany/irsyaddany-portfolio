@@ -58,9 +58,13 @@ export const Navbar: React.FC = () => {
         <a
           href="#home"
           onClick={(e) => handleNavClick(e, '#home')}
-          className="relative z-10 flex items-center gap-2 group font-semibold text-sm tracking-tight text-ink-primary"
+          className="relative z-10 flex items-center gap-2.5 group font-semibold text-sm tracking-tight text-ink-primary"
         >
-          <span className="w-2 h-2 rounded-full bg-violet-light group-hover:scale-125 transition-transform" />
+          <img
+            src="/favicon.png"
+            alt="Logo ID"
+            className="w-7 h-7 rounded-full object-contain border border-violet-light/30 shadow-[0_0_10px_rgba(158,92,246,0.35)] group-hover:scale-110 group-hover:border-violet-light transition-all duration-300"
+          />
           <span>irsyad<span className="text-violet-light">.dev</span></span>
         </a>
 
