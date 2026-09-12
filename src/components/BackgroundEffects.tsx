@@ -2,71 +2,67 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 /** 
- * Atmospheric background inspired by the iPhone 14 Pro Deep Purple aesthetic:
- * - Top luminous lilac/lavender bloom radiating into deep obsidian plum
- * - Subtle bottom ethereal bloom
- * - Soft tangent specular light contour creating depth without visual clutter
+ * Atmospheric background inspired by the iPhone 14 Pro Deep Purple aesthetic.
+ * Optimized for mobile Safari (iOS) and desktop:
+ * - Uses pure CSS radial gradients with soft alpha feathering (NO heavy GPU blur filters)
+ * - Prevents WebKit GPU memory exhaustion and crashes on iOS devices
+ * - Preserves subtle breathing animation without high GPU load
  */
 export const BackgroundEffects: React.FC = () => (
   <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
     {/* Top Luminous Lilac / Deep Purple Bloom */}
     <motion.div
       animate={{
-        scale: [1, 1.08, 1],
-        x: ['-50%', '-48%', '-50%'],
-        y: [0, 15, 0],
+        scale: [1, 1.05, 1],
+        opacity: [0.85, 1, 0.85],
       }}
       transition={{
-        duration: 14,
+        duration: 12,
         repeat: Infinity,
         ease: 'easeInOut',
       }}
-      className="absolute -top-48 left-1/2 w-[1100px] h-[750px] rounded-full opacity-[0.20]"
+      className="absolute -top-32 left-1/2 -translate-x-1/2 w-[95vw] max-w-[1000px] h-[550px] rounded-full will-change-transform"
       style={{
-        background: 'radial-gradient(ellipse 900px 650px at 50% 20%, #B88AF8 0%, #7E32D9 35%, #4A1578 65%, transparent 85%)',
-        filter: 'blur(110px)',
+        background: 'radial-gradient(ellipse 70% 60% at 50% 30%, rgba(184, 138, 248, 0.18) 0%, rgba(126, 50, 217, 0.12) 40%, rgba(74, 21, 120, 0.05) 75%, transparent 100%)',
       }}
     />
 
-    {/* Center Hourglass Subtle Arc Light (Echoing the iconic wallpaper contour) */}
+    {/* Center Subtle Ambient Light */}
     <motion.div
       animate={{
-        scale: [1, 1.12, 1],
-        opacity: [0.05, 0.08, 0.05],
+        opacity: [0.04, 0.07, 0.04],
       }}
       transition={{
-        duration: 10,
+        duration: 8,
         repeat: Infinity,
         ease: 'easeInOut',
       }}
-      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[900px] rounded-full"
+      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85vw] max-w-[800px] h-[600px] rounded-full will-change-transform"
       style={{
-        background: 'radial-gradient(circle 500px at center, #9E5CF6 0%, transparent 70%)',
-        filter: 'blur(120px)',
+        background: 'radial-gradient(circle at center, rgba(158, 92, 246, 0.14) 0%, rgba(126, 50, 217, 0.06) 45%, transparent 75%)',
       }}
     />
 
     {/* Bottom Ethereal Violet Bloom */}
     <motion.div
       animate={{
-        scale: [1, 1.06, 1],
-        y: [0, -20, 0],
+        scale: [1, 1.04, 1],
+        opacity: [0.8, 1, 0.8],
       }}
       transition={{
-        duration: 16,
+        duration: 14,
         repeat: Infinity,
         ease: 'easeInOut',
       }}
-      className="absolute -bottom-64 left-1/2 -translate-x-1/2 w-[1000px] h-[650px] rounded-full opacity-[0.16]"
+      className="absolute -bottom-48 left-1/2 -translate-x-1/2 w-[90vw] max-w-[900px] h-[500px] rounded-full will-change-transform"
       style={{
-        background: 'radial-gradient(ellipse 800px 550px at 50% 80%, #B88AF8 0%, #7E32D9 40%, #4A1578 70%, transparent 88%)',
-        filter: 'blur(100px)',
+        background: 'radial-gradient(ellipse 70% 55% at 50% 70%, rgba(184, 138, 248, 0.16) 0%, rgba(126, 50, 217, 0.10) 45%, rgba(74, 21, 120, 0.04) 80%, transparent 100%)',
       }}
     />
 
     {/* Fine Geometric Specular Arc Line in background */}
     <svg
-      className="absolute top-20 left-1/2 -translate-x-1/2 w-[1200px] h-[800px] opacity-[0.08]"
+      className="absolute top-20 left-1/2 -translate-x-1/2 w-full max-w-[1200px] h-[800px] opacity-[0.08]"
       viewBox="0 0 1200 800"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

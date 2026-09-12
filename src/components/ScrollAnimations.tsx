@@ -89,10 +89,10 @@ export const clipReveal: Variants = {
 };
 
 export const blurIn: Variants = {
-  hidden: { opacity: 0, filter: 'blur(12px)' },
+  hidden: { opacity: 0, y: 22 },
   visible: (i: number = 0) => ({
     opacity: 1,
-    filter: 'blur(0px)',
+    y: 0,
     transition: {
       duration: 0.65,
       ease: [0.22, 1, 0.36, 1],

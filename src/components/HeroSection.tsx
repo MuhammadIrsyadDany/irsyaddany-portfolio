@@ -226,7 +226,7 @@ export const HeroSection: React.FC = () => {
                         transform: `translateX(-${activePhoto * 100}%)`,
                       }}
                     >
-                      {profilePhotos.map((photo) => (
+                      {profilePhotos.map((photo, index) => (
                         <div
                           key={photo.src}
                           className="w-full h-full flex-shrink-0 relative overflow-hidden"
@@ -235,7 +235,8 @@ export const HeroSection: React.FC = () => {
                             src={photo.src}
                             alt={photo.alt}
                             className="w-full h-full object-cover object-top"
-                            loading="eager"
+                            loading={index === 0 ? "eager" : "lazy"}
+                            decoding="async"
                           />
                         </div>
                       ))}

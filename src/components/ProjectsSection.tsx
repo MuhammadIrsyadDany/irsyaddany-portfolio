@@ -466,6 +466,8 @@ export const ProjectsSection: React.FC = () => {
                   <img
                     src={flagship.thumbnail}
                     alt={flagship.title}
+                    loading="lazy"
+                    decoding="async"
                     onError={() =>
                       handleImageError(flagship.thumbnail)
                     }
@@ -772,6 +774,8 @@ export const ProjectsSection: React.FC = () => {
                     <img
                       src={project.thumbnail}
                       alt={project.title}
+                      loading="lazy"
+                      decoding="async"
                       onError={() =>
                         handleImageError(project.thumbnail)
                       }

@@ -72,6 +72,8 @@ export const ProjectModal: React.FC<Props> = ({ project, isOpen, onClose }) => {
                 <img
                   src={shot.url}
                   alt={shot.caption}
+                  loading="lazy"
+                  decoding="async"
                   onError={() => setImgErrors(p => ({ ...p, [shot.url!]: true }))}
                   className="w-full h-full object-contain rounded-lg"
                 />
