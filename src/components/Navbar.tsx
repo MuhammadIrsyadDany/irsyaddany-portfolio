@@ -60,11 +60,34 @@ export const Navbar: React.FC = () => {
           onClick={(e) => handleNavClick(e, '#home')}
           className="relative z-10 flex items-center gap-2.5 group font-semibold text-sm tracking-tight text-ink-primary"
         >
-          <img
-            src="/favicon.png"
-            alt="Logo ID"
-            className="w-7 h-7 rounded-full object-contain border border-violet-light/30 shadow-[0_0_10px_rgba(158,92,246,0.35)] group-hover:scale-110 group-hover:border-violet-light transition-all duration-300"
-          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 64 64"
+            className="w-7 h-7 rounded-lg shadow-[0_0_12px_rgba(158,92,246,0.4)] group-hover:scale-110 group-hover:shadow-[0_0_18px_rgba(158,92,246,0.6)] transition-all duration-300"
+            aria-label="Logo ID"
+          >
+            <defs>
+              <linearGradient id="navLogoBg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#5B1B8E"/>
+                <stop offset="50%" stopColor="#7E32D9"/>
+                <stop offset="100%" stopColor="#9E5CF6"/>
+              </linearGradient>
+              <linearGradient id="navLogoText" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#F6F2FD"/>
+                <stop offset="100%" stopColor="#E4D4FE"/>
+              </linearGradient>
+              <filter id="navGlow">
+                <feGaussianBlur stdDeviation="1.5" result="blur"/>
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+            <rect width="64" height="64" rx="16" fill="url(#navLogoBg)"/>
+            <rect x="1" y="1" width="62" height="62" rx="15" fill="none" stroke="rgba(228,212,254,0.25)" strokeWidth="1"/>
+            <text x="32" y="44" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif" fontWeight="800" fontSize="30" fill="url(#navLogoText)" filter="url(#navGlow)" letterSpacing="-1">ID</text>
+          </svg>
           <span>irsyad<span className="text-violet-light">.dev</span></span>
         </a>
 
