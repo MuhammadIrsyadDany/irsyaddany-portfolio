@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Volume2, VolumeX, ArrowRight, Zap, ChevronRight, Sparkles, ShieldCheck, Code2, Globe } from 'lucide-react';
+import { Volume2, VolumeX, ChevronRight, ShieldCheck, Code2, Globe } from 'lucide-react';
 
 interface SpiderWelcomeProps {
   isOpen?: boolean;
@@ -82,19 +82,26 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
 }) => {
   const [progress, setProgress] = useState(0);
   const [soundEnabled, setSoundEnabled] = useState(false);
+  const [exitPhase, setExitPhase] = useState<'idle' | 'exiting'>('idle');
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationFrameRef = useRef<number | null>(null);
   const mousePos = useRef({ x: 0, y: 0, active: false });
 
   const handleExit = useCallback(() => {
+    if (exitPhase === 'exiting') return;
     if (soundEnabled) playSoundFX('warp');
-    if (onClose) onClose();
-  }, [soundEnabled, onClose]);
+    setExitPhase('exiting');
+    setTimeout(() => {
+      if (onClose) onClose();
+      setExitPhase('idle');
+    }, 1600);
+  }, [soundEnabled, onClose, exitPhase]);
 
   // Handle countdown & auto-exit
   useEffect(() => {
     if (!isOpen) return;
     setProgress(0);
+    setExitPhase('idle');
 
     if (soundEnabled) {
       playSoundFX('sense');
@@ -117,26 +124,15 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
 
   // Auto exit when progress completes
   useEffect(() => {
-    if (progress >= 100) {
+    if (progress >= 100 && exitPhase === 'idle') {
       const timer = setTimeout(() => {
         handleExit();
       }, 350);
       return () => clearTimeout(timer);
     }
-  }, [progress, handleExit]);
+  }, [progress, handleExit, exitPhase]);
 
-  // Keyboard shortcut listener: ESC or Space or Enter to skip
-  useEffect(() => {
-    if (!isOpen) return;
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        handleExit();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, handleExit]);
+
 
   // Mouse interaction for organic spider silk tension
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -330,34 +326,21 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
           <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
 
           {/* ========================================================================= */}
-          {/* TOP CONTROLS (AUDIO & SKIP ESC)                                           */}
+          {/* TOP CONTROLS (AUDIO ONLY)                                                  */}
           {/* ========================================================================= */}
           <header className="relative z-20 w-full max-w-6xl mx-auto flex items-center justify-end">
-            <div className="flex items-center gap-3">
-              {/* SFX Audio Toggle */}
-              <button
-                onClick={() => {
-                  const next = !soundEnabled;
-                  setSoundEnabled(next);
-                  if (next) playSoundFX('thwip');
-                }}
-                className="px-3.5 py-1.5 rounded-full border border-violet-base/40 bg-bg-surface/75 backdrop-blur-md text-ink-secondary hover:text-white hover:border-violet-bright transition-all flex items-center gap-1.5 text-xs font-mono cursor-pointer shadow-sm"
-                title="Toggle Web Audio SFX"
-              >
-                {soundEnabled ? <Volume2 size={13} className="text-violet-light" /> : <VolumeX size={13} className="text-ink-muted" />}
-                <span className="hidden sm:inline">{soundEnabled ? 'SFX ON' : 'SFX OFF'}</span>
-              </button>
-
-              {/* Skip Button */}
-              <button
-                onClick={handleExit}
-                className="group px-4 py-1.5 rounded-full border border-violet-light/20 bg-bg-surface/75 hover:bg-bg-raised/90 backdrop-blur-md text-ink-secondary hover:text-white hover:border-violet-bright transition-all text-xs font-mono flex items-center gap-1.5 cursor-pointer shadow-sm"
-              >
-                <span>Lewati</span>
-                <span className="px-1.5 py-0.5 rounded bg-bg-raised border border-border-soft text-3xs text-violet-pale group-hover:text-white">ESC</span>
-                <ChevronRight size={14} className="text-ink-muted group-hover:text-violet-light group-hover:translate-x-0.5 transition-all" />
-              </button>
-            </div>
+            <button
+              onClick={() => {
+                const next = !soundEnabled;
+                setSoundEnabled(next);
+                if (next) playSoundFX('thwip');
+              }}
+              className="px-3.5 py-1.5 rounded-full border border-violet-base/40 bg-bg-surface/75 backdrop-blur-md text-ink-secondary hover:text-white hover:border-violet-bright transition-all flex items-center gap-1.5 text-xs font-mono cursor-pointer shadow-sm"
+              title="Toggle Web Audio SFX"
+            >
+              {soundEnabled ? <Volume2 size={13} className="text-violet-light" /> : <VolumeX size={13} className="text-ink-muted" />}
+              <span className="hidden sm:inline">{soundEnabled ? 'SFX ON' : 'SFX OFF'}</span>
+            </button>
           </header>
 
           {/* ========================================================================= */}
@@ -428,45 +411,87 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
               </span>
             </motion.div>
 
-            {/* Action Pill Button: Swing into Portfolio */}
+            {/* Enter Portfolio CTA */}
             <motion.div
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.38 }}
-              className="mt-7 sm:mt-9 flex flex-col items-center gap-3"
+              className="mt-8 sm:mt-10"
             >
               <button
                 onClick={handleExit}
-                className="group relative px-9 sm:px-11 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-violet-deep via-violet-base to-violet-bright hover:from-violet-base hover:to-violet-light text-white font-bold text-sm sm:text-base border border-violet-pale/40 shadow-[0_4px_28px_rgba(126,50,217,0.55),inset_0_1px_0_rgba(255,255,255,0.35)] hover:shadow-[0_6px_36px_rgba(158,92,246,0.75),inset_0_1px_0_rgba(255,255,255,0.5)] transition-all duration-300 transform hover:-translate-y-0.5 flex items-center gap-2.5 cursor-pointer overflow-hidden"
+                disabled={exitPhase === 'exiting'}
+                className="group relative px-8 py-2.5 rounded-full border border-violet-base/40 bg-bg-surface/60 hover:bg-violet-deep/40 backdrop-blur-md text-ink-secondary hover:text-white hover:border-violet-bright transition-all text-xs font-mono flex items-center gap-2 cursor-pointer shadow-sm disabled:pointer-events-none disabled:opacity-0"
               >
-                {/* Shimmer Light Sweep */}
-                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none" />
-                
-                <Sparkles size={16} className="text-violet-pale group-hover:rotate-12 transition-transform" />
-                <span className="font-spidey text-base sm:text-lg tracking-wider">SWING INTO PORTFOLIO</span>
-                <ArrowRight size={17} className="transition-transform group-hover:translate-x-1" />
+                <span className="w-1.5 h-1.5 rounded-full bg-violet-bright animate-pulse" />
+                <span className="tracking-widest uppercase font-spidey">Swing Into Portfolio</span>
+                <ChevronRight size={14} className="text-ink-muted group-hover:text-violet-light group-hover:translate-x-0.5 transition-all" />
               </button>
-
-              {/* Sub-hint text */}
-              <span className="text-2xs sm:text-xs font-mono text-ink-muted/80">
-                TEKAN <span className="text-violet-pale font-bold">[SPACE]</span> ATAU <span className="text-violet-pale font-bold">[ENTER]</span> UNTUK MENJELAJAHI PORTOFOLIO
-              </span>
             </motion.div>
           </main>
 
           {/* ========================================================================= */}
-          {/* BOTTOM FOOTER METADATA                                                    */}
+          {/* BOTTOM: SPIDER-MAN LOADING TRANSITION BAR                                 */}
           {/* ========================================================================= */}
-          <footer className="relative z-20 w-full max-w-5xl mx-auto flex items-center justify-center text-center">
-            <div className="text-2xs sm:text-xs font-mono text-ink-muted/70 tracking-widest uppercase flex items-center flex-wrap justify-center gap-2 sm:gap-4">
-              <span className="text-violet-pale/90">EARTH-616</span>
-              <span className="text-violet-light/40">•</span>
-              <span>FULL-STACK WEB DEVELOPER</span>
-              <span className="text-violet-light/40">•</span>
-              <span>CUM LAUDE GRADUATE</span>
-              <span className="text-violet-light/40">•</span>
-              <span>MALANG / GRESIK, ID</span>
-            </div>
+          <footer className="relative z-20 w-full px-0">
+
+            {/* === LOADING SCREEN — visible only when exiting === */}
+            <AnimatePresence>
+              {exitPhase === 'exiting' && (
+                <motion.div
+                  key="loading-overlay"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="absolute inset-x-0 bottom-full mb-6 flex flex-col items-center gap-3 px-6"
+                >
+                  {/* Label */}
+                  <div className="flex items-center gap-2 font-mono text-xs tracking-widest uppercase text-violet-light/80">
+                    <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-ping" />
+                    <span>Memasuki Dimensi Portofolio...</span>
+                  </div>
+
+                  {/* Segmented web-style progress bar */}
+                  <div className="relative w-full max-w-sm h-1.5 rounded-full bg-bg-surface/60 overflow-hidden border border-violet-base/20">
+                    <motion.div
+                      className="absolute left-0 top-0 h-full rounded-full"
+                      style={{
+                        background: 'linear-gradient(90deg, #7E32D9, #9E5CF6, #FB7185)',
+                        boxShadow: '0 0 12px #9E5CF6, 0 0 4px #FB7185',
+                      }}
+                      initial={{ width: '0%' }}
+                      animate={{ width: '100%' }}
+                      transition={{ duration: 1.3, ease: [0.4, 0, 0.2, 1] }}
+                    />
+                    {/* Shimmer sweep */}
+                    <motion.div
+                      className="absolute top-0 left-0 h-full w-12 rounded-full"
+                      style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent)' }}
+                      animate={{ x: ['-48px', '340px'] }}
+                      transition={{ duration: 1.1, ease: 'easeInOut', repeat: Infinity }}
+                    />
+                  </div>
+
+                  {/* Web segment ticks */}
+                  <div className="flex gap-1.5">
+                    {Array.from({ length: 8 }).map((_, i) => (
+                      <motion.span
+                        key={i}
+                        className="block w-5 h-0.5 rounded-full bg-violet-base/40"
+                        initial={{ scaleX: 0, opacity: 0 }}
+                        animate={{ scaleX: 1, opacity: 1 }}
+                        transition={{ delay: i * 0.12, duration: 0.3 }}
+                        style={{ transformOrigin: 'left center' }}
+                      />
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Thin bottom separator — always visible */}
+            <div className="w-full h-px bg-gradient-to-r from-transparent via-violet-base/30 to-transparent" />
           </footer>
         </motion.div>
       )}
