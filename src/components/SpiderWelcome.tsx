@@ -7,105 +7,108 @@ interface SpiderWelcomeProps {
   onClose?: () => void;
 }
 
-// Procedural Web Audio Synth for subtle cinematic Spider-Verse FX
-const playSoundFX = (type: 'thwip' | 'sense' | 'warp') => {
-  try {
-    const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
-    if (!AudioContextClass) return;
-    const ctx = new AudioContextClass();
-    if (ctx.state === 'suspended') {
-      ctx.resume();
-    }
+// Path ke file audio di folder public/
+const AUDIO_SRC = '/audio/spider-theme.mp3';
 
-    if (type === 'thwip') {
-      const bufferSize = ctx.sampleRate * 0.2;
-      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-      const data = buffer.getChannelData(0);
-      for (let i = 0; i < bufferSize; i++) {
-        data[i] = Math.random() * 2 - 1;
-      }
-      const noise = ctx.createBufferSource();
-      noise.buffer = buffer;
-
-      const filter = ctx.createBiquadFilter();
-      filter.type = 'bandpass';
-      filter.frequency.setValueAtTime(3400, ctx.currentTime);
-      filter.frequency.exponentialRampToValueAtTime(320, ctx.currentTime + 0.18);
-      filter.Q.setValueAtTime(3, ctx.currentTime);
-
-      const gain = ctx.createGain();
-      gain.gain.setValueAtTime(0.2, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
-
-      noise.connect(filter);
-      filter.connect(gain);
-      gain.connect(ctx.destination);
-      noise.start();
-    } else if (type === 'sense') {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(920, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(1840, ctx.currentTime + 0.12);
-      osc.frequency.exponentialRampToValueAtTime(460, ctx.currentTime + 0.28);
-
-      gain.gain.setValueAtTime(0.1, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
-
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.3);
-    } else if (type === 'warp') {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(200, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(35, ctx.currentTime + 0.45);
-
-      gain.gain.setValueAtTime(0.3, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
-
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.5);
-    }
-  } catch {
-    // Audio context may be restricted by browser policy
-  }
-};
 
 export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
   isOpen = true,
   onClose,
 }) => {
   const [progress, setProgress] = useState(0);
-  const [soundEnabled, setSoundEnabled] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
   const [exitPhase, setExitPhase] = useState<'idle' | 'exiting'>('idle');
+  const [audioStarted, setAudioStarted] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationFrameRef = useRef<number | null>(null);
   const mousePos = useRef({ x: 0, y: 0, active: false });
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const fadeIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Initialize audio element once
+  useEffect(() => {
+    const audio = new Audio(AUDIO_SRC);
+    audio.loop = true;
+    audio.volume = 0; // start at 0 for fade-in
+    audio.preload = 'auto';
+    audioRef.current = audio;
+    return () => {
+      audio.pause();
+      audio.src = '';
+      audioRef.current = null;
+    };
+  }, []);
+
+  // Helper: smooth fade in
+  const fadeIn = useCallback((targetVol = 0.55, durationMs = 1800) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
+    const steps = 40;
+    const stepMs = durationMs / steps;
+    const delta = targetVol / steps;
+    fadeIntervalRef.current = setInterval(() => {
+      if (!audioRef.current) return;
+      const next = Math.min(audioRef.current.volume + delta, targetVol);
+      audioRef.current.volume = next;
+      if (next >= targetVol && fadeIntervalRef.current) {
+        clearInterval(fadeIntervalRef.current);
+        fadeIntervalRef.current = null;
+      }
+    }, stepMs);
+  }, []);
+
+  // Helper: smooth fade out then pause
+  const fadeOut = useCallback((durationMs = 900) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
+    const steps = 30;
+    const stepMs = durationMs / steps;
+    const startVol = audio.volume;
+    const delta = startVol / steps;
+    fadeIntervalRef.current = setInterval(() => {
+      if (!audioRef.current) return;
+      const next = Math.max(audioRef.current.volume - delta, 0);
+      audioRef.current.volume = next;
+      if (next <= 0 && fadeIntervalRef.current) {
+        clearInterval(fadeIntervalRef.current);
+        fadeIntervalRef.current = null;
+        audioRef.current?.pause();
+      }
+    }, stepMs);
+  }, []);
+
+  // Start audio on first user interaction anywhere on the welcome screen
+  const startAudioOnInteraction = useCallback(() => {
+    if (audioStarted || isMuted) return;
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.volume = 0;
+    audio.play().then(() => {
+      setAudioStarted(true);
+      fadeIn();
+    }).catch(() => {
+      // autoplay blocked; try again on next interaction
+    });
+  }, [audioStarted, isMuted, fadeIn]);
 
   const handleExit = useCallback(() => {
     if (exitPhase === 'exiting') return;
-    if (soundEnabled) playSoundFX('warp');
     setExitPhase('exiting');
+    fadeOut(900);
     setTimeout(() => {
       if (onClose) onClose();
       setExitPhase('idle');
+      setAudioStarted(false);
     }, 1600);
-  }, [soundEnabled, onClose, exitPhase]);
+  }, [onClose, exitPhase, fadeOut]);
 
   // Handle countdown & auto-exit
   useEffect(() => {
     if (!isOpen) return;
     setProgress(0);
     setExitPhase('idle');
-
-    if (soundEnabled) {
-      playSoundFX('sense');
-    }
 
     const interval = setInterval(() => {
       setProgress((prev) => {
@@ -120,7 +123,22 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
     return () => {
       clearInterval(interval);
     };
-  }, [isOpen, soundEnabled]);
+  }, [isOpen]);
+
+  // Mute/unmute toggle
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (isMuted) {
+      if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
+      audio.volume = 0;
+      audio.pause();
+    } else if (audioStarted) {
+      audio.volume = 0;
+      audio.play().catch(() => {});
+      fadeIn();
+    }
+  }, [isMuted, audioStarted, fadeIn]);
 
   // Auto exit when progress completes
   useEffect(() => {
@@ -318,8 +336,9 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
             filter: 'blur(16px)',
             transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
           }}
-          onMouseMove={handleMouseMove}
+          onMouseMove={(e) => { handleMouseMove(e); startAudioOnInteraction(); }}
           onMouseLeave={handleMouseLeave}
+          onClick={startAudioOnInteraction}
           className="fixed inset-0 z-[99999] flex flex-col justify-between items-center overflow-hidden bg-bg-base select-none px-6 py-6 sm:py-8"
         >
           {/* Canvas Spider-Man Web Motif Background */}
@@ -330,16 +349,17 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
           {/* ========================================================================= */}
           <header className="relative z-20 w-full max-w-6xl mx-auto flex items-center justify-end">
             <button
-              onClick={() => {
-                const next = !soundEnabled;
-                setSoundEnabled(next);
-                if (next) playSoundFX('thwip');
+              onClick={(e) => {
+                e.stopPropagation();
+                const next = !isMuted;
+                setIsMuted(next);
+                if (!next) startAudioOnInteraction();
               }}
               className="px-3.5 py-1.5 rounded-full border border-violet-base/40 bg-bg-surface/75 backdrop-blur-md text-ink-secondary hover:text-white hover:border-violet-bright transition-all flex items-center gap-1.5 text-xs font-mono cursor-pointer shadow-sm"
-              title="Toggle Web Audio SFX"
+              title="Toggle Music"
             >
-              {soundEnabled ? <Volume2 size={13} className="text-violet-light" /> : <VolumeX size={13} className="text-ink-muted" />}
-              <span className="hidden sm:inline">{soundEnabled ? 'SFX ON' : 'SFX OFF'}</span>
+              {isMuted ? <VolumeX size={13} className="text-ink-muted" /> : <Volume2 size={13} className="text-violet-light" />}
+              <span className="hidden sm:inline">{isMuted ? 'MUTED' : 'MUSIC ON'}</span>
             </button>
           </header>
 
