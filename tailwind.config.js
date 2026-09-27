@@ -1,4 +1,4 @@
-﻿/** @type {import('tailwindcss').Config} */
+/** @type {import('tailwindcss').Config} */
 export default {
   content: [
     './index.html',
@@ -56,6 +56,9 @@ export default {
       fontFamily: {
         sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+        spidey: ['"Bebas Neue"', '"Russo One"', 'Impact', 'sans-serif'],
+        orbitron: ['"Orbitron"', 'sans-serif'],
+        syne: ['"Syne"', 'sans-serif'],
       },
       fontSize: {
         '2xs': ['0.6875rem', { lineHeight: '1rem' }],

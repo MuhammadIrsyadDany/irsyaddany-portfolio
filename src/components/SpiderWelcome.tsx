@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Volume2, VolumeX, ArrowRight, Zap, ChevronRight, Sparkles } from 'lucide-react';
+import { Volume2, VolumeX, ArrowRight, Zap, ChevronRight, Sparkles, ShieldCheck, Code2, Globe } from 'lucide-react';
 
 interface SpiderWelcomeProps {
   isOpen?: boolean;
@@ -106,7 +106,7 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
           clearInterval(interval);
           return 100;
         }
-        return prev + 1.25;
+        return prev + 1.2;
       });
     }, 35);
 
@@ -182,7 +182,7 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
         x: Math.random() * width,
         y: Math.random() * height,
         vx: (Math.random() - 0.5) * 0.4,
-        vy: -0.3 - Math.random() * 0.5, // slowly float upwards
+        vy: -0.3 - Math.random() * 0.5,
         size: 1 + Math.random() * 2,
         alpha: 0.2 + Math.random() * 0.6,
         color: i % 3 === 0 ? '#FB7185' : i % 2 === 0 ? '#B88AF8' : '#38BDF8',
@@ -267,7 +267,7 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
           } else {
             const prevAngle = ((i - 1) * 2 * Math.PI) / radialRays;
             const midAngle = (angle + prevAngle) / 2;
-            const midRadius = radius * 0.94; // slight inward tension curve
+            const midRadius = radius * 0.94;
             const cpx = Math.cos(midAngle) * midRadius + (mouseOffsetX * (r / rings) * 0.4);
             const cpy = Math.sin(midAngle) * midRadius + (mouseOffsetY * (r / rings) * 0.4);
             ctx.quadraticCurveTo(cpx, cpy, px, py);
@@ -324,7 +324,7 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
           }}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          className="fixed inset-0 z-[99999] flex flex-col justify-between items-center overflow-hidden bg-bg-base select-none px-6 py-8"
+          className="fixed inset-0 z-[99999] flex flex-col justify-between items-center overflow-hidden bg-bg-base select-none px-6 py-6 sm:py-8"
         >
           {/* Canvas Spider-Man Web Motif Background */}
           <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
@@ -333,13 +333,13 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
           {/* TOP CONTROLS (AUDIO & SKIP ESC)                                           */}
           {/* ========================================================================= */}
           <header className="relative z-20 w-full max-w-6xl mx-auto flex items-center justify-between">
-            {/* Brand Status with Glowing Spider Sense Dot */}
-            <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-bg-surface/60 border border-violet-light/15 backdrop-blur-md">
+            {/* Brand Status with Glowing Spider Sense Radar */}
+            <div className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-bg-surface/70 border border-violet-light/20 backdrop-blur-md shadow-sm">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500" />
               </span>
-              <span className="text-2xs font-mono text-violet-pale/80 tracking-widest uppercase">SPIDER-VERSE PROTOCOL // 2026</span>
+              <span className="text-2xs font-mono text-violet-pale/90 tracking-widest uppercase">SPIDER-VERSE PROTOCOL // EARTH-616</span>
             </div>
 
             <div className="flex items-center gap-3">
@@ -350,7 +350,7 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
                   setSoundEnabled(next);
                   if (next) playSoundFX('thwip');
                 }}
-                className="px-3 py-1.5 rounded-full border border-violet-base/40 bg-bg-surface/75 backdrop-blur-md text-ink-secondary hover:text-white hover:border-violet-bright transition-all flex items-center gap-1.5 text-xs font-mono cursor-pointer shadow-sm"
+                className="px-3.5 py-1.5 rounded-full border border-violet-base/40 bg-bg-surface/75 backdrop-blur-md text-ink-secondary hover:text-white hover:border-violet-bright transition-all flex items-center gap-1.5 text-xs font-mono cursor-pointer shadow-sm"
                 title="Toggle Web Audio SFX"
               >
                 {soundEnabled ? <Volume2 size={13} className="text-violet-light" /> : <VolumeX size={13} className="text-ink-muted" />}
@@ -370,19 +370,18 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
           </header>
 
           {/* ========================================================================= */}
-          {/* CENTER HERO: ULTRA-AESTHETIC SPIDER-VERSE TYPOGRAPHY                      */}
+          {/* CENTER HERO: SPIDER-MAN CINEMATIC DISPLAY TYPOGRAPHY                      */}
           {/* ========================================================================= */}
-          <main className="relative z-20 flex flex-col items-center justify-center text-center my-auto max-w-4xl w-full px-4">
+          <main className="relative z-20 flex flex-col items-center justify-center text-center my-auto max-w-5xl w-full px-4">
             
-            {/* Luminous Background Spider Emblem Silhouette (Subtle Atmospheric Watermark) */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none -z-10 opacity-20">
+            {/* Luminous Background Spider Emblem Silhouette Watermark */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none -z-10 opacity-25">
               <svg
                 viewBox="0 0 100 100"
-                className="w-80 h-80 sm:w-96 sm:h-96 text-violet-bright/30 filter drop-shadow-[0_0_50px_rgba(158,92,246,0.3)] animate-pulse"
+                className="w-80 h-80 sm:w-[420px] sm:h-[420px] text-violet-bright/30 filter drop-shadow-[0_0_60px_rgba(158,92,246,0.35)] animate-pulse"
                 style={{ animationDuration: '4s' }}
                 fill="currentColor"
               >
-                {/* Minimalist Iconic Geometric Spider Silhouette */}
                 <path d="M50 20C45 20 40 28 40 38C40 45 44 50 50 52C56 50 60 45 60 38C60 28 55 20 50 20ZM50 55C43 55 35 62 35 72C35 84 45 92 50 95C55 92 65 84 65 72C65 62 57 55 50 55Z" />
                 <path d="M42 35C30 25 15 22 5 28C18 35 28 42 38 45" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
                 <path d="M40 42C25 38 12 42 5 52C20 52 30 50 38 49" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
@@ -393,69 +392,87 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
               </svg>
             </div>
 
-            {/* Top Pill Tag in Deep Violet Glass */}
+            {/* Top Eyebrow Tag: D4 Teknik Informatika Polinema */}
             <motion.div
               initial={{ opacity: 0, y: -14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-violet-dim/80 border border-violet-light/35 text-violet-pale text-xs sm:text-sm font-semibold tracking-wide mb-6 backdrop-blur-md shadow-[0_2px_20px_rgba(126,50,217,0.35),inset_0_1px_0_rgba(255,255,255,0.2)]"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-violet-dim/80 border border-violet-light/35 text-violet-pale text-xs sm:text-sm font-semibold tracking-wider mb-4 backdrop-blur-md shadow-[0_2px_20px_rgba(126,50,217,0.35),inset_0_1px_0_rgba(255,255,255,0.2)]"
             >
-              <Zap size={13} className="text-amber-400 fill-amber-400" />
-              <span className="uppercase font-mono tracking-wider">D4 TEKNIK INFORMATIKA • POLINEMA</span>
+              <Zap size={14} className="text-amber-400 fill-amber-400" />
+              <span className="font-mono uppercase tracking-widest text-2xs sm:text-xs">INFORMATICS ENGINEERING // POLINEMA</span>
             </motion.div>
 
-            {/* Massive Bold Main Name Typography */}
+            {/* Main Name in Iconic Spider-Man Bold Condensed Display Font (Bebas Neue / Russo One) */}
             <motion.h1
-              initial={{ opacity: 0, scale: 0.96, y: 12 }}
+              initial={{ opacity: 0, scale: 0.94, y: 12 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
-              className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-white uppercase leading-tight drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]"
-              style={{
-                fontFamily: '"Plus Jakarta Sans", sans-serif',
-              }}
+              className="font-spidey text-6xl sm:text-8xl md:text-9xl lg:text-[10rem] tracking-wider text-white uppercase leading-none drop-shadow-[0_8px_40px_rgba(0,0,0,0.98)] select-none"
             >
               MUHAMMAD{' '}
-              <span className="bg-gradient-to-r from-violet-pale via-violet-light to-rose-400 bg-clip-text text-transparent filter drop-shadow-[0_0_36px_rgba(158,92,246,0.6)]">
+              <span className="bg-gradient-to-r from-violet-pale via-violet-light to-rose-400 bg-clip-text text-transparent filter drop-shadow-[0_0_40px_rgba(158,92,246,0.7)]">
                 IRSYAD DANY
               </span>
             </motion.h1>
 
-            {/* Subtitle Roles with Glowing Bullet Separators */}
-            <motion.p
+            {/* Cinematic Spider-Verse Philosophy Tagline */}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.22 }}
+              className="mt-2 sm:mt-3 text-xs sm:text-sm md:text-base font-mono tracking-widest uppercase text-violet-light/90 flex items-center justify-center gap-2"
+            >
+              <span className="text-rose-400">&ldquo;</span>
+              <span>WITH GREAT CODE COMES INFINITE POSSIBILITIES</span>
+              <span className="text-rose-400">&rdquo;</span>
+            </motion.div>
+
+            {/* Specialization Skill Pills with Luminous Badges */}
+            <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.25 }}
-              className="mt-4 sm:mt-5 text-base sm:text-lg md:text-xl font-medium text-ink-secondary flex items-center justify-center flex-wrap gap-2 sm:gap-3.5"
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="mt-5 flex items-center justify-center flex-wrap gap-2.5 sm:gap-3 text-xs sm:text-sm text-ink-secondary"
             >
-              <span className="hover:text-white transition-colors">Web Developer</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-violet-bright shadow-[0_0_8px_#9E5CF6]" />
-              <span className="hover:text-white transition-colors">Full-Stack Solutions</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-rose-400 shadow-[0_0_8px_#FB7185]" />
-              <span className="hover:text-white transition-colors">UI/UX Architecture</span>
-            </motion.p>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-bg-surface/70 border border-violet-base/30 text-ink-primary backdrop-blur-sm shadow-sm hover:border-violet-bright transition-colors">
+                <Code2 size={13} className="text-violet-bright" />
+                <span>Full-Stack Web Architect</span>
+              </span>
 
-            {/* Action Pill Button: Luminous Deep Purple & Violet Gradient */}
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-bg-surface/70 border border-violet-base/30 text-ink-primary backdrop-blur-sm shadow-sm hover:border-rose-400 transition-colors">
+                <Globe size={13} className="text-rose-400" />
+                <span>Laravel & React Ecosystem</span>
+              </span>
+
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-bg-surface/70 border border-violet-base/30 text-ink-primary backdrop-blur-sm shadow-sm hover:border-cyan-vivid transition-colors">
+                <ShieldCheck size={13} className="text-cyan-vivid" />
+                <span>Interactive UI/UX Engineering</span>
+              </span>
+            </motion.div>
+
+            {/* Action Pill Button: Swing into Portfolio */}
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.35 }}
+              transition={{ duration: 0.5, delay: 0.38 }}
               className="mt-8 sm:mt-10 flex flex-col items-center gap-3"
             >
               <button
                 onClick={handleExit}
-                className="group relative px-8 sm:px-10 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-violet-deep via-violet-base to-violet-bright hover:from-violet-base hover:to-violet-light text-white font-bold text-sm sm:text-base border border-violet-pale/40 shadow-[0_4px_30px_rgba(126,50,217,0.55),inset_0_1px_0_rgba(255,255,255,0.35)] hover:shadow-[0_6px_40px_rgba(158,92,246,0.75),inset_0_1px_0_rgba(255,255,255,0.5)] transition-all duration-300 transform hover:-translate-y-0.5 flex items-center gap-2.5 cursor-pointer overflow-hidden"
+                className="group relative px-9 sm:px-12 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-violet-deep via-violet-base to-violet-bright hover:from-violet-base hover:to-violet-light text-white font-bold text-sm sm:text-base border border-violet-pale/40 shadow-[0_4px_30px_rgba(126,50,217,0.55),inset_0_1px_0_rgba(255,255,255,0.35)] hover:shadow-[0_6px_40px_rgba(158,92,246,0.75),inset_0_1px_0_rgba(255,255,255,0.5)] transition-all duration-300 transform hover:-translate-y-0.5 flex items-center gap-3 cursor-pointer overflow-hidden"
               >
-                {/* Subtle Shimmer Light Sweep */}
-                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none" />
+                {/* Shimmer Light Sweep */}
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none" />
                 
-                <Sparkles size={16} className="text-violet-pale group-hover:rotate-12 transition-transform" />
-                <span>Masuk ke Portofolio</span>
+                <Sparkles size={17} className="text-violet-pale group-hover:rotate-12 transition-transform" />
+                <span className="font-spidey text-base sm:text-lg tracking-wider">SWING INTO PORTFOLIO</span>
                 <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
               </button>
 
               {/* Sub-hint text */}
-              <span className="text-xs sm:text-sm text-ink-muted/80 font-normal">
-                Tekan Spasi, Enter, atau klik untuk melanjutkan
+              <span className="text-2xs sm:text-xs font-mono text-ink-muted/80">
+                TEKAN <span className="text-violet-pale font-bold">[SPACE]</span> ATAU <span className="text-violet-pale font-bold">[ENTER]</span> UNTUK MENJELAJAHI PORTOFOLIO
               </span>
             </motion.div>
           </main>
@@ -463,13 +480,15 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
           {/* ========================================================================= */}
           {/* BOTTOM FOOTER METADATA                                                    */}
           {/* ========================================================================= */}
-          <footer className="relative z-20 w-full max-w-4xl mx-auto flex items-center justify-center text-center">
-            <div className="text-2xs sm:text-xs font-mono text-ink-muted/65 tracking-widest uppercase flex items-center flex-wrap justify-center gap-2 sm:gap-4">
-              <span>FULL-STACK WEB</span>
-              <span className="text-violet-light/50">•</span>
-              <span>LARAVEL & REACT</span>
-              <span className="text-violet-light/50">•</span>
-              <span>GRESIK / MALANG, ID</span>
+          <footer className="relative z-20 w-full max-w-5xl mx-auto flex items-center justify-center text-center">
+            <div className="text-2xs sm:text-xs font-mono text-ink-muted/70 tracking-widest uppercase flex items-center flex-wrap justify-center gap-2 sm:gap-4">
+              <span className="text-violet-pale/90">EARTH-616</span>
+              <span className="text-violet-light/40">•</span>
+              <span>FULL-STACK WEB DEVELOPER</span>
+              <span className="text-violet-light/40">•</span>
+              <span>CUM LAUDE GRADUATE</span>
+              <span className="text-violet-light/40">•</span>
+              <span>MALANG / GRESIK, ID</span>
             </div>
           </footer>
         </motion.div>
