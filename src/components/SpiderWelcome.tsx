@@ -332,16 +332,7 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
           {/* ========================================================================= */}
           {/* TOP CONTROLS (AUDIO & SKIP ESC)                                           */}
           {/* ========================================================================= */}
-          <header className="relative z-20 w-full max-w-6xl mx-auto flex items-center justify-between">
-            {/* Brand Status with Glowing Spider Sense Radar */}
-            <div className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-bg-surface/70 border border-violet-light/20 backdrop-blur-md shadow-sm">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500" />
-              </span>
-              <span className="text-2xs font-mono text-violet-pale/90 tracking-widest uppercase">SPIDER-VERSE PROTOCOL // 2026</span>
-            </div>
-
+          <header className="relative z-20 w-full max-w-6xl mx-auto flex items-center justify-end">
             <div className="flex items-center gap-3">
               {/* SFX Audio Toggle */}
               <button
@@ -391,17 +382,6 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
                 <path d="M60 58C75 64 88 75 92 90C82 80 72 72 62 65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
               </svg>
             </div>
-
-            {/* Top Eyebrow Tag: D4 Teknik Informatika Polinema */}
-            <motion.div
-              initial={{ opacity: 0, y: -12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-violet-dim/80 border border-violet-light/30 text-violet-pale text-xs sm:text-sm font-semibold tracking-wider mb-5 backdrop-blur-md shadow-[0_2px_16px_rgba(126,50,217,0.3),inset_0_1px_0_rgba(255,255,255,0.15)]"
-            >
-              <Zap size={13} className="text-amber-400 fill-amber-400" />
-              <span className="font-mono uppercase tracking-widest text-2xs sm:text-xs">INFORMATICS ENGINEERING // POLINEMA</span>
-            </motion.div>
 
             {/* Main Name: Sleek, Horizontal, Proportional Size with Clean Crystal White & Specular Sheen */}
             <motion.h1
