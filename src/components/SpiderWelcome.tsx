@@ -1,21 +1,15 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Volume2, VolumeX, ChevronRight, ShieldCheck, Code2, Globe } from 'lucide-react';
+import { ChevronRight, ShieldCheck, Code2, Globe } from 'lucide-react';
 
 interface SpiderWelcomeProps {
   isOpen?: boolean;
   onClose?: () => void;
-  isMuted?: boolean;
-  onToggleMute?: () => void;
-  onFirstInteraction?: () => void;
 }
 
 export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
   isOpen = true,
   onClose,
-  isMuted = false,
-  onToggleMute,
-  onFirstInteraction,
 }) => {
   const [progress, setProgress] = useState(0);
   const [exitPhase, setExitPhase] = useState<'idle' | 'exiting'>('idle');
@@ -248,30 +242,14 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
             filter: 'blur(16px)',
             transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
           }}
-          onMouseMove={(e) => { handleMouseMove(e); onFirstInteraction?.(); }}
+          onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          onClick={() => onFirstInteraction?.()}
           className="fixed inset-0 z-[99999] flex flex-col justify-between items-center overflow-hidden bg-bg-base select-none px-6 py-6 sm:py-8"
         >
           {/* Canvas Spider-Man Web Motif Background */}
           <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
 
-          {/* ========================================================================= */}
-          {/* TOP CONTROLS (AUDIO ONLY)                                                  */}
-          {/* ========================================================================= */}
-          <header className="relative z-20 w-full max-w-6xl mx-auto flex items-center justify-end">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onToggleMute?.();
-              }}
-              className="px-3.5 py-1.5 rounded-full border border-violet-base/40 bg-bg-surface/75 backdrop-blur-md text-ink-secondary hover:text-white hover:border-violet-bright transition-all flex items-center gap-1.5 text-xs font-mono cursor-pointer shadow-sm"
-              title="Toggle Music"
-            >
-              {isMuted ? <VolumeX size={13} className="text-ink-muted" /> : <Volume2 size={13} className="text-violet-light" />}
-              <span className="hidden sm:inline">{isMuted ? 'MUTED' : 'MUSIC ON'}</span>
-            </button>
-          </header>
+          {/* No top controls — audio managed globally */}
 
           {/* ========================================================================= */}
           {/* CENTER HERO: REFINED HORIZONTAL NAME & CLEAN TYPOGRAPHY                    */}

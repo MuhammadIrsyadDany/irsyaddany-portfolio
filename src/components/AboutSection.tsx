@@ -61,13 +61,9 @@ export const AboutSection: React.FC = () => {
                 Saya adalah fresh graduate{' '}
                 <strong className="text-ink-primary font-semibold">
                   D4 Teknik Informatika dari Politeknik Negeri Malang
-                </strong>
-                , lulus dengan predikat{' '}
-                <span className="text-violet-light font-semibold">
-                  Dengan Pujian (Cum Laude)
-                </span>{' '}
-                dengan IPK{' '}
-                <strong className="text-ink-primary tabular-nums">
+                </strong>{' '}
+                dengan capaian IPK{' '}
+                <strong className="text-violet-light font-semibold tabular-nums">
                   3.62 / 4.00
                 </strong>
                 .
@@ -213,17 +209,20 @@ export const AboutSection: React.FC = () => {
         <div className="mt-7 pt-4 border-t border-border-faint flex items-end justify-between gap-4">
           <div>
             <p className="text-2xs uppercase tracking-wider text-ink-muted">
-              Kelulusan
+              Indeks Prestasi
             </p>
 
             <p className="mt-1 text-sm font-semibold text-ink-primary">
-              Cum Laude
+              IPK Kumulatif
             </p>
           </div>
 
-          <p className="text-2xl font-black tracking-tight text-violet-light tabular-nums">
-            3.62
-          </p>
+          <div className="text-right">
+            <span className="text-2xs text-ink-muted block font-mono">Skala 4.00</span>
+            <p className="text-2xl font-black tracking-tight text-violet-light tabular-nums">
+              3.62
+            </p>
+          </div>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { BackgroundEffects } from './components/BackgroundEffects';
 import { ScrollProgressBar } from './components/ScrollAnimations';
 import { Navbar } from './components/Navbar';
@@ -21,99 +21,99 @@ export const App: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const fadeRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const interactedRef = useRef(false);
+  const startedRef = useRef(false);
 
+  // Create audio element on mount
   useEffect(() => {
     const audio = new Audio(AUDIO_SRC);
     audio.loop = true;
     audio.volume = 0;
     audio.preload = 'auto';
     audioRef.current = audio;
+
+    // Attempt immediate autoplay (works if browser allows or user visited before)
+    audio.play().then(() => {
+      startedRef.current = true;
+      setIsPlaying(true);
+      doFadeIn(audio);
+    }).catch(() => {
+      // Browser blocked — fall back to first interaction
+      const resume = () => {
+        if (startedRef.current) return;
+        audio.volume = 0;
+        audio.play().then(() => {
+          startedRef.current = true;
+          setIsPlaying(true);
+          doFadeIn(audio);
+        }).catch(() => {});
+      };
+      window.addEventListener('click', resume, { once: true });
+      window.addEventListener('touchstart', resume, { once: true });
+      window.addEventListener('keydown', resume, { once: true });
+    });
+
     return () => {
       audio.pause();
       audio.src = '';
       audioRef.current = null;
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const fadeIn = useCallback((target = 0.55, ms = 1800) => {
-    const audio = audioRef.current;
-    if (!audio) return;
+  // Smooth fade in helper (works directly on audio element)
+  function doFadeIn(audio: HTMLAudioElement, target = 0.55, ms = 1800) {
     if (fadeRef.current) clearInterval(fadeRef.current);
     const steps = 40;
     const stepMs = ms / steps;
     const delta = target / steps;
     fadeRef.current = setInterval(() => {
-      if (!audioRef.current) return;
-      const next = Math.min(audioRef.current.volume + delta, target);
-      audioRef.current.volume = next;
+      const next = Math.min(audio.volume + delta, target);
+      audio.volume = next;
       if (next >= target && fadeRef.current) {
         clearInterval(fadeRef.current);
         fadeRef.current = null;
       }
     }, stepMs);
-  }, []);
+  }
 
-  const startAudio = useCallback(() => {
-    if (interactedRef.current || isMuted) return;
+  const fadeIn = useCallback(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    interactedRef.current = true;
-    audio.volume = 0;
-    audio.play().then(() => {
-      setIsPlaying(true);
-      fadeIn();
-    }).catch(() => {
-      interactedRef.current = false;
-    });
-  }, [isMuted, fadeIn]);
-
-  useEffect(() => {
-    const handler = () => startAudio();
-    window.addEventListener('mousemove', handler, { once: true });
-    window.addEventListener('click', handler, { once: true });
-    window.addEventListener('touchstart', handler, { once: true });
-    return () => {
-      window.removeEventListener('mousemove', handler);
-      window.removeEventListener('click', handler);
-      window.removeEventListener('touchstart', handler);
-    };
-  }, [startAudio]);
+    doFadeIn(audio);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleToggleMute = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
     if (!isMuted) {
-      setIsMuted(true);
+      // Mute instantly
       if (fadeRef.current) clearInterval(fadeRef.current);
-      if (audioRef.current) {
-        audioRef.current.volume = 0;
-        audioRef.current.pause();
-      }
+      audio.volume = 0;
+      audio.pause();
+      setIsMuted(true);
     } else {
+      // Unmute with fade
       setIsMuted(false);
-      const audio = audioRef.current;
-      if (!audio) return;
-      if (!interactedRef.current) {
-        startAudio();
+      if (!startedRef.current) {
+        audio.play().then(() => {
+          startedRef.current = true;
+          setIsPlaying(true);
+          fadeIn();
+        }).catch(() => {});
       } else {
         audio.volume = 0;
         audio.play().catch(() => {});
         fadeIn();
       }
     }
-  }, [isMuted, fadeIn, startAudio]);
-
-  const handleReplayIntro = () => {
-    setShowIntro(true);
-  };
+  }, [isMuted, fadeIn]);
 
   return (
     <div className="min-h-screen bg-bg-base text-ink-primary relative selection:bg-violet-base/30 selection:text-violet-pale font-sans antialiased">
       <SpiderWelcome
         isOpen={showIntro}
         onClose={() => setShowIntro(false)}
-        isMuted={isMuted}
-        onToggleMute={handleToggleMute}
-        onFirstInteraction={startAudio}
       />
 
       <ScrollProgressBar />
@@ -130,6 +130,7 @@ export const App: React.FC = () => {
       </main>
       <Footer />
 
+      {/* Vinyl Player — bottom-right, shown after welcome screen */}
       {!showIntro && (
         <VinylPlayer
           isMuted={isMuted}
@@ -137,20 +138,6 @@ export const App: React.FC = () => {
           onToggleMute={handleToggleMute}
         />
       )}
-
-      <div className="fixed bottom-6 right-6 z-40">
-        <button
-          onClick={handleReplayIntro}
-          aria-label="Replay Spider-Man Welcome Animation"
-          className="group relative flex items-center gap-2 px-3.5 py-2 rounded-full bg-bg-raised/85 hover:bg-bg-overlay border border-violet-base/30 hover:border-violet-bright backdrop-blur-md shadow-lg shadow-black/40 text-xs font-mono text-ink-secondary hover:text-white transition-all duration-300 hover:scale-105"
-        >
-          <div className="w-5 h-5 rounded-full bg-gradient-to-br from-rose-500 to-violet-deep flex items-center justify-center text-white text-2xs shadow-sm shadow-rose-500/50 group-hover:rotate-12 transition-transform">
-            🕸️
-          </div>
-          <span className="hidden sm:inline font-medium">Spider Intro</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
-        </button>
-      </div>
     </div>
   );
 };

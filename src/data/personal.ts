@@ -1,4 +1,4 @@
-﻿export interface PersonalInfo {
+export interface PersonalInfo {
   name: string;
   title: string;
   location: string;
@@ -7,7 +7,7 @@
   linkedin: string;
   education: string;
   gpa: string;
-  honor: string;
+  honor?: string;
 }
 
 export const personalInfo: PersonalInfo = {
@@ -19,5 +19,4 @@ export const personalInfo: PersonalInfo = {
   linkedin: 'https://linkedin.com/in/muhammadirsyaddany',
   education: 'State Polytechnic of Malang (Polinema)',
   gpa: '3.62 / 4.00',
-  honor: 'Cum Laude',
 };

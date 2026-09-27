@@ -44,8 +44,8 @@ export const AchievementsSection: React.FC = () => {
           </Animate>
         </div>
 
-        {/* Part 1: Academic Honors (2-Column Cards) */}
-        <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+        {/* Part 1: Academic & Capstone Honors */}
+        <StaggerGroup className={achievements.length > 1 ? "grid grid-cols-1 md:grid-cols-2 gap-6 mb-16" : "max-w-2xl mb-16"}>
           {achievements.map((ach, i) => (
             <Animate key={ach.id} variants={scaleIn} custom={i}>
             <div

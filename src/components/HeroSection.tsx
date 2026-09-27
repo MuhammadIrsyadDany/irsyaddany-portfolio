@@ -118,9 +118,9 @@ export const HeroSection: React.FC = () => {
               <strong className="text-ink-primary font-semibold">
                 D4 Teknik Informatika Politeknik Negeri Malang
               </strong>{" "}
-              dengan predikat{" "}
+              dengan capaian{" "}
               <span className="text-violet-light font-semibold tabular-nums">
-                Cum Laude (IPK 3.62 / 4.00)
+                IPK 3.62 / 4.00
               </span>
               . Berpengalaman merancang dan mengembangkan sistem web yang fungsional,
               teruji, dan berorientasi pada kebutuhan pengguna.
@@ -263,7 +263,7 @@ export const HeroSection: React.FC = () => {
                       </button>
                     </div>
 
-                    {/* Bottom Area: Minimalist Indicator Dots & Cum Laude Badge */}
+                    {/* Bottom Area: Minimalist Indicator Dots & Academic Badge */}
                     <div className="absolute bottom-3 left-3 right-3 z-20 space-y-2.5">
 
                       {/* Minimalist Sliding Indicator Dots (Tanpa teks label) */}
@@ -281,7 +281,7 @@ export const HeroSection: React.FC = () => {
                         ))}
                       </div>
 
-                      {/* Cum Laude Badge */}
+                      {/* Academic Info Badge */}
                       <div className="rounded-xl p-3 flex items-center justify-between bg-bg-base/85 backdrop-blur-md border border-border-subtle shadow-lg">
                         <div>
                           <p className="text-2xs uppercase tracking-wider font-semibold text-violet-light">

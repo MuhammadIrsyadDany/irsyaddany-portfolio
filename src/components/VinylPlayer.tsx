@@ -51,13 +51,13 @@ export const VinylPlayer: React.FC<VinylPlayerProps> = ({
 
   return (
     <div
-      className="fixed bottom-6 left-6 z-40 select-none"
+      className="fixed bottom-6 right-6 z-40 select-none"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       <motion.div
         className="relative flex items-end gap-3"
-        initial={{ opacity: 0, x: -30 }}
+        initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
       >
@@ -66,9 +66,9 @@ export const VinylPlayer: React.FC<VinylPlayerProps> = ({
           {hovered && (
             <motion.div
               key="vinyl-label"
-              initial={{ opacity: 0, x: -10, scale: 0.9 }}
+              initial={{ opacity: 0, x: 10, scale: 0.9 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, x: -8, scale: 0.92 }}
+              exit={{ opacity: 0, x: 8, scale: 0.92 }}
               transition={{ duration: 0.22 }}
               className="mb-1 bg-bg-raised/90 backdrop-blur-md border border-violet-base/30 rounded-xl px-3.5 py-2.5 shadow-lg shadow-black/40 min-w-[140px]"
             >
@@ -210,18 +210,18 @@ export const VinylPlayer: React.FC<VinylPlayerProps> = ({
               </motion.div>
             )}
           </AnimatePresence>
+
+          {/* Muted badge dot */}
+          {isMuted && (
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-rose-500 border-2 border-bg-base flex items-center justify-center pointer-events-none"
+              title="Muted"
+            />
+          )}
         </div>
       </motion.div>
-
-      {/* Muted badge dot */}
-      {isMuted && (
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-rose-500 border border-bg-base flex items-center justify-center"
-          title="Muted"
-        />
-      )}
     </div>
   );
 };
