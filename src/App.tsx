@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { BackgroundEffects } from './components/BackgroundEffects';
 import { ScrollProgressBar } from './components/ScrollAnimations';
 import { Navbar } from './components/Navbar';
@@ -11,9 +11,96 @@ import { AchievementsSection } from './components/AchievementsSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { SpiderWelcome } from './components/SpiderWelcome';
+import { VinylPlayer } from './components/VinylPlayer';
+
+const AUDIO_SRC = '/audio/spider-theme.mp3';
 
 export const App: React.FC = () => {
   const [showIntro, setShowIntro] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const fadeRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const interactedRef = useRef(false);
+
+  useEffect(() => {
+    const audio = new Audio(AUDIO_SRC);
+    audio.loop = true;
+    audio.volume = 0;
+    audio.preload = 'auto';
+    audioRef.current = audio;
+    return () => {
+      audio.pause();
+      audio.src = '';
+      audioRef.current = null;
+    };
+  }, []);
+
+  const fadeIn = useCallback((target = 0.55, ms = 1800) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (fadeRef.current) clearInterval(fadeRef.current);
+    const steps = 40;
+    const stepMs = ms / steps;
+    const delta = target / steps;
+    fadeRef.current = setInterval(() => {
+      if (!audioRef.current) return;
+      const next = Math.min(audioRef.current.volume + delta, target);
+      audioRef.current.volume = next;
+      if (next >= target && fadeRef.current) {
+        clearInterval(fadeRef.current);
+        fadeRef.current = null;
+      }
+    }, stepMs);
+  }, []);
+
+  const startAudio = useCallback(() => {
+    if (interactedRef.current || isMuted) return;
+    const audio = audioRef.current;
+    if (!audio) return;
+    interactedRef.current = true;
+    audio.volume = 0;
+    audio.play().then(() => {
+      setIsPlaying(true);
+      fadeIn();
+    }).catch(() => {
+      interactedRef.current = false;
+    });
+  }, [isMuted, fadeIn]);
+
+  useEffect(() => {
+    const handler = () => startAudio();
+    window.addEventListener('mousemove', handler, { once: true });
+    window.addEventListener('click', handler, { once: true });
+    window.addEventListener('touchstart', handler, { once: true });
+    return () => {
+      window.removeEventListener('mousemove', handler);
+      window.removeEventListener('click', handler);
+      window.removeEventListener('touchstart', handler);
+    };
+  }, [startAudio]);
+
+  const handleToggleMute = useCallback(() => {
+    if (!isMuted) {
+      setIsMuted(true);
+      if (fadeRef.current) clearInterval(fadeRef.current);
+      if (audioRef.current) {
+        audioRef.current.volume = 0;
+        audioRef.current.pause();
+      }
+    } else {
+      setIsMuted(false);
+      const audio = audioRef.current;
+      if (!audio) return;
+      if (!interactedRef.current) {
+        startAudio();
+      } else {
+        audio.volume = 0;
+        audio.play().catch(() => {});
+        fadeIn();
+      }
+    }
+  }, [isMuted, fadeIn, startAudio]);
 
   const handleReplayIntro = () => {
     setShowIntro(true);
@@ -21,10 +108,12 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-bg-base text-ink-primary relative selection:bg-violet-base/30 selection:text-violet-pale font-sans antialiased">
-      {/* Spider-Verse Welcome Intro Screen */}
       <SpiderWelcome
         isOpen={showIntro}
         onClose={() => setShowIntro(false)}
+        isMuted={isMuted}
+        onToggleMute={handleToggleMute}
+        onFirstInteraction={startAudio}
       />
 
       <ScrollProgressBar />
@@ -41,7 +130,14 @@ export const App: React.FC = () => {
       </main>
       <Footer />
 
-      {/* Spider Easter Egg Replay Trigger (Floating Button) */}
+      {!showIntro && (
+        <VinylPlayer
+          isMuted={isMuted}
+          isPlaying={isPlaying}
+          onToggleMute={handleToggleMute}
+        />
+      )}
+
       <div className="fixed bottom-6 right-6 z-40">
         <button
           onClick={handleReplayIntro}

@@ -5,104 +5,32 @@ import { Volume2, VolumeX, ChevronRight, ShieldCheck, Code2, Globe } from 'lucid
 interface SpiderWelcomeProps {
   isOpen?: boolean;
   onClose?: () => void;
+  isMuted?: boolean;
+  onToggleMute?: () => void;
+  onFirstInteraction?: () => void;
 }
-
-// Path ke file audio di folder public/
-const AUDIO_SRC = '/audio/spider-theme.mp3';
-
 
 export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
   isOpen = true,
   onClose,
+  isMuted = false,
+  onToggleMute,
+  onFirstInteraction,
 }) => {
   const [progress, setProgress] = useState(0);
-  const [isMuted, setIsMuted] = useState(false);
   const [exitPhase, setExitPhase] = useState<'idle' | 'exiting'>('idle');
-  const [audioStarted, setAudioStarted] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationFrameRef = useRef<number | null>(null);
   const mousePos = useRef({ x: 0, y: 0, active: false });
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const fadeIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  // Initialize audio element once
-  useEffect(() => {
-    const audio = new Audio(AUDIO_SRC);
-    audio.loop = true;
-    audio.volume = 0; // start at 0 for fade-in
-    audio.preload = 'auto';
-    audioRef.current = audio;
-    return () => {
-      audio.pause();
-      audio.src = '';
-      audioRef.current = null;
-    };
-  }, []);
-
-  // Helper: smooth fade in
-  const fadeIn = useCallback((targetVol = 0.55, durationMs = 1800) => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
-    const steps = 40;
-    const stepMs = durationMs / steps;
-    const delta = targetVol / steps;
-    fadeIntervalRef.current = setInterval(() => {
-      if (!audioRef.current) return;
-      const next = Math.min(audioRef.current.volume + delta, targetVol);
-      audioRef.current.volume = next;
-      if (next >= targetVol && fadeIntervalRef.current) {
-        clearInterval(fadeIntervalRef.current);
-        fadeIntervalRef.current = null;
-      }
-    }, stepMs);
-  }, []);
-
-  // Helper: smooth fade out then pause
-  const fadeOut = useCallback((durationMs = 900) => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
-    const steps = 30;
-    const stepMs = durationMs / steps;
-    const startVol = audio.volume;
-    const delta = startVol / steps;
-    fadeIntervalRef.current = setInterval(() => {
-      if (!audioRef.current) return;
-      const next = Math.max(audioRef.current.volume - delta, 0);
-      audioRef.current.volume = next;
-      if (next <= 0 && fadeIntervalRef.current) {
-        clearInterval(fadeIntervalRef.current);
-        fadeIntervalRef.current = null;
-        audioRef.current?.pause();
-      }
-    }, stepMs);
-  }, []);
-
-  // Start audio on first user interaction anywhere on the welcome screen
-  const startAudioOnInteraction = useCallback(() => {
-    if (audioStarted || isMuted) return;
-    const audio = audioRef.current;
-    if (!audio) return;
-    audio.volume = 0;
-    audio.play().then(() => {
-      setAudioStarted(true);
-      fadeIn();
-    }).catch(() => {
-      // autoplay blocked; try again on next interaction
-    });
-  }, [audioStarted, isMuted, fadeIn]);
 
   const handleExit = useCallback(() => {
     if (exitPhase === 'exiting') return;
     setExitPhase('exiting');
-    fadeOut(900);
     setTimeout(() => {
       if (onClose) onClose();
       setExitPhase('idle');
-      setAudioStarted(false);
     }, 1600);
-  }, [onClose, exitPhase, fadeOut]);
+  }, [onClose, exitPhase]);
 
   // Handle countdown & auto-exit
   useEffect(() => {
@@ -125,21 +53,6 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
     };
   }, [isOpen]);
 
-  // Mute/unmute toggle
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (isMuted) {
-      if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
-      audio.volume = 0;
-      audio.pause();
-    } else if (audioStarted) {
-      audio.volume = 0;
-      audio.play().catch(() => {});
-      fadeIn();
-    }
-  }, [isMuted, audioStarted, fadeIn]);
-
   // Auto exit when progress completes
   useEffect(() => {
     if (progress >= 100 && exitPhase === 'idle') {
@@ -149,8 +62,6 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
       return () => clearTimeout(timer);
     }
   }, [progress, handleExit, exitPhase]);
-
-
 
   // Mouse interaction for organic spider silk tension
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -163,6 +74,7 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
 
   const handleMouseLeave = () => {
     mousePos.current.active = false;
+
   };
 
   // Canvas Pure Spider-Man Web Motif with Floating Embers & Interactive Silk Physics
@@ -336,9 +248,9 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
             filter: 'blur(16px)',
             transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
           }}
-          onMouseMove={(e) => { handleMouseMove(e); startAudioOnInteraction(); }}
+          onMouseMove={(e) => { handleMouseMove(e); onFirstInteraction?.(); }}
           onMouseLeave={handleMouseLeave}
-          onClick={startAudioOnInteraction}
+          onClick={() => onFirstInteraction?.()}
           className="fixed inset-0 z-[99999] flex flex-col justify-between items-center overflow-hidden bg-bg-base select-none px-6 py-6 sm:py-8"
         >
           {/* Canvas Spider-Man Web Motif Background */}
@@ -351,9 +263,7 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                const next = !isMuted;
-                setIsMuted(next);
-                if (!next) startAudioOnInteraction();
+                onToggleMute?.();
               }}
               className="px-3.5 py-1.5 rounded-full border border-violet-base/40 bg-bg-surface/75 backdrop-blur-md text-ink-secondary hover:text-white hover:border-violet-bright transition-all flex items-center gap-1.5 text-xs font-mono cursor-pointer shadow-sm"
               title="Toggle Music"
