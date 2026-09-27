@@ -177,37 +177,35 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
       ctx.save();
       ctx.translate(centerX, centerY);
 
-      // 1. Draw Spider-Man Web Radial Strands (Spokes)
+      // 1. Draw Spider-Man Web Radial Strands (Spokes) - Uniform & Calm (No rotating cross)
       for (let i = 0; i < radialRays; i++) {
-        const angle = (i * 2 * Math.PI) / radialRays + Math.sin(time * 0.3 + i) * 0.012;
+        const angle = (i * 2 * Math.PI) / radialRays;
         const maxRadius = Math.max(width, height) * 0.65;
         
         ctx.beginPath();
         ctx.moveTo(0, 0);
         ctx.lineTo(Math.cos(angle) * maxRadius, Math.sin(angle) * maxRadius);
-        
-        const isPulse = (i + Math.floor(time * 1.5)) % 4 === 0;
-        ctx.strokeStyle = isPulse ? 'rgba(232, 121, 249, 0.35)' : 'rgba(158, 92, 246, 0.15)';
-        ctx.lineWidth = isPulse ? 1.4 : 0.8;
+        ctx.strokeStyle = 'rgba(158, 92, 246, 0.14)';
+        ctx.lineWidth = 0.8;
         ctx.stroke();
       }
 
       // 2. Draw Organic Concentric Silk Web Rings (with realistic quadratic curves)
       for (let r = 1; r <= rings; r++) {
         const baseRadius = (r / rings) * (Math.min(width, height) * 0.45);
-        const ringPulse = Math.sin(time * 1.2 - r * 0.45) * 3;
+        const ringPulse = Math.sin(time * 0.8 - r * 0.3) * 2;
         const radius = baseRadius + ringPulse;
 
         ctx.beginPath();
         for (let i = 0; i <= radialRays; i++) {
-          const angle = (i * 2 * Math.PI) / radialRays + Math.sin(time * 0.3 + i) * 0.012;
+          const angle = (i * 2 * Math.PI) / radialRays;
           const px = Math.cos(angle) * radius;
           const py = Math.sin(angle) * radius;
 
           if (i === 0) {
             ctx.moveTo(px, py);
           } else {
-            const prevAngle = ((i - 1) * 2 * Math.PI) / radialRays + Math.sin(time * 0.3 + (i - 1)) * 0.012;
+            const prevAngle = ((i - 1) * 2 * Math.PI) / radialRays;
             const midAngle = (angle + prevAngle) / 2;
             const midRadius = radius * 0.94; // slight inward tension curve
             const cpx = Math.cos(midAngle) * midRadius;
@@ -218,20 +216,20 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
         ctx.closePath();
 
         const isGlowRing = r === 2 || r === 4;
-        ctx.strokeStyle = isGlowRing ? 'rgba(184, 138, 248, 0.30)' : 'rgba(126, 50, 217, 0.16)';
-        ctx.lineWidth = isGlowRing ? 1.3 : 0.8;
+        ctx.strokeStyle = isGlowRing ? 'rgba(184, 138, 248, 0.26)' : 'rgba(126, 50, 217, 0.14)';
+        ctx.lineWidth = isGlowRing ? 1.1 : 0.7;
         ctx.stroke();
 
-        // Glowing Bio-Electric Dew Sparks at Web Intersections
+        // Glowing Bio-Electric Dew Sparks at Web Intersections (Subtle Twinkle)
         for (let i = 0; i < radialRays; i += 2) {
-          const angle = (i * 2 * Math.PI) / radialRays + Math.sin(time * 0.3 + i) * 0.012;
+          const angle = (i * 2 * Math.PI) / radialRays;
           const px = Math.cos(angle) * radius;
           const py = Math.sin(angle) * radius;
 
           ctx.beginPath();
-          ctx.arc(px, py, 1.4 + Math.sin(time * 2.5 + i + r) * 0.7, 0, Math.PI * 2);
+          ctx.arc(px, py, 1.2 + Math.sin(time * 2 + i + r) * 0.5, 0, Math.PI * 2);
           ctx.fillStyle = (i + r) % 3 === 0 ? '#FB7185' : '#B88AF8';
-          ctx.shadowBlur = 8;
+          ctx.shadowBlur = 6;
           ctx.shadowColor = (i + r) % 3 === 0 ? '#FB7185' : '#9E5CF6';
           ctx.fill();
           ctx.shadowBlur = 0;
