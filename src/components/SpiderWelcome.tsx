@@ -137,7 +137,7 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, handleExit]);
 
-  // Canvas Web Lattice & Luminous Violet Silk Wave
+  // Canvas Pure Spider-Man Web Motif Background
   useEffect(() => {
     if (!isOpen || !canvasRef.current) return;
     const canvas = canvasRef.current;
@@ -156,125 +156,89 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
 
     const centerX = width / 2;
     const centerY = height / 2;
-    const nodesCount = 30;
+    const rings = 6;
     const radialRays = 16;
     let time = 0;
-
-    // Generate static radial web nodes
-    const nodes: { angle: number; dist: number; speed: number; size: number; color: string }[] = [];
-    for (let i = 0; i < nodesCount; i++) {
-      nodes.push({
-        angle: (i / nodesCount) * Math.PI * 2 + Math.random() * 0.25,
-        dist: 0.15 + Math.random() * 0.45,
-        speed: 0.2 + Math.random() * 0.5,
-        size: 1.5 + Math.random() * 2,
-        color: i % 3 === 0 ? '#FF3366' : i % 2 === 0 ? '#B88AF8' : '#9E5CF6',
-      });
-    }
 
     const render = () => {
       time += 0.016;
       ctx.clearRect(0, 0, width, height);
 
-      // Deep Obsidian foundation matching #090511 and #110A1E
-      const bgGrad = ctx.createRadialGradient(centerX, centerY, 60, centerX, centerY, Math.max(width, height) * 0.8);
-      bgGrad.addColorStop(0, '#24103E');
-      bgGrad.addColorStop(0.4, '#140824');
+      // Deep Obsidian foundation (#090511) with ambient violet glow in center
+      const bgGrad = ctx.createRadialGradient(centerX, centerY, 40, centerX, centerY, Math.max(width, height) * 0.75);
+      bgGrad.addColorStop(0, '#220E3D');
+      bgGrad.addColorStop(0.4, '#130722');
       bgGrad.addColorStop(0.8, '#090511');
       bgGrad.addColorStop(1, '#05020A');
       ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, width, height);
 
-      // 1. Draw Geometric Spider Web / Circuit Strands from center
+      // Spider Web Radial Geometry
       ctx.save();
       ctx.translate(centerX, centerY);
 
+      // 1. Draw Spider-Man Web Radial Strands (Spokes)
       for (let i = 0; i < radialRays; i++) {
-        const baseAngle = (i * 2 * Math.PI) / radialRays;
-        const maxRadius = Math.max(width, height) * 0.58;
-        const px = Math.cos(baseAngle) * maxRadius;
-        const py = Math.sin(baseAngle) * maxRadius;
-
+        const angle = (i * 2 * Math.PI) / radialRays + Math.sin(time * 0.3 + i) * 0.012;
+        const maxRadius = Math.max(width, height) * 0.65;
+        
         ctx.beginPath();
         ctx.moveTo(0, 0);
+        ctx.lineTo(Math.cos(angle) * maxRadius, Math.sin(angle) * maxRadius);
         
-        // Circuit step in web strands
-        const midDist = maxRadius * 0.42;
-        const midAngle = baseAngle + Math.sin(time + i) * 0.035;
-        const mx = Math.cos(midAngle) * midDist;
-        const my = Math.sin(midAngle) * midDist;
-        ctx.lineTo(mx, my);
-        ctx.lineTo(px, py);
-
-        const isPulse = (i + Math.floor(time * 1.8)) % 4 === 0;
-        ctx.strokeStyle = isPulse ? 'rgba(232, 121, 249, 0.45)' : 'rgba(158, 92, 246, 0.16)';
+        const isPulse = (i + Math.floor(time * 1.5)) % 4 === 0;
+        ctx.strokeStyle = isPulse ? 'rgba(232, 121, 249, 0.35)' : 'rgba(158, 92, 246, 0.15)';
         ctx.lineWidth = isPulse ? 1.4 : 0.8;
         ctx.stroke();
       }
 
-      // Connecting Web Concentric Polygon Loops
-      for (let r = 1; r <= 4; r++) {
-        const rad = (r / 4) * (Math.min(width, height) * 0.38);
+      // 2. Draw Organic Concentric Silk Web Rings (with realistic quadratic curves)
+      for (let r = 1; r <= rings; r++) {
+        const baseRadius = (r / rings) * (Math.min(width, height) * 0.45);
+        const ringPulse = Math.sin(time * 1.2 - r * 0.45) * 3;
+        const radius = baseRadius + ringPulse;
+
         ctx.beginPath();
         for (let i = 0; i <= radialRays; i++) {
-          const angle = (i * 2 * Math.PI) / radialRays;
-          const x = Math.cos(angle) * rad;
-          const y = Math.sin(angle) * rad;
-          if (i === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
+          const angle = (i * 2 * Math.PI) / radialRays + Math.sin(time * 0.3 + i) * 0.012;
+          const px = Math.cos(angle) * radius;
+          const py = Math.sin(angle) * radius;
+
+          if (i === 0) {
+            ctx.moveTo(px, py);
+          } else {
+            const prevAngle = ((i - 1) * 2 * Math.PI) / radialRays + Math.sin(time * 0.3 + (i - 1)) * 0.012;
+            const midAngle = (angle + prevAngle) / 2;
+            const midRadius = radius * 0.94; // slight inward tension curve
+            const cpx = Math.cos(midAngle) * midRadius;
+            const cpy = Math.sin(midAngle) * midRadius;
+            ctx.quadraticCurveTo(cpx, cpy, px, py);
+          }
         }
         ctx.closePath();
-        ctx.strokeStyle = r === 2 || r === 4 ? 'rgba(184, 138, 248, 0.28)' : 'rgba(126, 50, 217, 0.14)';
-        ctx.lineWidth = 0.9;
+
+        const isGlowRing = r === 2 || r === 4;
+        ctx.strokeStyle = isGlowRing ? 'rgba(184, 138, 248, 0.30)' : 'rgba(126, 50, 217, 0.16)';
+        ctx.lineWidth = isGlowRing ? 1.3 : 0.8;
         ctx.stroke();
+
+        // Glowing Bio-Electric Dew Sparks at Web Intersections
+        for (let i = 0; i < radialRays; i += 2) {
+          const angle = (i * 2 * Math.PI) / radialRays + Math.sin(time * 0.3 + i) * 0.012;
+          const px = Math.cos(angle) * radius;
+          const py = Math.sin(angle) * radius;
+
+          ctx.beginPath();
+          ctx.arc(px, py, 1.4 + Math.sin(time * 2.5 + i + r) * 0.7, 0, Math.PI * 2);
+          ctx.fillStyle = (i + r) % 3 === 0 ? '#FB7185' : '#B88AF8';
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = (i + r) % 3 === 0 ? '#FB7185' : '#9E5CF6';
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        }
       }
-
-      // Floating bio-electric node dots
-      nodes.forEach((n, idx) => {
-        const currentDist = (n.dist * Math.min(width, height)) + Math.sin(time * n.speed + idx) * 12;
-        const nx = Math.cos(n.angle + time * 0.04) * currentDist;
-        const ny = Math.sin(n.angle + time * 0.04) * currentDist;
-
-        ctx.beginPath();
-        ctx.arc(nx, ny, n.size, 0, Math.PI * 2);
-        ctx.fillStyle = n.color;
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = n.color;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      });
 
       ctx.restore();
-
-      // 2. Horizontal Smooth Sine Waves in Luminous Violet & Silk Glow
-      ctx.beginPath();
-      const waveY = centerY + Math.sin(time * 0.7) * 14;
-      const amplitude = 32;
-      const frequency = 0.0032;
-
-      for (let x = 0; x <= width; x += 10) {
-        const y = waveY + Math.sin(x * frequency + time) * amplitude;
-        if (x === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      }
-
-      ctx.strokeStyle = 'rgba(184, 138, 248, 0.55)';
-      ctx.lineWidth = 2.2;
-      ctx.shadowBlur = 16;
-      ctx.shadowColor = '#9E5CF6';
-      ctx.stroke();
-      ctx.shadowBlur = 0;
-
-      // Secondary Silk Wave in Neon Rose / Magenta
-      ctx.beginPath();
-      for (let x = 0; x <= width; x += 10) {
-        const y = waveY + Math.sin(x * frequency - time * 0.65 + Math.PI / 3) * (amplitude * 0.75);
-        if (x === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      }
-      ctx.strokeStyle = 'rgba(244, 63, 94, 0.35)';
-      ctx.lineWidth = 1.4;
-      ctx.stroke();
 
       animationFrameRef.current = requestAnimationFrame(render);
     };
@@ -302,7 +266,7 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
           }}
           className="fixed inset-0 z-[99999] flex flex-col justify-between items-center overflow-hidden bg-bg-base select-none px-6 py-8"
         >
-          {/* Canvas Web & Silk Wave Animation Background */}
+          {/* Canvas Spider-Man Web Motif Background */}
           <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
 
           {/* ========================================================================= */}
@@ -328,7 +292,7 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
                 <span className="hidden sm:inline">{soundEnabled ? 'SFX ON' : 'SFX OFF'}</span>
               </button>
 
-              {/* Skip Button Styled in Portfolio Glass Style */}
+              {/* Skip Button */}
               <button
                 onClick={handleExit}
                 className="group px-4 py-1.5 rounded-full border border-border-subtle bg-bg-surface/75 hover:bg-bg-raised/90 backdrop-blur-md text-ink-secondary hover:text-white hover:border-violet-bright transition-all text-xs font-mono flex items-center gap-1.5 cursor-pointer shadow-sm"
@@ -341,7 +305,7 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
           </header>
 
           {/* ========================================================================= */}
-          {/* CENTER HERO: PURE TYPOGRAPHY (NO BOX / CONTAINER)                         */}
+          {/* CENTER HERO: PURE TYPOGRAPHY OVER SPIDER-MAN WEB MOTIF                    */}
           {/* ========================================================================= */}
           <main className="relative z-20 flex flex-col items-center justify-center text-center my-auto max-w-4xl w-full px-4">
             
@@ -356,7 +320,7 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
               <span className="uppercase">D4 TEKNIK INFORMATIKA • POLINEMA</span>
             </motion.div>
 
-            {/* Massive Bold Main Name Typography matching Portfolio Gradient */}
+            {/* Massive Bold Main Name Typography */}
             <motion.h1
               initial={{ opacity: 0, scale: 0.96, y: 12 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
