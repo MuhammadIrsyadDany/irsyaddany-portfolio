@@ -6,9 +6,9 @@ export const AboutSection: React.FC = () => {
   return (
     <section
       id="about"
-      className="py-24 sm:py-32 border-t border-border-faint"
+      className="py-24 sm:py-32 border-t border-border-faint overflow-hidden w-full max-w-full"
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
 
         {/* Section Header */}
         <div className="mb-14 sm:mb-20">

@@ -94,9 +94,9 @@ export const ProjectsSection: React.FC = () => {
   return (
     <section
       id="projects"
-      className="py-24 sm:py-32 border-t border-border-faint"
+      className="py-24 sm:py-32 border-t border-border-faint overflow-hidden w-full max-w-full"
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
 
         {/* ======================================================
             SECTION HEADER
@@ -717,6 +717,7 @@ export const ProjectsSection: React.FC = () => {
             scrollbar-none
             cursor-grab
             active:cursor-grabbing
+            touch-pan-x
           "
         >
 

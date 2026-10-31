@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -6,12 +6,35 @@ export const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [navVisible, setNavVisible] = useState(true);
+  const [isScrollingUp, setIsScrollingUp] = useState(false);
+  const lastScrollYRef = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      const currentScrollY = window.scrollY;
+      const prevScrollY = lastScrollYRef.current;
+      const delta = currentScrollY - prevScrollY;
+
+      setScrolled(currentScrollY > 30);
+
+      // Intelligent scroll direction detection
+      if (Math.abs(delta) > 5) {
+        if (currentScrollY > 120 && delta > 0) {
+          // Scrolling DOWN: hide navbar to give immersive view
+          setNavVisible(false);
+          setIsScrollingUp(false);
+        } else if (delta < 0 || currentScrollY <= 120) {
+          // Scrolling UP: reveal navbar with spring animation
+          setNavVisible(true);
+          setIsScrollingUp(currentScrollY > 120);
+        }
+      }
+
+      lastScrollYRef.current = currentScrollY;
+
       const sections = ['home', 'about', 'skills', 'projects', 'experience', 'contact'];
-      const scrollPos = window.scrollY + 200;
+      const scrollPos = currentScrollY + 200;
       for (const section of sections) {
         const el = document.getElementById(section);
         if (el) {
@@ -44,12 +67,25 @@ export const Navbar: React.FC = () => {
     if (target) target.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const shouldShow = navVisible || mobileMenuOpen;
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-4 sm:py-5">
+    <motion.header
+      initial={{ y: 0, opacity: 1 }}
+      animate={{
+        y: shouldShow ? 0 : -90,
+        opacity: shouldShow ? 1 : 0,
+      }}
+      transition={{
+        duration: 0.35,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-3.5 sm:py-5 pointer-events-none"
+    >
       <div
-        className={`max-w-6xl mx-auto rounded-full px-5 sm:px-6 py-2.5 sm:py-3 transition-all duration-500 flex items-center justify-between ${
+        className={`pointer-events-auto max-w-6xl mx-auto rounded-full px-5 sm:px-6 py-2.5 sm:py-3 transition-all duration-300 flex items-center justify-between ${
           scrolled ? 'liquid-glass-nav' : 'bg-bg-base/30 backdrop-blur-sm border border-border-faint/50'
-        }`}
+        } ${isScrollingUp && scrolled ? 'ring-1 ring-violet-light/40 shadow-[0_4px_25px_rgba(158,92,246,0.22)]' : ''}`}
       >
         {/* Specular highlight overlay — only when scrolled (has glass material) */}
         {scrolled && <div className="liquid-glass-specular" aria-hidden="true" />}
@@ -172,6 +208,6 @@ export const Navbar: React.FC = () => {
           </div>
         </div>
       )}
-    </header>
+    </motion.header>
   );
 };

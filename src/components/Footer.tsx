@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { ArrowUp } from 'lucide-react';
 
 export const Footer: React.FC = () => {
@@ -7,8 +7,8 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="py-12 border-t border-border-faint bg-bg-base">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+    <footer className="py-12 border-t border-border-faint bg-bg-base overflow-hidden w-full max-w-full">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full flex flex-col sm:flex-row items-center justify-between gap-6">
 
         {/* Brand & Note */}
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 text-center sm:text-left">

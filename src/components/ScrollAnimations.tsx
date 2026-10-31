@@ -31,27 +31,27 @@ export const fadeDown: Variants = {
 };
 
 export const fadeLeft: Variants = {
-  hidden: { opacity: 0, x: -40 },
+  hidden: { opacity: 0, x: -16 },
   visible: (i: number = 0) => ({
     opacity: 1,
     x: 0,
     transition: {
       duration: 0.6,
       ease: [0.22, 1, 0.36, 1],
-      delay: i * 0.1,
+      delay: i * 0.08,
     },
   }),
 };
 
 export const fadeRight: Variants = {
-  hidden: { opacity: 0, x: 40 },
+  hidden: { opacity: 0, x: 16 },
   visible: (i: number = 0) => ({
     opacity: 1,
     x: 0,
     transition: {
       duration: 0.6,
       ease: [0.22, 1, 0.36, 1],
-      delay: i * 0.1,
+      delay: i * 0.08,
     },
   }),
 };

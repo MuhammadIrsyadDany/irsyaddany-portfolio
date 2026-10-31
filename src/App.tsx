@@ -12,6 +12,7 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { SpiderWelcome } from './components/SpiderWelcome';
 import { VinylPlayer } from './components/VinylPlayer';
+import { ScrollToTopButton } from './components/ScrollToTopButton';
 
 const AUDIO_SRC = '/audio/spider-theme.mp3';
 
@@ -110,7 +111,7 @@ export const App: React.FC = () => {
   }, [isMuted, fadeIn]);
 
   return (
-    <div className="min-h-screen bg-bg-base text-ink-primary relative selection:bg-violet-base/30 selection:text-violet-pale font-sans antialiased">
+    <div className="min-h-screen bg-bg-base text-ink-primary relative selection:bg-violet-base/30 selection:text-violet-pale font-sans antialiased overflow-x-hidden w-full max-w-full">
       <SpiderWelcome
         isOpen={showIntro}
         onClose={() => setShowIntro(false)}
@@ -119,7 +120,7 @@ export const App: React.FC = () => {
       <ScrollProgressBar />
       <BackgroundEffects />
       <Navbar />
-      <main className="relative z-10">
+      <main className="relative z-10 w-full max-w-full overflow-x-hidden">
         <HeroSection />
         <AboutSection />
         <SkillsSection />
@@ -129,6 +130,9 @@ export const App: React.FC = () => {
         <ContactSection />
       </main>
       <Footer />
+
+      {/* Floating Animated Scroll To Top Button */}
+      <ScrollToTopButton />
 
       {/* Vinyl Player — bottom-right, shown after welcome screen */}
       {!showIntro && (
