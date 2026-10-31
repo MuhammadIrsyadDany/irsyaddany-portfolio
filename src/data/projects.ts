@@ -55,9 +55,14 @@ export const projects: Project[] = [
     ],
     thumbnail: '/images/projects/hiradc/thumbnail.png',
     screenshots: [
-      { url: '/images/projects/hiradc/thumbnail.png', caption: 'HIRADC Audit Control Center' },
-      { url: '/images/projects/hiradc/dashboard.png', caption: 'Live Audit Monitoring Dashboard' },
-      { url: '/images/projects/hiradc/report.png', caption: 'Hazard Categorization & Risk Matrix' }
+      { url: '/images/projects/hiradc/1.png', caption: 'HIRADC & Live Audit — Portal Login SHIELD Safety Hub PLN NP UP Tanjung Awar-Awar' },
+      { url: '/images/projects/hiradc/2.png', caption: 'HIRADC & Live Audit — Dashboard Utama Admin HSSE & Statistik K3' },
+      { url: '/images/projects/hiradc/3.png', caption: 'HIRADC & Live Audit — Database Dokumen HIRADC & Aspek Bahaya Area' },
+      { url: '/images/projects/hiradc/4.png', caption: 'HIRADC & Live Audit — Monitoring Program Kerja Pengendalian Risiko' },
+      { url: '/images/projects/hiradc/5.png', caption: 'HIRADC & Live Audit — Manajemen Live Audit / WIP (Work In Practise)' },
+      { url: '/images/projects/hiradc/6.png', caption: 'HIRADC & Live Audit — Pelaporan Temuan K3 (Unsafe Action / Condition)' },
+      { url: '/images/projects/hiradc/7.png', caption: 'HIRADC & Live Audit — Master Checklist Items Pemeriksaan Lapangan' },
+      { url: '/images/projects/hiradc/8.png', caption: 'HIRADC & Live Audit — Manajemen User & Hak Akses Multi-Level (RBAC)' }
     ]
   },
   {
