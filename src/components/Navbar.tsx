@@ -33,7 +33,7 @@ export const Navbar: React.FC = () => {
 
       lastScrollYRef.current = currentScrollY;
 
-      const sections = ['home', 'about', 'skills', 'projects', 'experience', 'contact'];
+      const sections = ['home', 'about', 'skills', 'projects', 'experience', 'recognition', 'contact'];
       const scrollPos = currentScrollY + 200;
       for (const section of sections) {
         const el = document.getElementById(section);
@@ -57,6 +57,7 @@ export const Navbar: React.FC = () => {
     { label: 'Skills', href: '#skills', id: 'skills' },
     { label: 'Projects', href: '#projects', id: 'projects' },
     { label: 'Experience', href: '#experience', id: 'experience' },
+    { label: 'Certificates', href: '#recognition', id: 'recognition' },
     { label: 'Contact', href: '#contact', id: 'contact' },
   ];
 

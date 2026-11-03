@@ -9,7 +9,9 @@ export const certifications: Certification[] = [
     certificateImage: '/images/certifications/lsp-programming-page-1.png',
     certificateImages: [
       '/images/certifications/lsp-programming-page-1.png',
-      '/images/certifications/lsp-programming-page-2.png'
+      '/images/certifications/lsp-programming-page-2.png',
+      '/images/certifications/lsp-feedback-page-1.png',
+      '/images/certifications/lsp-polinema-fr-ak-03-page-2.png'
     ],
     pdfUrl: '/documents/certificates/lsp-polinema-fr-ak-02.pdf',
     category: 'Sertifikasi Profesi',

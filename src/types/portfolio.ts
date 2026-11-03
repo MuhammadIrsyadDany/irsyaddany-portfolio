@@ -59,6 +59,8 @@ export interface Achievement {
   description: string;
   metrics?: { label: string; value: string }[];
   image?: string;
+  pdfUrl?: string;
+  badge?: string;
 }
 
 export interface Certification {

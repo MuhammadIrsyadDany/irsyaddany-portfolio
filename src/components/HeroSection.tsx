@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { ArrowUpRight, MapPin, GraduationCap, Phone, Mail, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowUpRight, MapPin, GraduationCap, Phone, Mail, ChevronLeft, ChevronRight, FileText } from 'lucide-react';
 import { personalInfo } from '../data/personal';
 import { GithubIcon, LinkedinIcon } from './SocialIcons';
 
@@ -134,6 +134,15 @@ export const HeroSection: React.FC = () => {
               <a href="#projects" className="btn-primary group">
                 <span>Lihat Proyek Utama</span>
                 <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </a>
+              <a
+                href="/documents/CV_Muhammad_Irsyad_Dany.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-outline group flex items-center gap-2 hover:border-violet-light/50"
+              >
+                <FileText className="w-4 h-4 text-violet-light group-hover:scale-110 transition-transform" />
+                <span>Unduh CV (ATS)</span>
               </a>
               <a href="#contact" className="btn-outline">
                 <span>Hubungi Saya</span>

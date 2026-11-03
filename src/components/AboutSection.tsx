@@ -1,5 +1,5 @@
 import React from 'react';
-import { Award, BookOpen, Briefcase } from 'lucide-react';
+import { Award, BookOpen, Briefcase, FileText, ArrowUpRight } from 'lucide-react';
 import { Animate, StaggerGroup, AnimatedLine, fadeUp, fadeLeft, fadeRight, scaleIn, blurIn } from './ScrollAnimations';
 
 export const AboutSection: React.FC = () => {
@@ -224,6 +224,20 @@ export const AboutSection: React.FC = () => {
             </p>
           </div>
         </div>
+
+        {/* Document Action */}
+        <div className="mt-3.5 pt-3 border-t border-border-faint/60 flex items-center justify-between">
+          <a
+            href="/documents/Transkrip_Nilai_Muhammad_Irsyad_Dany.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-2xs font-semibold text-violet-light hover:text-ink-primary transition-colors"
+          >
+            <FileText className="w-3.5 h-3.5 text-violet-light" />
+            <span>Lihat Transkrip Nilai Resmi</span>
+            <ArrowUpRight className="w-3 h-3" />
+          </a>
+        </div>
       </div>
     </div>
     </Animate>
@@ -314,6 +328,18 @@ export const AboutSection: React.FC = () => {
             100%
           </p>
         </div>
+
+        {/* Document Action */}
+        <div className="mt-3.5 pt-3 border-t border-border-faint/60 flex items-center justify-between">
+          <a
+            href="#recognition"
+            className="inline-flex items-center gap-1.5 text-2xs font-semibold text-violet-light hover:text-ink-primary transition-colors"
+          >
+            <FileText className="w-3.5 h-3.5 text-violet-light" />
+            <span>Lihat Bukti Validasi Capstone</span>
+            <ArrowUpRight className="w-3 h-3" />
+          </a>
+        </div>
       </div>
     </div>
     </Animate>
@@ -403,6 +429,20 @@ export const AboutSection: React.FC = () => {
           <p className="text-2xl font-black tracking-tight text-violet-light tabular-nums">
             10+ <span className="text-xs font-medium text-ink-muted tracking-normal">Fitur</span>
           </p>
+        </div>
+
+        {/* Document Action */}
+        <div className="mt-3.5 pt-3 border-t border-border-faint/60 flex items-center justify-between">
+          <a
+            href="/documents/certificates/sertifikat-magang.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-2xs font-semibold text-violet-light hover:text-ink-primary transition-colors"
+          >
+            <FileText className="w-3.5 h-3.5 text-violet-light" />
+            <span>Lihat Sertifikat Magang</span>
+            <ArrowUpRight className="w-3 h-3" />
+          </a>
         </div>
       </div>
     </div>

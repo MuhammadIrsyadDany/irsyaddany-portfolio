@@ -21,6 +21,25 @@ export const Footer: React.FC = () => {
           </p>
         </div>
 
+        {/* Navigation links & CV in Footer */}
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs text-ink-muted">
+          <a href="#about" className="hover:text-ink-primary transition-colors">About</a>
+          <a href="#skills" className="hover:text-ink-primary transition-colors">Skills</a>
+          <a href="#projects" className="hover:text-ink-primary transition-colors">Projects</a>
+          <a href="#experience" className="hover:text-ink-primary transition-colors">Experience</a>
+          <a href="#recognition" className="hover:text-ink-primary transition-colors">Certificates</a>
+          <a href="#contact" className="hover:text-ink-primary transition-colors">Contact</a>
+          <span className="text-border-soft hidden sm:inline">•</span>
+          <a
+            href="/documents/CV_Muhammad_Irsyad_Dany.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-violet-light hover:text-violet-base font-semibold transition-colors"
+          >
+            Download CV
+          </a>
+        </div>
+
         {/* Back to top & copyright */}
         <div className="flex items-center gap-6 text-xs text-ink-muted tabular-nums">
           <span>&copy; 2026 Muhammad Irsyad Dany</span>
