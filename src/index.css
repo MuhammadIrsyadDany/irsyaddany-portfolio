@@ -235,89 +235,46 @@
   }
 
   /* ============================================================
-     HERO PHOTO FRAME - CREATIVE SHAPE & ORBIT DECORATIONS
+     HERO PHOTO FRAME - ARCHITECTURAL PORTAL & ORBIT SYSTEM
      ============================================================ */
 
-  /* Creative rounded shape for the outer frame */
+  /* Asymmetric futuristic portal curvature */
   .hero-photo-frame {
-    border-radius: 30% 70% 66% 34% / 40% 30% 70% 60%;
-    overflow: visible;
+    border-radius: 46px 18px 46px 18px;
+    transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+                border-radius 600ms cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 400ms ease,
+                border-color 400ms ease;
   }
 
   .hero-photo-frame:hover {
-    border-radius: 34% 66% 70% 30% / 36% 34% 66% 64%;
+    border-radius: 22px 46px 22px 46px;
+    box-shadow:
+      inset 0 1.5px 0 rgba(228, 212, 254, 0.30),
+      inset 0 -1.5px 0 rgba(0, 0, 0, 0.50),
+      0 28px 60px -8px rgba(0, 0, 0, 0.8),
+      0 0 50px -4px rgba(158, 92, 246, 0.38);
   }
 
-  /* Inner photo clip: organic blob mask */
+  /* Inner photo clip: matching architectural geometry */
   .hero-photo-clip {
-    border-radius: 28% 72% 64% 36% / 38% 28% 72% 62%;
-    transition: border-radius 600ms ease;
+    border-radius: 38px 12px 38px 12px;
+    transition: border-radius 600ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .hero-photo-frame:hover .hero-photo-clip {
-    border-radius: 32% 68% 68% 32% / 34% 32% 68% 66%;
+    border-radius: 16px 38px 16px 38px;
   }
 
-  /* Orbit ring decorations */
-  .hero-orbit-ring {
-    border: 1px solid transparent;
-    transition: opacity 400ms ease;
+  /* SVG Orbital Rotations */
+  .hero-svg-orbit-outer {
+    animation: hero-orbit-spin 24s linear infinite;
+    transform-origin: center center;
   }
 
-  .hero-orbit-ring--outer {
-    border-image: linear-gradient(
-      135deg,
-      rgba(158, 92, 246, 0.40) 0%,
-      rgba(126, 50, 217, 0.08) 40%,
-      rgba(158, 92, 246, 0.32) 70%,
-      rgba(126, 50, 217, 0.05) 100%
-    ) 1;
-    animation: hero-orbit-spin 18s linear infinite;
-  }
-
-  .hero-orbit-ring--inner {
-    border-image: linear-gradient(
-      -45deg,
-      rgba(184, 138, 248, 0.25) 0%,
-      rgba(158, 92, 246, 0.04) 50%,
-      rgba(184, 138, 248, 0.20) 100%
-    ) 1;
-    animation: hero-orbit-spin 14s linear infinite reverse;
-  }
-
-  /* Floating accent dots on the orbit */
-  .hero-orbit-dot {
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: rgba(158, 92, 246, 0.70);
-    box-shadow: 0 0 12px 3px rgba(158, 92, 246, 0.40);
-    animation: hero-dot-pulse 3s ease-in-out infinite;
-  }
-
-  .hero-orbit-dot--1 {
-    top: -6px;
-    left: 30%;
-    animation-delay: 0s;
-  }
-
-  .hero-orbit-dot--2 {
-    bottom: 12%;
-    right: -8px;
-    animation-delay: 1s;
-    width: 5px;
-    height: 5px;
-  }
-
-  .hero-orbit-dot--3 {
-    top: 45%;
-    left: -6px;
-    animation-delay: 2s;
-    width: 4px;
-    height: 4px;
-    background: rgba(184, 138, 248, 0.55);
-    box-shadow: 0 0 10px 2px rgba(184, 138, 248, 0.30);
+  .hero-svg-orbit-inner {
+    animation: hero-orbit-spin 16s linear infinite reverse;
+    transform-origin: center center;
   }
 
   @keyframes hero-orbit-spin {
@@ -325,9 +282,13 @@
     to   { transform: rotate(360deg); }
   }
 
-  @keyframes hero-dot-pulse {
-    0%, 100% { opacity: 0.5; transform: scale(1); }
-    50%      { opacity: 1;   transform: scale(1.6); }
+  @keyframes hero-pulse-glow {
+    0%, 100% { opacity: 0.45; transform: scale(1); }
+    50%      { opacity: 0.85; transform: scale(1.04); }
+  }
+
+  .hero-ambient-glow {
+    animation: hero-pulse-glow 5s ease-in-out infinite;
   }
 
   /* Browser fallback */

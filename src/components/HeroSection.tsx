@@ -190,6 +190,7 @@ export const HeroSection: React.FC = () => {
                   rel="noopener noreferrer"
                   className="hover:text-violet-light transition-colors p-1"
                   aria-label="GitHub"
+                  title="Kunjungi GitHub Muhammad Irsyad Dany"
                 >
                   <GithubIcon className="w-4 h-4" />
                 </a>
@@ -200,6 +201,7 @@ export const HeroSection: React.FC = () => {
                   rel="noopener noreferrer"
                   className="hover:text-violet-light transition-colors p-1"
                   aria-label="LinkedIn"
+                  title="Kunjungi LinkedIn Muhammad Irsyad Dany"
                 >
                   <LinkedinIcon className="w-4 h-4" />
                 </a>
@@ -210,6 +212,7 @@ export const HeroSection: React.FC = () => {
                   rel="noopener noreferrer"
                   className="hover:text-violet-light transition-colors p-1"
                   aria-label="Instagram"
+                  title="Kunjungi Instagram @rsydanyy"
                 >
                   <InstagramIcon className="w-4 h-4" />
                 </a>
@@ -218,6 +221,7 @@ export const HeroSection: React.FC = () => {
                   href={`mailto:${personalInfo.email}`}
                   className="hover:text-violet-light transition-colors p-1"
                   aria-label="Email"
+                  title="Kirim Email ke Muhammad Irsyad Dany"
                 >
                   <Mail className="w-4 h-4" />
                 </a>
@@ -226,26 +230,99 @@ export const HeroSection: React.FC = () => {
 
             </div>
 
-            {/* Right: Creative Photo Frame with Carousel */}
+            {/* Right: Architectural Portal Photo Frame with SVG Orbit & Slide Controls */}
             <div
               className={`lg:col-span-5 flex justify-center lg:justify-end transition-all duration-700 delay-300 ease-out ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                 }`}
             >
               <div className="relative w-full max-w-sm sm:max-w-md">
 
-                {/* Decorative Orbit Rings */}
-                <div className="absolute inset-0 hero-orbit-container pointer-events-none" aria-hidden="true">
-                  {/* Outer rotating ring */}
-                  <div className="absolute -inset-4 hero-orbit-ring hero-orbit-ring--outer rounded-[2rem]" />
-                  {/* Inner counter-rotating ring */}
-                  <div className="absolute -inset-1 hero-orbit-ring hero-orbit-ring--inner rounded-[1.5rem]" />
-                  {/* Floating accent dots */}
-                  <div className="hero-orbit-dot hero-orbit-dot--1" />
-                  <div className="hero-orbit-dot hero-orbit-dot--2" />
-                  <div className="hero-orbit-dot hero-orbit-dot--3" />
+                {/* Ambient Radial Backlight */}
+                <div
+                  className="absolute -inset-6 hero-ambient-glow bg-gradient-to-tr from-violet-600/30 via-fuchsia-600/15 to-cyan-500/20 rounded-[56px_24px_56px_24px] blur-2xl pointer-events-none"
+                  aria-hidden="true"
+                />
+
+                {/* SVG Precision Orbit System */}
+                <svg
+                  className="absolute -inset-7 w-[calc(100%+3.5rem)] h-[calc(100%+3.5rem)] pointer-events-none z-0"
+                  viewBox="0 0 460 560"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
+                  <defs>
+                    <linearGradient id="orbitGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#9E5CF6" stopOpacity="0.6" />
+                      <stop offset="50%" stopColor="#7E32D9" stopOpacity="0.1" />
+                      <stop offset="100%" stopColor="#38BDF8" stopOpacity="0.5" />
+                    </linearGradient>
+                    <linearGradient id="orbitGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#B88AF8" stopOpacity="0.4" />
+                      <stop offset="50%" stopColor="#9E5CF6" stopOpacity="0.05" />
+                      <stop offset="100%" stopColor="#F472B6" stopOpacity="0.3" />
+                    </linearGradient>
+                    <filter id="glowNode" x="-50%" y="-50%" width="200%" height="200%">
+                      <feGaussianBlur stdDeviation="3" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
+
+                  {/* Outer Orbit Path */}
+                  <g className="hero-svg-orbit-outer">
+                    <rect
+                      x="16"
+                      y="16"
+                      width="428"
+                      height="528"
+                      rx="64"
+                      ry="32"
+                      stroke="url(#orbitGrad1)"
+                      strokeWidth="1.2"
+                      strokeDasharray="10 16"
+                      fill="none"
+                    />
+                    {/* Orbiting Celestial Node */}
+                    <circle cx="230" cy="16" r="3.5" fill="#B88AF8" filter="url(#glowNode)" />
+                    <circle cx="230" cy="544" r="3" fill="#38BDF8" filter="url(#glowNode)" />
+                  </g>
+
+                  {/* Inner Counter Orbit Path */}
+                  <g className="hero-svg-orbit-inner">
+                    <rect
+                      x="28"
+                      y="28"
+                      width="404"
+                      height="504"
+                      rx="48"
+                      ry="24"
+                      stroke="url(#orbitGrad2)"
+                      strokeWidth="1"
+                      strokeDasharray="6 20"
+                      fill="none"
+                    />
+                    <circle cx="28" cy="280" r="2.5" fill="#FB7185" filter="url(#glowNode)" />
+                    <circle cx="432" cy="280" r="2.5" fill="#9E5CF6" filter="url(#glowNode)" />
+                  </g>
+                </svg>
+
+                {/* Corner Precision HUD Tech Markers */}
+                <div className="absolute -top-1.5 -left-1.5 w-3.5 h-3.5 border-t-2 border-l-2 border-violet-light/60 pointer-events-none z-30" />
+                <div className="absolute -top-1.5 -right-1.5 w-3.5 h-3.5 border-t-2 border-r-2 border-violet-light/60 pointer-events-none z-30" />
+                <div className="absolute -bottom-1.5 -left-1.5 w-3.5 h-3.5 border-b-2 border-l-2 border-violet-light/60 pointer-events-none z-30" />
+                <div className="absolute -bottom-1.5 -right-1.5 w-3.5 h-3.5 border-b-2 border-r-2 border-violet-light/60 pointer-events-none z-30" />
+
+                {/* Floating Top Academic Pill */}
+                <div className="absolute -top-3.5 left-4 z-30 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-bg-surface/90 backdrop-blur-md border border-violet-light/35 shadow-[0_4px_16px_rgba(158,92,246,0.3)] text-2xs font-semibold text-ink-primary">
+                  <GraduationCap className="w-3.5 h-3.5 text-violet-light" />
+                  <span>D4 Teknik Informatika</span>
+                  <span className="text-violet-light font-mono font-bold">IPK 3.62</span>
                 </div>
 
-                {/* Main Glass Frame */}
+                {/* Main Glass Photo Frame with Architectural Portal Curvature */}
                 <div
                   ref={frameRef}
                   className="liquid-glass-frame hero-photo-frame p-3 cursor-default relative z-10"
@@ -253,7 +330,7 @@ export const HeroSection: React.FC = () => {
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={handleMouseLeave}
                 >
-                  {/* Photo Container with Creative Shape Mask */}
+                  {/* Inner Photo Container with Matching Geometry */}
                   <div className="relative z-10 aspect-[4/5] hero-photo-clip overflow-hidden bg-bg-surface border border-border-subtle bg-grid-fine group/slider select-none">
 
                     {/* Sliding Track */}
@@ -279,21 +356,28 @@ export const HeroSection: React.FC = () => {
                       ))}
                     </div>
 
-                    {/* Gradient Overlays for Elegance & Depth */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-bg-base/90 via-transparent to-bg-base/30 pointer-events-none" />
+                    {/* Gradient Overlays for Elegance, Contrast & Readability */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-bg-base/95 via-transparent to-bg-base/30 pointer-events-none" />
 
-                    {/* Subtle Floating Navigation Arrows (Visible on Hover) */}
+                    {/* Slide Counter (Top-Right) */}
+                    <div className="absolute top-3.5 right-3.5 z-20 px-2 py-0.5 rounded-full bg-bg-base/80 backdrop-blur-md border border-border-subtle text-2xs font-mono text-ink-muted">
+                      <span className="text-violet-light font-bold">0{activePhoto + 1}</span>
+                      <span className="text-ink-faint mx-1">/</span>
+                      <span>0{profilePhotos.length}</span>
+                    </div>
+
+                    {/* Floating Navigation Arrows (Visible on Hover) */}
                     <div className="absolute inset-x-2.5 top-1/2 -translate-y-1/2 flex items-center justify-between z-20 pointer-events-none opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300">
                       <button
                         onClick={prevPhoto}
-                        className="pointer-events-auto w-8 h-8 rounded-full bg-bg-base/75 backdrop-blur-md border border-border-subtle text-ink-secondary hover:text-ink-primary hover:border-violet-light/60 hover:bg-bg-elevated transition-all flex items-center justify-center shadow-lg active:scale-95"
+                        className="pointer-events-auto w-8 h-8 rounded-full bg-bg-base/80 backdrop-blur-md border border-border-subtle text-ink-secondary hover:text-ink-primary hover:border-violet-light/60 hover:bg-bg-elevated transition-all flex items-center justify-center shadow-lg active:scale-95"
                         aria-label="Foto Sebelumnya"
                       >
                         <ChevronLeft className="w-4 h-4" />
                       </button>
                       <button
                         onClick={nextPhoto}
-                        className="pointer-events-auto w-8 h-8 rounded-full bg-bg-base/75 backdrop-blur-md border border-border-subtle text-ink-secondary hover:text-ink-primary hover:border-violet-light/60 hover:bg-bg-elevated transition-all flex items-center justify-center shadow-lg active:scale-95"
+                        className="pointer-events-auto w-8 h-8 rounded-full bg-bg-base/80 backdrop-blur-md border border-border-subtle text-ink-secondary hover:text-ink-primary hover:border-violet-light/60 hover:bg-bg-elevated transition-all flex items-center justify-center shadow-lg active:scale-95"
                         aria-label="Foto Selanjutnya"
                       >
                         <ChevronRight className="w-4 h-4" />
@@ -301,34 +385,35 @@ export const HeroSection: React.FC = () => {
                     </div>
 
                     {/* Bottom Area: Indicator Dots & Academic Badge */}
-                    <div className="absolute bottom-3 left-3 right-3 z-20 space-y-2.5">
+                    <div className="absolute bottom-3 left-3 right-3 z-20 space-y-2">
 
                       {/* Sliding Indicator Dots */}
-                      <div className="flex items-center justify-center gap-1.5 py-1">
+                      <div className="flex items-center justify-center gap-1.5">
                         {profilePhotos.map((_, index) => (
                           <button
                             key={index}
                             onClick={() => setActivePhoto(index)}
                             className={`h-1.5 rounded-full transition-all duration-300 ${index === activePhoto
                               ? 'w-6 bg-violet-light shadow-[0_0_10px_rgba(158,92,246,0.6)]'
-                              : 'w-1.5 bg-white/25 hover:bg-white/50'
+                              : 'w-1.5 bg-white/30 hover:bg-white/60'
                               }`}
                             aria-label={`Slide ${index + 1}`}
                           />
                         ))}
                       </div>
 
-                      {/* Academic Info Badge */}
-                      <div className="rounded-xl p-3 flex items-center justify-between bg-bg-base/85 backdrop-blur-md border border-border-subtle shadow-lg">
+                      {/* Integrated Glass Academic Info Badge */}
+                      <div className="rounded-xl px-3 py-2 sm:px-3.5 sm:py-2.5 flex items-center justify-between bg-bg-base/90 backdrop-blur-md border border-border-subtle shadow-xl">
                         <div>
-                          <p className="text-2xs uppercase tracking-wider font-semibold text-violet-light">
-                            Politeknik Negeri Malang
+                          <p className="text-2xs font-bold text-ink-primary flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                            <span>Politeknik Negeri Malang</span>
                           </p>
+                          <p className="text-2xs text-ink-muted">S.Tr.Kom • Web Developer</p>
                         </div>
-                        <div className="flex items-center gap-1.5 text-2xs text-ink-muted">
-                          <span className="w-2 h-2 rounded-full bg-violet-base animate-pulse" />
-                          <span>Web Developer</span>
-                        </div>
+                        <span className="text-2xs font-mono font-semibold px-2 py-0.5 rounded-full bg-violet-dim text-violet-light border border-violet-light/30">
+                          Polinema
+                        </span>
                       </div>
 
                     </div>

@@ -48,6 +48,7 @@ export const Footer: React.FC = () => {
               rel="noopener noreferrer"
               className="hover:text-violet-light transition-colors p-0.5"
               aria-label="GitHub"
+              title="GitHub Muhammad Irsyad Dany"
             >
               <GithubIcon className="w-3.5 h-3.5" />
             </a>
@@ -57,6 +58,7 @@ export const Footer: React.FC = () => {
               rel="noopener noreferrer"
               className="hover:text-violet-light transition-colors p-0.5"
               aria-label="LinkedIn"
+              title="LinkedIn Muhammad Irsyad Dany"
             >
               <LinkedinIcon className="w-3.5 h-3.5" />
             </a>
@@ -66,6 +68,7 @@ export const Footer: React.FC = () => {
               rel="noopener noreferrer"
               className="hover:text-violet-light transition-colors p-0.5"
               aria-label="Instagram"
+              title="Instagram @rsydanyy"
             >
               <InstagramIcon className="w-3.5 h-3.5" />
             </a>
