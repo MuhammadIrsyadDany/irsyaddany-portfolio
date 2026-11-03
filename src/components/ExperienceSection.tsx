@@ -4,6 +4,7 @@ import {
   MapPin,
   CheckCircle2,
   ArrowUpRight,
+  FileText,
 } from 'lucide-react';
 import { experiences } from '../data/experience';
 import { Animate, fadeUp, blurIn, fadeLeft } from './ScrollAnimations';
@@ -346,6 +347,25 @@ export const ExperienceSection: React.FC = () => {
                     ))}
 
                   </div>
+
+                  {/* Documentation / Certificate preview if available */}
+                  {exp.documentation && exp.documentation.length > 0 && (
+                    <div className="mt-4 pt-3 border-t border-border-faint flex flex-wrap gap-2">
+                      {exp.documentation.map((doc, dIdx) => (
+                        <a
+                          key={dIdx}
+                          href={doc.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-2xs font-semibold bg-violet-dim text-violet-light border border-violet-light/35 hover:bg-violet-dim/80 hover:border-violet-light/60 transition-all shadow-sm"
+                        >
+                          <FileText className="w-3 h-3 text-violet-light" />
+                          <span>{doc.caption}</span>
+                          <ArrowUpRight className="w-3 h-3" />
+                        </a>
+                      ))}
+                    </div>
+                  )}
 
                   {/* Bottom Accent */}
                   <div

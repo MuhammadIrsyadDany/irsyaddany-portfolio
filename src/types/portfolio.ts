@@ -68,4 +68,9 @@ export interface Certification {
   date: string;
   credentialUrl?: string;
   certificateImage?: string;
+  certificateImages?: string[];
+  pdfUrl?: string;
+  category?: string;
+  badge?: string;
+  description?: string;
 }

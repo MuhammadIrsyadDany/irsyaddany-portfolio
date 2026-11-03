@@ -15,8 +15,10 @@ export const experiences: Experience[] = [
       'Constructed Use Case and Activity Diagrams directly aligning technical system architecture with stakeholder requirements.'
     ],
     documentation: [
-      // Prepared for progressive upload of internship documentation
-      // { url: '/images/experience/utero/woreca-ui.png', caption: 'WORECA Mobile UI Implementation' }
+      {
+        url: '/images/certifications/sertifikat-magang-utero.png',
+        caption: 'Sertifikat Magang Resmi Front-End Mobile Developer - PT Utero Kreatif Indonesia'
+      }
     ]
   },
   {
