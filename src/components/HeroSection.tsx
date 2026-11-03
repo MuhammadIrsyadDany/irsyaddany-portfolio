@@ -5,19 +5,23 @@ import { GithubIcon, LinkedinIcon } from './SocialIcons';
 
 const profilePhotos = [
   {
-    src: '/images/profile/profile-4.png',
+    src: '/images/profile/irsyad-dany.jpg?v=2',
+    alt: 'Muhammad Irsyad Dany, S.Tr.Kom - Portrait Wisuda',
+  },
+  {
+    src: '/images/profile/profile-4.jpg?v=2',
     alt: 'Muhammad Irsyad Dany - Formal Portrait Close-up',
   },
   {
-    src: '/images/profile/profile-3.png',
+    src: '/images/profile/profile-3.jpg?v=2',
     alt: 'Muhammad Irsyad Dany - Studio Seated Pose',
   },
   {
-    src: '/images/profile/profile-2.png',
+    src: '/images/profile/profile-2.jpg?v=2',
     alt: 'Muhammad Irsyad Dany - Full Formal Suit',
   },
   {
-    src: '/images/profile/profile-1.png',
+    src: '/images/profile/profile-1.png?v=2',
     alt: 'Muhammad Irsyad Dany - Classic Vest & Tie',
   },
 ];
