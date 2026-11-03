@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { ArrowUpRight, MapPin, GraduationCap, Phone, Mail, ChevronLeft, ChevronRight, FileText } from 'lucide-react';
 import { personalInfo } from '../data/personal';
-import { GithubIcon, LinkedinIcon } from './SocialIcons';
+import { GithubIcon, LinkedinIcon, InstagramIcon } from './SocialIcons';
 
 const profilePhotos = [
   {
@@ -205,6 +205,16 @@ export const HeroSection: React.FC = () => {
                 </a>
 
                 <a
+                  href={personalInfo.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-violet-light transition-colors p-1"
+                  aria-label="Instagram"
+                >
+                  <InstagramIcon className="w-4 h-4" />
+                </a>
+
+                <a
                   href={`mailto:${personalInfo.email}`}
                   className="hover:text-violet-light transition-colors p-1"
                   aria-label="Email"
@@ -216,23 +226,37 @@ export const HeroSection: React.FC = () => {
 
             </div>
 
-            {/* Right: Selective Liquid Glass Photo Frame with Automatic Sliding Carousel */}
+            {/* Right: Creative Photo Frame with Carousel */}
             <div
               className={`lg:col-span-5 flex justify-center lg:justify-end transition-all duration-700 delay-300 ease-out ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                 }`}
             >
               <div className="relative w-full max-w-sm sm:max-w-md">
+
+                {/* Decorative Orbit Rings */}
+                <div className="absolute inset-0 hero-orbit-container pointer-events-none" aria-hidden="true">
+                  {/* Outer rotating ring */}
+                  <div className="absolute -inset-4 hero-orbit-ring hero-orbit-ring--outer rounded-[2rem]" />
+                  {/* Inner counter-rotating ring */}
+                  <div className="absolute -inset-1 hero-orbit-ring hero-orbit-ring--inner rounded-[1.5rem]" />
+                  {/* Floating accent dots */}
+                  <div className="hero-orbit-dot hero-orbit-dot--1" />
+                  <div className="hero-orbit-dot hero-orbit-dot--2" />
+                  <div className="hero-orbit-dot hero-orbit-dot--3" />
+                </div>
+
+                {/* Main Glass Frame */}
                 <div
                   ref={frameRef}
-                  className="liquid-glass-frame rounded-3xl p-3 cursor-default"
+                  className="liquid-glass-frame hero-photo-frame p-3 cursor-default relative z-10"
                   onMouseMove={handleMouseMove}
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={handleMouseLeave}
                 >
-                  {/* Photo Container with 4/5 Aspect Ratio & Horizontal Sliding Track */}
-                  <div className="relative z-10 aspect-[4/5] rounded-2xl overflow-hidden bg-bg-surface border border-border-subtle bg-grid-fine group/slider select-none">
+                  {/* Photo Container with Creative Shape Mask */}
+                  <div className="relative z-10 aspect-[4/5] hero-photo-clip overflow-hidden bg-bg-surface border border-border-subtle bg-grid-fine group/slider select-none">
 
-                    {/* Sliding Track (geser otomatis secara horizontal) */}
+                    {/* Sliding Track */}
                     <div
                       className="flex h-full w-full transition-transform duration-700 ease-out"
                       style={{
@@ -276,10 +300,10 @@ export const HeroSection: React.FC = () => {
                       </button>
                     </div>
 
-                    {/* Bottom Area: Minimalist Indicator Dots & Academic Badge */}
+                    {/* Bottom Area: Indicator Dots & Academic Badge */}
                     <div className="absolute bottom-3 left-3 right-3 z-20 space-y-2.5">
 
-                      {/* Minimalist Sliding Indicator Dots (Tanpa teks label) */}
+                      {/* Sliding Indicator Dots */}
                       <div className="flex items-center justify-center gap-1.5 py-1">
                         {profilePhotos.map((_, index) => (
                           <button

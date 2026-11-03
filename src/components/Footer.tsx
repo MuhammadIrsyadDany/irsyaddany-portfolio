@@ -1,5 +1,7 @@
 import React from 'react';
 import { ArrowUp } from 'lucide-react';
+import { GithubIcon, LinkedinIcon, InstagramIcon } from './SocialIcons';
+import { personalInfo } from '../data/personal';
 
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
@@ -38,6 +40,36 @@ export const Footer: React.FC = () => {
           >
             Download CV
           </a>
+          <span className="text-border-soft hidden sm:inline">•</span>
+          <div className="flex items-center gap-2.5 text-ink-secondary">
+            <a
+              href={personalInfo.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-violet-light transition-colors p-0.5"
+              aria-label="GitHub"
+            >
+              <GithubIcon className="w-3.5 h-3.5" />
+            </a>
+            <a
+              href={personalInfo.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-violet-light transition-colors p-0.5"
+              aria-label="LinkedIn"
+            >
+              <LinkedinIcon className="w-3.5 h-3.5" />
+            </a>
+            <a
+              href={personalInfo.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-violet-light transition-colors p-0.5"
+              aria-label="Instagram"
+            >
+              <InstagramIcon className="w-3.5 h-3.5" />
+            </a>
+          </div>
         </div>
 
         {/* Back to top & copyright */}

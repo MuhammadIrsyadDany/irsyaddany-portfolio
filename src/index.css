@@ -234,6 +234,102 @@
       0 0 44px -6px rgba(158, 92, 246, 0.30);
   }
 
+  /* ============================================================
+     HERO PHOTO FRAME - CREATIVE SHAPE & ORBIT DECORATIONS
+     ============================================================ */
+
+  /* Creative rounded shape for the outer frame */
+  .hero-photo-frame {
+    border-radius: 30% 70% 66% 34% / 40% 30% 70% 60%;
+    overflow: visible;
+  }
+
+  .hero-photo-frame:hover {
+    border-radius: 34% 66% 70% 30% / 36% 34% 66% 64%;
+  }
+
+  /* Inner photo clip: organic blob mask */
+  .hero-photo-clip {
+    border-radius: 28% 72% 64% 36% / 38% 28% 72% 62%;
+    transition: border-radius 600ms ease;
+  }
+
+  .hero-photo-frame:hover .hero-photo-clip {
+    border-radius: 32% 68% 68% 32% / 34% 32% 68% 66%;
+  }
+
+  /* Orbit ring decorations */
+  .hero-orbit-ring {
+    border: 1px solid transparent;
+    transition: opacity 400ms ease;
+  }
+
+  .hero-orbit-ring--outer {
+    border-image: linear-gradient(
+      135deg,
+      rgba(158, 92, 246, 0.40) 0%,
+      rgba(126, 50, 217, 0.08) 40%,
+      rgba(158, 92, 246, 0.32) 70%,
+      rgba(126, 50, 217, 0.05) 100%
+    ) 1;
+    animation: hero-orbit-spin 18s linear infinite;
+  }
+
+  .hero-orbit-ring--inner {
+    border-image: linear-gradient(
+      -45deg,
+      rgba(184, 138, 248, 0.25) 0%,
+      rgba(158, 92, 246, 0.04) 50%,
+      rgba(184, 138, 248, 0.20) 100%
+    ) 1;
+    animation: hero-orbit-spin 14s linear infinite reverse;
+  }
+
+  /* Floating accent dots on the orbit */
+  .hero-orbit-dot {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(158, 92, 246, 0.70);
+    box-shadow: 0 0 12px 3px rgba(158, 92, 246, 0.40);
+    animation: hero-dot-pulse 3s ease-in-out infinite;
+  }
+
+  .hero-orbit-dot--1 {
+    top: -6px;
+    left: 30%;
+    animation-delay: 0s;
+  }
+
+  .hero-orbit-dot--2 {
+    bottom: 12%;
+    right: -8px;
+    animation-delay: 1s;
+    width: 5px;
+    height: 5px;
+  }
+
+  .hero-orbit-dot--3 {
+    top: 45%;
+    left: -6px;
+    animation-delay: 2s;
+    width: 4px;
+    height: 4px;
+    background: rgba(184, 138, 248, 0.55);
+    box-shadow: 0 0 10px 2px rgba(184, 138, 248, 0.30);
+  }
+
+  @keyframes hero-orbit-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  @keyframes hero-dot-pulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50%      { opacity: 1;   transform: scale(1.6); }
+  }
+
   /* Browser fallback */
   @supports not (backdrop-filter: blur(1px)) {
     .liquid-glass-nav {

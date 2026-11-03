@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { personalInfo } from '../data/personal';
-import { GithubIcon, LinkedinIcon } from './SocialIcons';
+import { GithubIcon, LinkedinIcon, InstagramIcon } from './SocialIcons';
 import { Copy, Check, ArrowUpRight, Send } from 'lucide-react';
 import { Animate, fadeUp, blurIn, fadeLeft, fadeRight } from './ScrollAnimations';
 
@@ -80,7 +80,7 @@ export const ContactSection: React.FC = () => {
 
             {/* Social Links List */}
             <div className="space-y-3">
-              <p className="text-2xs uppercase text-ink-muted font-semibold tracking-wider">Tautan Profesional</p>
+              <p className="text-2xs uppercase text-ink-muted font-semibold tracking-wider">Tautan Profesional &amp; Media Sosial</p>
               
               <a
                 href={personalInfo.github}
@@ -109,6 +109,22 @@ export const ContactSection: React.FC = () => {
                   <div>
                     <p className="text-sm font-semibold text-ink-primary">LinkedIn</p>
                     <p className="text-xs text-ink-muted">linkedin.com/in/muhammadirsyaddany</p>
+                  </div>
+                </div>
+                <ArrowUpRight className="w-4 h-4 text-ink-muted group-hover:text-violet-light group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </a>
+
+              <a
+                href={personalInfo.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="card rounded-xl p-4 flex items-center justify-between hover:border-border-soft transition-all group"
+              >
+                <div className="flex items-center gap-3">
+                  <InstagramIcon className="w-5 h-5 text-violet-light" />
+                  <div>
+                    <p className="text-sm font-semibold text-ink-primary">Instagram</p>
+                    <p className="text-xs text-ink-muted">@rsydanyy</p>
                   </div>
                 </div>
                 <ArrowUpRight className="w-4 h-4 text-ink-muted group-hover:text-violet-light group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
