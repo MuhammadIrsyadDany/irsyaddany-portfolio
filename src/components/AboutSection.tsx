@@ -154,17 +154,18 @@ export const AboutSection: React.FC = () => {
       {/* Background Number */}
       <span
         className="
-          absolute -right-3 -top-7
-          text-[7rem]
-          font-black
+          absolute right-3 top-1
+          text-6xl sm:text-7xl
+          font-black font-mono
           leading-none
-          tracking-[-0.08em]
-          text-ink-primary/[0.025]
+          tracking-tighter
+          text-ink-primary/[0.04]
           select-none
           pointer-events-none
           transition-colors duration-300
-          group-hover:text-violet-light/[0.05]
+          group-hover:text-violet-light/[0.08]
         "
+        aria-hidden="true"
       >
         01
       </span>
@@ -261,17 +262,18 @@ export const AboutSection: React.FC = () => {
       {/* Background Number */}
       <span
         className="
-          absolute -right-3 -top-7
-          text-[7rem]
-          font-black
+          absolute right-3 top-1
+          text-6xl sm:text-7xl
+          font-black font-mono
           leading-none
-          tracking-[-0.08em]
-          text-ink-primary/[0.025]
+          tracking-tighter
+          text-ink-primary/[0.04]
           select-none
           pointer-events-none
           transition-colors duration-300
-          group-hover:text-violet-light/[0.05]
+          group-hover:text-violet-light/[0.08]
         "
+        aria-hidden="true"
       >
         02
       </span>
@@ -363,17 +365,18 @@ export const AboutSection: React.FC = () => {
       {/* Background Number */}
       <span
         className="
-          absolute -right-3 -top-7
-          text-[7rem]
-          font-black
+          absolute right-3 top-1
+          text-6xl sm:text-7xl
+          font-black font-mono
           leading-none
-          tracking-[-0.08em]
-          text-ink-primary/[0.025]
+          tracking-tighter
+          text-ink-primary/[0.04]
           select-none
           pointer-events-none
           transition-colors duration-300
-          group-hover:text-violet-light/[0.05]
+          group-hover:text-violet-light/[0.08]
         "
+        aria-hidden="true"
       >
         03
       </span>

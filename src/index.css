@@ -266,15 +266,21 @@
     border-radius: 16px 38px 16px 38px;
   }
 
-  /* SVG Orbital Rotations */
+  /* SVG Orbital Rotations - Optimized with Hardware Acceleration */
   .hero-svg-orbit-outer {
-    animation: hero-orbit-spin 24s linear infinite;
+    animation: hero-orbit-spin 26s linear infinite;
     transform-origin: center center;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 
   .hero-svg-orbit-inner {
-    animation: hero-orbit-spin 16s linear infinite reverse;
+    animation: hero-orbit-spin 18s linear infinite reverse;
     transform-origin: center center;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 
   @keyframes hero-orbit-spin {
@@ -283,12 +289,15 @@
   }
 
   @keyframes hero-pulse-glow {
-    0%, 100% { opacity: 0.45; transform: scale(1); }
-    50%      { opacity: 0.85; transform: scale(1.04); }
+    0%, 100% { opacity: 0.35; transform: scale(1); }
+    50%      { opacity: 0.70; transform: scale(1.02); }
   }
 
   .hero-ambient-glow {
-    animation: hero-pulse-glow 5s ease-in-out infinite;
+    animation: hero-pulse-glow 6s ease-in-out infinite;
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 
   /* Browser fallback */

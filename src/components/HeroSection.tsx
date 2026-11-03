@@ -262,16 +262,9 @@ export const HeroSection: React.FC = () => {
                       <stop offset="50%" stopColor="#9E5CF6" stopOpacity="0.05" />
                       <stop offset="100%" stopColor="#F472B6" stopOpacity="0.3" />
                     </linearGradient>
-                    <filter id="glowNode" x="-50%" y="-50%" width="200%" height="200%">
-                      <feGaussianBlur stdDeviation="3" result="blur" />
-                      <feMerge>
-                        <feMergeNode in="blur" />
-                        <feMergeNode in="SourceGraphic" />
-                      </feMerge>
-                    </filter>
                   </defs>
 
-                  {/* Outer Orbit Path */}
+                  {/* Outer Orbit Path - Lightweight GPU-composited */}
                   <g className="hero-svg-orbit-outer">
                     <rect
                       x="16"
@@ -286,11 +279,11 @@ export const HeroSection: React.FC = () => {
                       fill="none"
                     />
                     {/* Orbiting Celestial Node */}
-                    <circle cx="230" cy="16" r="3.5" fill="#B88AF8" filter="url(#glowNode)" />
-                    <circle cx="230" cy="544" r="3" fill="#38BDF8" filter="url(#glowNode)" />
+                    <circle cx="230" cy="16" r="3.5" fill="#B88AF8" />
+                    <circle cx="230" cy="544" r="3" fill="#38BDF8" />
                   </g>
 
-                  {/* Inner Counter Orbit Path */}
+                  {/* Inner Counter Orbit Path - Lightweight GPU-composited */}
                   <g className="hero-svg-orbit-inner">
                     <rect
                       x="28"
@@ -304,8 +297,8 @@ export const HeroSection: React.FC = () => {
                       strokeDasharray="6 20"
                       fill="none"
                     />
-                    <circle cx="28" cy="280" r="2.5" fill="#FB7185" filter="url(#glowNode)" />
-                    <circle cx="432" cy="280" r="2.5" fill="#9E5CF6" filter="url(#glowNode)" />
+                    <circle cx="28" cy="280" r="2.5" fill="#FB7185" />
+                    <circle cx="432" cy="280" r="2.5" fill="#9E5CF6" />
                   </g>
                 </svg>
 
@@ -348,7 +341,7 @@ export const HeroSection: React.FC = () => {
                           <img
                             src={photo.src}
                             alt={photo.alt}
-                            className="w-full h-full object-cover object-top"
+                            className="w-full h-full object-cover object-center"
                             loading={index === 0 ? "eager" : "lazy"}
                             decoding="async"
                           />
