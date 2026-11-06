@@ -8,7 +8,7 @@ const closeUpPhotos = [
   {
     id: 'wisuda',
     label: 'Wisuda (S.Tr.Kom)',
-    src: '/images/profile/wisuda-closeup.jpg?v=5',
+    src: '/images/profile/wisuda-closeup.jpg?v=7',
     alt: 'Muhammad Irsyad Dany, S.Tr.Kom - Close Up Wisuda',
   },
   {
