@@ -3,25 +3,25 @@ import { ArrowUpRight, MapPin, GraduationCap, Phone, Mail, FileText } from 'luci
 import { personalInfo } from '../data/personal';
 import { GithubIcon, LinkedinIcon, InstagramIcon } from './SocialIcons';
 
-// Lightweight, crisp close-up portraits optimized for speed and clarity
+// Lightweight, crisp close-up portraits optimized for speed, precise framing & zero clutter
 const closeUpPhotos = [
   {
     id: 'wisuda',
     label: 'Wisuda (S.Tr.Kom)',
-    src: '/images/profile/irsyad-closeup.jpg?v=4',
+    src: '/images/profile/wisuda-closeup.jpg?v=5',
     alt: 'Muhammad Irsyad Dany, S.Tr.Kom - Close Up Wisuda',
   },
   {
     id: 'studio',
     label: 'Studio Formal',
-    src: '/images/profile/profile-1-opt.jpg?v=4',
+    src: '/images/profile/studio-closeup.jpg?v=5',
     alt: 'Muhammad Irsyad Dany - Studio Formal Close Up',
   },
   {
     id: 'casual',
     label: 'Portrait Close-Up',
-    src: '/images/profile/close-up-1.jpg?v=4',
-    alt: 'Muhammad Irsyad Dany - Close Up Portrait',
+    src: '/images/profile/pas-foto-closeup.jpg?v=5',
+    alt: 'Muhammad Irsyad Dany - Formal Portrait Close Up',
   },
 ];
 
