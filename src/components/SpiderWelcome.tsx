@@ -122,7 +122,7 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
       ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, width, height);
 
-      // Render Floating Embers
+      // Render Floating Embers (Optimized without heavy CPU shadowBlur)
       embers.forEach((ember) => {
         ember.x += ember.vx;
         ember.y += ember.vy;
@@ -135,11 +135,8 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
         ctx.beginPath();
         ctx.arc(ember.x, ember.y, ember.size, 0, Math.PI * 2);
         ctx.fillStyle = ember.color;
-        ctx.globalAlpha = ember.alpha * (0.5 + 0.5 * Math.sin(time * 3 + ember.x));
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = ember.color;
+        ctx.globalAlpha = ember.alpha * (0.6 + 0.4 * Math.sin(time * 2.5 + ember.x));
         ctx.fill();
-        ctx.shadowBlur = 0;
         ctx.globalAlpha = 1.0;
       });
 
@@ -200,19 +197,16 @@ export const SpiderWelcome: React.FC<SpiderWelcomeProps> = ({
         ctx.lineWidth = isGlowRing ? 1.1 : 0.7;
         ctx.stroke();
 
-        // Glowing Bio-Electric Dew Sparks at Web Intersections
+        // Glowing Bio-Electric Dew Sparks at Web Intersections (Zero-lag render)
         for (let i = 0; i < radialRays; i += 2) {
           const angle = (i * 2 * Math.PI) / radialRays;
           const px = Math.cos(angle) * radius + (mouseOffsetX * (r / rings) * 0.4);
           const py = Math.sin(angle) * radius + (mouseOffsetY * (r / rings) * 0.4);
 
           ctx.beginPath();
-          ctx.arc(px, py, 1.3 + Math.sin(time * 2.2 + i + r) * 0.5, 0, Math.PI * 2);
+          ctx.arc(px, py, 1.4 + Math.sin(time * 2.2 + i + r) * 0.4, 0, Math.PI * 2);
           ctx.fillStyle = (i + r) % 3 === 0 ? '#FB7185' : '#B88AF8';
-          ctx.shadowBlur = 6;
-          ctx.shadowColor = (i + r) % 3 === 0 ? '#FB7185' : '#9E5CF6';
           ctx.fill();
-          ctx.shadowBlur = 0;
         }
       }
 

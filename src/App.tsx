@@ -29,7 +29,7 @@ export const App: React.FC = () => {
     const audio = new Audio(AUDIO_SRC);
     audio.loop = true;
     audio.volume = 0;
-    audio.preload = 'auto';
+    audio.preload = 'none';
     audioRef.current = audio;
 
     // Attempt immediate autoplay (works if browser allows or user visited before)
