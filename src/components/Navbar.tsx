@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, ArrowUpRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Menu, X, ArrowUpRight, Terminal } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [navVisible, setNavVisible] = useState(true);
-  const [isScrollingUp, setIsScrollingUp] = useState(false);
   const lastScrollYRef = useRef(0);
 
   useEffect(() => {
@@ -16,25 +15,20 @@ export const Navbar: React.FC = () => {
       const prevScrollY = lastScrollYRef.current;
       const delta = currentScrollY - prevScrollY;
 
-      setScrolled(currentScrollY > 30);
+      setScrolled(currentScrollY > 20);
 
-      // Intelligent scroll direction detection
       if (Math.abs(delta) > 5) {
-        if (currentScrollY > 120 && delta > 0) {
-          // Scrolling DOWN: hide navbar to give immersive view
+        if (currentScrollY > 140 && delta > 0) {
           setNavVisible(false);
-          setIsScrollingUp(false);
-        } else if (delta < 0 || currentScrollY <= 120) {
-          // Scrolling UP: reveal navbar with spring animation
+        } else if (delta < 0 || currentScrollY <= 140) {
           setNavVisible(true);
-          setIsScrollingUp(currentScrollY > 120);
         }
       }
 
       lastScrollYRef.current = currentScrollY;
 
       const sections = ['home', 'about', 'skills', 'projects', 'experience', 'recognition', 'contact'];
-      const scrollPos = currentScrollY + 200;
+      const scrollPos = currentScrollY + 220;
       for (const section of sections) {
         const el = document.getElementById(section);
         if (el) {
@@ -52,13 +46,12 @@ export const Navbar: React.FC = () => {
   }, []);
 
   const navLinks = [
-    { label: 'Home', href: '#home', id: 'home' },
-    { label: 'About', href: '#about', id: 'about' },
-    { label: 'Skills', href: '#skills', id: 'skills' },
-    { label: 'Projects', href: '#projects', id: 'projects' },
-    { label: 'Experience', href: '#experience', id: 'experience' },
-    { label: 'Certificates', href: '#recognition', id: 'recognition' },
-    { label: 'Contact', href: '#contact', id: 'contact' },
+    { label: 'Origin', num: '01', href: '#about', id: 'about' },
+    { label: 'Missions', num: '02', href: '#projects', id: 'projects' },
+    { label: 'Abilities', num: '03', href: '#skills', id: 'skills' },
+    { label: 'Archives', num: '04', href: '#experience', id: 'experience' },
+    { label: 'Credentials', num: '05', href: '#recognition', id: 'recognition' },
+    { label: 'Signal', num: '06', href: '#contact', id: 'contact' },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -77,59 +70,38 @@ export const Navbar: React.FC = () => {
         y: shouldShow ? 0 : -90,
         opacity: shouldShow ? 1 : 0,
       }}
-      transition={{
-        duration: 0.35,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-      className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-3.5 sm:py-5 pointer-events-none"
+      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+      className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-6 py-3 sm:py-4 pointer-events-none"
     >
       <div
-        className={`pointer-events-auto max-w-6xl mx-auto rounded-full px-5 sm:px-6 py-2.5 sm:py-3 transition-all duration-300 flex items-center justify-between ${
-          scrolled ? 'liquid-glass-nav' : 'bg-bg-base/30 backdrop-blur-sm border border-border-faint/50'
-        } ${isScrollingUp && scrolled ? 'ring-1 ring-violet-light/40 shadow-[0_4px_25px_rgba(158,92,246,0.22)]' : ''}`}
+        className={`pointer-events-auto max-w-6xl mx-auto rounded-full px-4 sm:px-6 py-2.5 sm:py-3 transition-all duration-300 flex items-center justify-between border ${
+          scrolled
+            ? 'bg-[#0E1013]/90 backdrop-blur-md border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.6)]'
+            : 'bg-[#0E1013]/50 backdrop-blur-sm border-white/[0.06]'
+        }`}
       >
-        {/* Specular highlight overlay — only when scrolled (has glass material) */}
-        {scrolled && <div className="liquid-glass-specular" aria-hidden="true" />}
-
-        {/* Brand */}
+        {/* Brand / Civilian vs Alter Ego designation */}
         <a
           href="#home"
           onClick={(e) => handleNavClick(e, '#home')}
-          className="relative z-10 flex items-center gap-2.5 group font-semibold text-sm tracking-tight text-ink-primary"
+          className="flex items-center gap-2.5 group"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 64 64"
-            className="w-7 h-7 rounded-lg shadow-[0_0_12px_rgba(158,92,246,0.4)] group-hover:scale-110 group-hover:shadow-[0_0_18px_rgba(158,92,246,0.6)] transition-all duration-300"
-            aria-label="Logo ID"
-          >
-            <defs>
-              <linearGradient id="navLogoBg" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#5B1B8E"/>
-                <stop offset="50%" stopColor="#7E32D9"/>
-                <stop offset="100%" stopColor="#9E5CF6"/>
-              </linearGradient>
-              <linearGradient id="navLogoText" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#F6F2FD"/>
-                <stop offset="100%" stopColor="#E4D4FE"/>
-              </linearGradient>
-              <filter id="navGlow">
-                <feGaussianBlur stdDeviation="1.5" result="blur"/>
-                <feMerge>
-                  <feMergeNode in="blur"/>
-                  <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-              </filter>
-            </defs>
-            <rect width="64" height="64" rx="16" fill="url(#navLogoBg)"/>
-            <rect x="1" y="1" width="62" height="62" rx="15" fill="none" stroke="rgba(228,212,254,0.25)" strokeWidth="1"/>
-            <text x="32" y="44" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif" fontWeight="800" fontSize="30" fill="url(#navLogoText)" filter="url(#navGlow)" letterSpacing="-1">ID</text>
-          </svg>
-          <span>irsyad<span className="text-violet-light">.dev</span></span>
+          <div className="w-8 h-8 rounded-lg bg-[#15181C] border border-white/10 flex items-center justify-center text-signal-orange font-mono font-bold text-xs group-hover:border-signal-orange/60 group-hover:scale-105 transition-all">
+            ID
+          </div>
+          <div className="flex flex-col">
+            <span className="font-alter uppercase text-sm sm:text-base font-bold tracking-tight text-white group-hover:text-signal-orange transition-colors">
+              Irsyad Dany
+            </span>
+            <span className="hidden sm:inline-flex items-center gap-1.5 text-[10px] font-mono text-white/50 tracking-wider">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              STATUS: READY // Q1 2027
+            </span>
+          </div>
         </a>
 
-        {/* Desktop Nav Links */}
-        <nav className="relative z-10 hidden md:flex items-center gap-5 text-xs font-medium tracking-wide">
+        {/* Desktop Nav Links (Alter minimal style) */}
+        <nav className="hidden lg:flex items-center gap-6 text-xs font-mono">
           {navLinks.map((link) => {
             const isActive = activeSection === link.id;
             return (
@@ -137,16 +109,17 @@ export const Navbar: React.FC = () => {
                 key={link.id}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className={`relative px-2 py-1 transition-colors duration-200 ${
-                  isActive ? 'text-violet-light font-semibold' : 'text-ink-secondary hover:text-ink-primary'
+                className={`group relative py-1 transition-colors uppercase tracking-wider text-[11px] ${
+                  isActive ? 'text-white font-semibold' : 'text-white/60 hover:text-white'
                 }`}
               >
+                <span className="text-signal-orange/70 text-[9px] mr-1 font-mono">//</span>
                 {link.label}
                 {isActive && (
                   <motion.span
-                    layoutId="activeNavIndicator"
-                    className="absolute -bottom-1 left-1.5 right-1.5 h-[2px] bg-gradient-to-r from-violet-base via-violet-light to-fuchsia-400 rounded-full shadow-[0_0_8px_rgba(184,138,248,0.7)]"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    layoutId="alterActiveNav"
+                    className="absolute -bottom-1 left-0 right-0 h-[2px] bg-signal-orange rounded-full shadow-[0_0_8px_rgba(255,90,31,0.8)]"
+                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                   />
                 )}
               </a>
@@ -154,61 +127,72 @@ export const Navbar: React.FC = () => {
           })}
         </nav>
 
-        {/* CTA */}
-        <div className="relative z-10 hidden md:flex items-center">
+        {/* Right CTA / Send Signal */}
+        <div className="flex items-center gap-3">
           <a
             href="#contact"
             onClick={(e) => handleNavClick(e, '#contact')}
-            className="text-xs font-medium text-ink-primary bg-bg-surface/70 hover:bg-violet-dim/40 border border-border-soft hover:border-violet-light/40 px-4 py-1.5 rounded-full transition-all flex items-center gap-1.5 group"
+            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/[0.04] hover:bg-signal-orange hover:text-white border border-white/10 hover:border-signal-orange text-[11px] font-mono uppercase tracking-wider text-white/80 transition-all group"
           >
-            <span>Hubungi Saya</span>
-            <ArrowUpRight className="w-3.5 h-3.5 text-violet-light group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            <span className="text-signal-orange group-hover:text-white">//</span>
+            <span>Send Signal</span>
+            <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </a>
-        </div>
 
-        {/* Mobile Hamburger */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="relative z-10 md:hidden p-1.5 rounded-lg text-ink-secondary hover:text-ink-primary hover:bg-bg-surface/60 transition-colors"
-          aria-label="Toggle Navigation Menu"
-        >
-          {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden p-1.5 rounded-lg text-white/80 hover:text-white hover:bg-white/5 transition-colors"
+            aria-label="Toggle Menu"
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div className="md:hidden mt-2 max-w-sm mx-auto liquid-glass-nav rounded-2xl p-4 shadow-2xl">
-          {/* Mobile specular */}
-          <div className="liquid-glass-specular rounded-2xl" aria-hidden="true" />
-          <div className="relative z-10 flex flex-col gap-2">
-            {navLinks.map((link) => (
-              <a
-                key={link.id}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-                  activeSection === link.id
-                    ? 'bg-violet-dim/50 text-violet-light font-semibold'
-                    : 'text-ink-secondary hover:text-ink-primary hover:bg-bg-surface/60'
-                }`}
-              >
-                {link.label}
-              </a>
-            ))}
-            <div className="pt-2 border-t border-border-faint/60 mt-1">
-              <a
-                href="#contact"
-                onClick={(e) => handleNavClick(e, '#contact')}
-                className="w-full btn-primary py-2.5 text-xs text-center justify-center flex items-center gap-1.5"
-              >
-                <span>Hubungi Saya</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </a>
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+            className="lg:hidden mt-2 max-w-sm mx-auto bg-[#0E1013]/95 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl pointer-events-auto"
+          >
+            <div className="flex flex-col gap-1.5">
+              <div className="px-3 py-2 border-b border-white/10 mb-1 flex items-center justify-between text-[11px] font-mono text-white/50">
+                <span>SYSTEM NAVIGATION</span>
+                <span className="text-signal-orange">// ALTER EGO</span>
+              </div>
+              {navLinks.map((link) => (
+                <a
+                  key={link.id}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className={`px-3 py-2 rounded-xl text-xs font-mono uppercase tracking-wider transition-colors flex items-center justify-between ${
+                    activeSection === link.id
+                      ? 'bg-signal-orange/15 text-signal-orange font-semibold border border-signal-orange/30'
+                      : 'text-white/70 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  <span>{link.label}</span>
+                  <span className="text-[10px] text-white/40 font-mono">#{link.num}</span>
+                </a>
+              ))}
+              <div className="pt-2 border-t border-white/10 mt-1">
+                <a
+                  href="#contact"
+                  onClick={(e) => handleNavClick(e, '#contact')}
+                  className="w-full btn-primary py-2.5 text-xs text-center justify-center flex items-center gap-1.5"
+                >
+                  <span>Transmit Signal</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+              </div>
             </div>
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 };

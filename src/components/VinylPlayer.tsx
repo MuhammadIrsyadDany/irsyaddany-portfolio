@@ -70,14 +70,14 @@ export const VinylPlayer: React.FC<VinylPlayerProps> = ({
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 8, scale: 0.92 }}
               transition={{ duration: 0.22 }}
-              className="mb-1 bg-bg-raised/90 backdrop-blur-md border border-violet-base/30 rounded-xl px-3.5 py-2.5 shadow-lg shadow-black/40 min-w-[140px]"
+              className="mb-1 bg-[#0E1013]/95 backdrop-blur-md border border-white/10 rounded-xl px-3.5 py-2.5 shadow-lg shadow-black/60 min-w-[140px]"
             >
               {/* Song info */}
               <div className="flex items-center gap-1.5 mb-1.5">
-                <Music2 size={11} className="text-violet-bright shrink-0" />
-                <span className="text-2xs font-mono text-ink-muted uppercase tracking-wider">Now Playing</span>
+                <Music2 size={11} className="text-signal-orange shrink-0" />
+                <span className="text-[10px] font-mono text-white/50 uppercase tracking-wider">Audio Signal</span>
               </div>
-              <p className="text-xs font-spidey text-white tracking-wide leading-snug truncate max-w-[130px]">
+              <p className="text-xs font-mono font-bold text-white tracking-wide leading-snug truncate max-w-[130px]">
                 Spider-Man Theme
               </p>
               <div className="mt-2 flex items-center gap-1.5">
@@ -86,7 +86,7 @@ export const VinylPlayer: React.FC<VinylPlayerProps> = ({
                   {[0.4, 0.8, 0.55, 1, 0.65, 0.85, 0.5].map((h, i) => (
                     <motion.span
                       key={i}
-                      className="block w-0.5 rounded-full bg-violet-bright"
+                      className="block w-0.5 rounded-full bg-signal-orange"
                       animate={isActive ? {
                         scaleY: [h, h * 0.4 + 0.1, h],
                       } : { scaleY: 0.15 }}

@@ -1,1108 +1,220 @@
-import React, { useRef, useState } from 'react';
-import {
-  ArrowLeft,
-  ArrowRight,
-  ArrowUpRight,
-  Layers,
-} from 'lucide-react';
-
+import React, { useState } from 'react';
+import { ArrowUpRight, Crosshair, CheckCircle2, Layers, ExternalLink, Calendar, MapPin, Eye } from 'lucide-react';
 import { projects } from '../data/projects';
 import { ProjectModal } from './ProjectModal';
 import { Project } from '../types/portfolio';
-import { Animate, fadeUp, blurIn, scaleIn } from './ScrollAnimations';
+import { Animate, StaggerGroup, fadeUp, scaleIn } from './ScrollAnimations';
 
 export const ProjectsSection: React.FC = () => {
-  const [selectedProject, setSelectedProject] =
-    useState<Project | null>(null);
-
-  const [imgErrors, setImgErrors] = useState<Record<string, boolean>>({});
-  const [activeSlide, setActiveSlide] = useState(0);
-
-  const carouselRef = useRef<HTMLDivElement>(null);
-
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const flagship = projects[0];
-  const secondaryProjects = projects.slice(1);
-
-  /* ============================================================
-     IMAGE ERROR
-     ============================================================ */
-
-  const handleImageError = (thumbnail: string) => {
-    setImgErrors((prev) => ({
-      ...prev,
-      [thumbnail]: true,
-    }));
-  };
-
-  /* ============================================================
-     CAROUSEL
-     ============================================================ */
-
-  const scrollCarousel = (direction: 'prev' | 'next') => {
-    if (!carouselRef.current) return;
-
-    const container = carouselRef.current;
-    const firstCard =
-      container.firstElementChild as HTMLElement | null;
-
-    if (!firstCard) return;
-
-    const styles = window.getComputedStyle(container);
-    const gap = parseFloat(styles.columnGap || styles.gap || '20');
-
-    const scrollAmount = firstCard.offsetWidth + gap;
-
-    container.scrollBy({
-      left: direction === 'next'
-        ? scrollAmount
-        : -scrollAmount,
-      behavior: 'smooth',
-    });
-  };
-
-  const handleCarouselScroll = () => {
-    if (!carouselRef.current) return;
-
-    const container = carouselRef.current;
-    const firstCard =
-      container.firstElementChild as HTMLElement | null;
-
-    if (!firstCard) return;
-
-    const styles = window.getComputedStyle(container);
-    const gap = parseFloat(styles.columnGap || styles.gap || '20');
-
-    const index = Math.round(
-      container.scrollLeft /
-      (firstCard.offsetWidth + gap)
-    );
-
-    const maxIndex = Math.max(
-      secondaryProjects.length - 1,
-      0
-    );
-
-    setActiveSlide(
-      Math.min(Math.max(index, 0), maxIndex)
-    );
-  };
-
-  /* ============================================================
-     RENDER
-     ============================================================ */
+  const missionRecords = projects.slice(1);
 
   return (
     <section
       id="projects"
-      className="py-24 sm:py-32 border-t border-border-faint overflow-hidden w-full max-w-full"
+      className="py-24 sm:py-32 border-t border-white/10 overflow-hidden w-full max-w-full bg-[#07080A]"
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
-
-        {/* ======================================================
-            SECTION HEADER
-            ====================================================== */}
-
-        <div className="space-y-4 mb-12 sm:mb-14">
-
-          {/* Eyebrow */}
+        {/* Alter Section Header: Mission files // 06 records */}
+        <div className="mb-14 sm:mb-20">
           <Animate variants={fadeUp}>
-            <div className="eyebrow-tag">
+            <div className="eyebrow-tag mb-4">
               <span>03</span>
-              <span className="text-border-soft">/</span>
-              <span>Selected Work</span>
+              <span className="text-white/20">/</span>
+              <span>MISSION FILES</span>
+              <span className="text-white/30 text-[10px] ml-2">// 06 CLASSIFIED RECORDS</span>
             </div>
           </Animate>
 
-          {/* Heading */}
-          <Animate variants={blurIn} custom={1}>
-            <h2
-              className="
-                text-3xl sm:text-5xl
-                font-black
-                tracking-[-0.045em]
-                leading-[0.92]
-                text-ink-primary
-                max-w-3xl
-              "
-            >
-              Things I've
-              <span className="text-violet-light">
-                {' '}built.
-              </span>
+          <Animate variants={fadeUp} custom={1}>
+            <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight text-white leading-[0.92] max-w-3xl">
+              FIELD MISSIONS
+              <br />
+              <span className="text-signal-orange">&amp; PRODUCTION SYSTEMS.</span>
             </h2>
           </Animate>
 
-          {/* Description */}
           <Animate variants={fadeUp} custom={2}>
-            <p
-              className="
-                text-sm sm:text-base
-                text-ink-muted
-                max-w-xl
-                leading-reading
-              "
-            >
-              Beberapa sistem dan aplikasi yang saya kembangkan
-              berdasarkan kebutuhan nyata, dari proyek akademik
-              hingga pengalaman profesional.
+            <p className="mt-5 text-sm sm:text-base text-white/60 font-sans max-w-2xl leading-relaxed">
+              Arsitektur aplikasi nyata yang telah dibangun, divalidasi dengan pengujian end-to-end, dan dioperasikan untuk kebutuhan bisnis, industri, serta riset akademik.
             </p>
           </Animate>
-
         </div>
 
+        {/* Flagship Mission: 01 / VENDOR SAVVE (Thesis Capstone) */}
+        <div className="mb-14">
+          <div className="text-[11px] font-mono text-signal-orange uppercase tracking-wider mb-3 flex items-center gap-2">
+            <span>// FLAGSHIP DOSSIER 01</span>
+            <span className="text-white/20">——</span>
+            <span className="text-white/50">ENTERPRISE CAPSTONE</span>
+          </div>
 
-        {/* ======================================================
-            FLAGSHIP PROJECT — VENDOR SAVVE
-            ====================================================== */}
+          <div className="rounded-3xl bg-[#0E1013] border border-white/15 p-6 sm:p-10 relative overflow-hidden group shadow-2xl">
+            {/* Tactical Corners */}
+            <div className="tactical-corner-tl" />
+            <div className="tactical-corner-tr" />
+            <div className="tactical-corner-bl" />
+            <div className="tactical-corner-br" />
 
-        <Animate variants={scaleIn}>
-        <article
-          className="
-            group
-            relative
-            overflow-hidden
-            rounded-3xl
-            border border-border-soft
-            bg-bg-surface/30
-            mb-16 sm:mb-20
-            transition-all duration-300
-            hover:border-violet-light/30
-          "
-        >
-
-          <div
-            className="
-              relative z-10
-              grid
-              grid-cols-1
-              lg:grid-cols-12
-            "
-          >
-
-            {/* ==================================================
-                PROJECT CONTENT
-                ================================================== */}
-
-            <div
-              className="
-                lg:col-span-5
-                p-7 sm:p-9 lg:p-11
-                flex flex-col
-                justify-between
-              "
-            >
-
-              <div>
-
-                {/* Meta */}
-                <div
-                  className="
-                    flex flex-wrap
-                    items-center
-                    gap-x-3 gap-y-2
-                    mb-7
-                  "
-                >
-                  <span
-                    className="
-                      text-2xs
-                      uppercase
-                      tracking-[0.16em]
-                      font-semibold
-                      text-violet-light
-                    "
-                  >
-                    01 / Final Project
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              {/* Left: Info */}
+              <div className="lg:col-span-6 space-y-5">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="px-2.5 py-1 rounded bg-signal-orange/20 text-signal-orange border border-signal-orange/30 text-[10px] font-mono font-bold tracking-wider uppercase">
+                    CYPRESS 100% VERIFIED
                   </span>
-
-                  <span
-                    className="
-                      w-1 h-1
-                      rounded-full
-                      bg-border-soft
-                    "
-                  />
-
-                  <span
-                    className="
-                      text-2xs
-                      text-ink-muted
-                      tabular-nums
-                    "
-                  >
-                    Jan — Jun 2026
+                  <span className="px-2.5 py-1 rounded bg-[#15181C] text-white/70 border border-white/10 text-[10px] font-mono">
+                    {flagship.type}
+                  </span>
+                  <span className="px-2.5 py-1 rounded bg-[#15181C] text-white/70 border border-white/10 text-[10px] font-mono">
+                    {flagship.period}
                   </span>
                 </div>
 
-
-                {/* Title */}
                 <div>
-
-                  <h3
-                    className="
-                      text-2xl sm:text-3xl
-                      font-black
-                      tracking-[-0.035em]
-                      text-ink-primary
-                    "
-                  >
+                  <h3 className="font-alter uppercase text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
                     {flagship.title}
                   </h3>
-
-                  <p
-                    className="
-                      mt-2
-                      text-sm sm:text-base
-                      font-medium
-                      text-violet-light
-                      leading-snug
-                      max-w-md
-                    "
-                  >
-                    Item Storage &amp; Inventory
-                    Management Information System
+                  <p className="text-sm font-mono text-signal-orange mt-1">
+                    {flagship.fullTitle}
                   </p>
-
                 </div>
 
-
-                {/* Description */}
-                <p
-                  className="
-                    mt-5
-                    text-sm
-                    text-ink-muted
-                    leading-reading
-                    max-w-lg
-                  "
-                >
-                  Sistem manajemen pergudangan dan logistik
-                  berbasis web untuk mengelola inventaris sewa
-                  vendor, alur pengambilan barang, pelaporan,
-                  serta kontrol akses multi-peran Admin &amp; Kasir.
+                <p className="text-sm text-white/70 leading-relaxed font-sans">
+                  {flagship.summary}
                 </p>
 
-
-                {/* ==================================================
-                    METRICS
-                    ================================================== */}
-
-                <div
-                  className="
-                    grid grid-cols-3
-                    gap-3
-                    mt-7
-                    pt-5
-                    border-t border-border-faint
-                  "
-                >
-
-                  <div>
-                    <p
-                      className="
-                        text-lg sm:text-xl
-                        font-black
-                        text-ink-primary
-                        tabular-nums
-                      "
-                    >
-                      60
-                    </p>
-
-                    <p
-                      className="
-                        mt-0.5
-                        text-2xs
-                        text-ink-muted
-                      "
-                    >
-                      E2E Scenarios
-                    </p>
-                  </div>
-
-
-                  <div>
-                    <p
-                      className="
-                        text-lg sm:text-xl
-                        font-black
-                        text-ink-primary
-                        tabular-nums
-                      "
-                    >
-                      28
-                    </p>
-
-                    <p
-                      className="
-                        mt-0.5
-                        text-2xs
-                        text-ink-muted
-                      "
-                    >
-                      Functional Specs
-                    </p>
-                  </div>
-
-
-                  <div>
-                    <p
-                      className="
-                        text-lg sm:text-xl
-                        font-black
-                        text-violet-light
-                        tabular-nums
-                      "
-                    >
-                      100%
-                    </p>
-
-                    <p
-                      className="
-                        mt-0.5
-                        text-2xs
-                        text-ink-muted
-                      "
-                    >
-                      Test Passed
-                    </p>
-                  </div>
-
+                {/* Highlights */}
+                <div className="space-y-2 pt-2">
+                  {flagship.highlights.slice(0, 3).map((h, i) => (
+                    <div key={i} className="flex items-start gap-2.5 text-xs text-white/80 font-sans">
+                      <CheckCircle2 className="w-4 h-4 text-signal-orange shrink-0 mt-0.5" />
+                      <span>{h}</span>
+                    </div>
+                  ))}
                 </div>
 
-
-                {/* ==================================================
-                    TECH STACK
-                    ================================================== */}
-
-                <div
-                  className="
-                    flex flex-wrap
-                    gap-1.5
-                    mt-6
-                  "
-                >
-                  {flagship.technologies.map((technology) => (
+                {/* Technologies */}
+                <div className="flex flex-wrap gap-1.5 pt-2">
+                  {flagship.technologies.map((t) => (
                     <span
-                      key={technology}
-                      className="tech-chip tech-chip-violet"
+                      key={t}
+                      className="px-2.5 py-1 rounded-md bg-[#15181C] border border-white/10 text-xs font-mono text-white/80"
                     >
-                      {technology}
+                      {t}
                     </span>
                   ))}
                 </div>
 
+                {/* Open Dossier Button */}
+                <div className="pt-4">
+                  <button
+                    onClick={() => setSelectedProject(flagship)}
+                    className="btn-primary flex items-center gap-2 text-xs"
+                  >
+                    <span>Inspect Full Mission Dossier (11 Screenshots)</span>
+                    <ArrowUpRight className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
 
-
-              {/* ==================================================
-                  CTA
-                  ================================================== */}
-
-              <div className="mt-8">
-
-                <button
-                  type="button"
-                  onClick={() =>
-                    setSelectedProject(flagship)
-                  }
-                  className="
-                    btn-primary
-                    group/btn
-                    text-xs sm:text-sm
-                  "
+              {/* Right: Interactive Preview Image */}
+              <div className="lg:col-span-6">
+                <div
+                  onClick={() => setSelectedProject(flagship)}
+                  className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-[#07080A] border border-white/10 cursor-pointer group/card shadow-xl"
                 >
-                  <span>Lihat Studi Kasus</span>
-
-                  <ArrowUpRight
-                    className="
-                      w-4 h-4
-                      text-violet-pale
-                      transition-transform duration-200
-                      group-hover/btn:translate-x-0.5
-                      group-hover/btn:-translate-y-0.5
-                    "
-                  />
-                </button>
-
-              </div>
-
-            </div>
-
-
-            {/* ==================================================
-                FLAGSHIP SCREENSHOT
-                ================================================== */}
-
-            <div
-              className="
-                lg:col-span-7
-                p-3 sm:p-4 lg:p-5
-                flex items-center justify-center
-              "
-            >
-
-              <div
-                onClick={() =>
-                  setSelectedProject(flagship)
-                }
-                className="
-                  relative
-                  w-full
-                  aspect-[16/10]
-                  rounded-2xl
-                  overflow-hidden
-                  bg-bg-overlay
-                  border border-border-subtle
-                  cursor-pointer
-                  bg-grid-fine
-                  flex items-center justify-center
-                  p-2 sm:p-3.5
-                "
-              >
-
-                {!imgErrors[flagship.thumbnail] ? (
-
                   <img
                     src={flagship.thumbnail}
                     alt={flagship.title}
-                    loading="lazy"
-                    decoding="async"
-                    onError={() =>
-                      handleImageError(flagship.thumbnail)
-                    }
-                    className="
-                      w-full h-full
-                      object-contain object-center
-                      rounded-xl
-                      transition-transform duration-500
-                      group-hover:scale-[1.015]
-                    "
+                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover/card:scale-105"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover/card:opacity-40 transition-opacity" />
 
-                ) : (
-
-                  <div
-                    className="
-                      w-full h-full
-                      flex flex-col
-                      items-center
-                      justify-center
-                      p-6
-                      text-center
-                    "
-                  >
-
-                    <div
-                      className="
-                        w-12 h-12
-                        rounded-xl
-                        bg-violet-dim
-                        border border-violet-light/30
-                        flex items-center
-                        justify-center
-                        text-violet-light
-                      "
-                    >
-                      <Layers className="w-6 h-6" />
-                    </div>
-
-                    <p
-                      className="
-                        mt-4
-                        text-sm
-                        font-bold
-                        text-ink-primary
-                      "
-                    >
-                      {flagship.fullTitle}
-                    </p>
-
-                    <p
-                      className="
-                        mt-1
-                        text-2xs
-                        text-ink-muted
-                      "
-                    >
-                      Dashboard &amp; Transaction Flow
-                    </p>
-
+                  {/* Hover prompt */}
+                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-white bg-black/75 backdrop-blur-md px-3.5 py-2 rounded-xl border border-white/15">
+                    <span className="flex items-center gap-2">
+                      <Eye className="w-3.5 h-3.5 text-signal-orange" />
+                      <span>CLICK TO OPEN DOSSIER GALLERY</span>
+                    </span>
+                    <span className="text-signal-orange font-bold">11 SHOTS</span>
                   </div>
-
-                )}
-
-
-                {/* Image Hover Overlay */}
-                <div
-                  className="
-                    absolute inset-0
-                    bg-black/35
-                    opacity-0
-                    group-hover:opacity-100
-                    transition-opacity duration-300
-                    flex items-center
-                    justify-center
-                  "
-                >
-                  <span
-                    className="
-                      px-4 py-2
-                      rounded-full
-                      bg-bg-base/90
-                      border border-violet-light/40
-                      text-xs
-                      font-semibold
-                      text-ink-primary
-                      flex items-center
-                      gap-1.5
-                    "
-                  >
-                    Buka Studi Kasus
-
-                    <ArrowUpRight
-                      className="
-                        w-3.5 h-3.5
-                        text-violet-light
-                      "
-                    />
-                  </span>
                 </div>
-
               </div>
-
             </div>
-
           </div>
-
-        </article>
-        </Animate>
-
-
-        {/* ======================================================
-            OTHER PROJECTS HEADER
-            ====================================================== */}
-
-        <Animate variants={fadeUp}>
-        <div
-          className="
-            flex flex-col
-            sm:flex-row
-            sm:items-end
-            sm:justify-between
-            gap-5
-            mb-7
-          "
-        >
-
-          <div>
-
-            <p
-              className="
-                text-2xs
-                uppercase
-                tracking-[0.18em]
-                font-semibold
-                text-violet-light
-              "
-            >
-              More Work
-            </p>
-
-            <h3
-              className="
-                mt-2
-                text-2xl sm:text-3xl
-                font-black
-                tracking-[-0.035em]
-                text-ink-primary
-              "
-            >
-              Other projects.
-            </h3>
-
-          </div>
-
-
-          {/* Carousel Controls */}
-          {secondaryProjects.length > 1 && (
-
-            <div className="flex items-center gap-2">
-
-              <span
-                className="
-                  mr-3
-                  text-2xs
-                  text-ink-muted
-                  tabular-nums
-                "
-              >
-                {String(activeSlide + 1).padStart(2, '0')}
-                {' / '}
-                {String(secondaryProjects.length).padStart(2, '0')}
-              </span>
-
-
-              <button
-                type="button"
-                onClick={() => scrollCarousel('prev')}
-                aria-label="Project sebelumnya"
-                className="
-                  w-9 h-9
-                  rounded-full
-                  border border-border-faint
-                  bg-bg-surface/40
-                  flex items-center
-                  justify-center
-                  text-ink-muted
-                  transition-all duration-200
-                  hover:border-violet-light/30
-                  hover:text-violet-light
-                  hover:bg-violet-dim
-                "
-              >
-                <ArrowLeft className="w-4 h-4" />
-              </button>
-
-
-              <button
-                type="button"
-                onClick={() => scrollCarousel('next')}
-                aria-label="Project berikutnya"
-                className="
-                  w-9 h-9
-                  rounded-full
-                  border border-border-faint
-                  bg-bg-surface/40
-                  flex items-center
-                  justify-center
-                  text-ink-muted
-                  transition-all duration-200
-                  hover:border-violet-light/30
-                  hover:text-violet-light
-                  hover:bg-violet-dim
-                "
-              >
-                <ArrowRight className="w-4 h-4" />
-              </button>
-
-            </div>
-
-          )}
-
         </div>
-        </Animate>
 
+        {/* Editorial Alter Mission Records List (Rows 02 to 06) */}
+        <div>
+          <div className="text-[11px] font-mono text-white/40 uppercase tracking-wider mb-4 flex items-center justify-between">
+            <span>// ARCHIVED MISSIONS (MSN-02 — MSN-06)</span>
+            <span className="text-signal-orange">CLICK ROW TO INSPECT</span>
+          </div>
 
-        {/* ======================================================
-            HORIZONTAL PROJECT CAROUSEL
-            ====================================================== */}
-
-        <Animate variants={fadeUp} custom={1}>
-        <div
-          ref={carouselRef}
-          onScroll={handleCarouselScroll}
-          className="
-            flex
-            gap-5
-            overflow-x-auto
-            snap-x
-            snap-mandatory
-            scroll-smooth
-            pb-5
-            -mx-4
-            px-4
-            sm:mx-0
-            sm:px-0
-            scrollbar-none
-            cursor-grab
-            active:cursor-grabbing
-            touch-pan-x
-          "
-        >
-
-          {secondaryProjects.map((project, idx) => {
-
-            const indexStr = String(idx + 2).padStart(2, '0');
-
-            return (
-
-              <article
-                key={project.id}
-                onClick={() =>
-                  setSelectedProject(project)
-                }
-                className="
-                  group
-                  relative
-                  shrink-0
-                  w-[88%]
-                  sm:w-[60%]
-                  lg:w-[460px]
-                  snap-start
-                  rounded-2xl
-                  border border-border-faint
-                  bg-bg-surface/30
-                  overflow-hidden
-                  cursor-pointer
-                  transition-all duration-300
-                  hover:-translate-y-1
-                  hover:border-violet-light/30
-                  hover:bg-bg-surface/60
-                "
-              >
-
-                {/* ==================================================
-                    PROJECT IMAGE
-                    ================================================== */}
-
+          <div className="divide-y divide-white/10 border-y border-white/10">
+            {missionRecords.map((project, idx) => {
+              const num = (idx + 2).toString().padStart(2, '0');
+              return (
                 <div
-                  className="
-                    relative
-                    aspect-[16/10]
-                    overflow-hidden
-                    bg-bg-overlay
-                    border-b border-border-faint
-                    bg-grid-fine
-                    flex items-center
-                    justify-center
-                    p-2 sm:p-2.5
-                  "
+                  key={project.id}
+                  onClick={() => setSelectedProject(project)}
+                  className="group py-6 sm:py-7 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer hover:bg-white/[0.02] px-3 sm:px-4 rounded-xl transition-colors"
                 >
+                  {/* Left: Code, Title, Role */}
+                  <div className="flex items-start sm:items-center gap-4 sm:gap-6 min-w-0">
+                    <span className="font-mono text-xs sm:text-sm font-bold text-signal-orange shrink-0 mt-1 sm:mt-0">
+                      MSN-{num}
+                    </span>
 
-                  {!imgErrors[project.thumbnail] ? (
-
-                    <img
-                      src={project.thumbnail}
-                      alt={project.title}
-                      loading="lazy"
-                      decoding="async"
-                      onError={() =>
-                        handleImageError(project.thumbnail)
-                      }
-                      className="
-                        w-full h-full
-                        object-contain object-center
-                        rounded-lg
-                        transition-transform duration-500
-                        group-hover:scale-[1.02]
-                      "
-                    />
-
-                  ) : (
-
-                    <div
-                      className="
-                        p-6
-                        text-center
-                      "
-                    >
-
-                      <div
-                        className="
-                          w-10 h-10
-                          mx-auto
-                          rounded-xl
-                          bg-violet-dim
-                          border border-violet-light/20
-                          flex items-center
-                          justify-center
-                          text-violet-light
-                        "
-                      >
-                        <Layers className="w-5 h-5" />
-                      </div>
-
-                      <p
-                        className="
-                          mt-3
-                          text-xs
-                          font-bold
-                          text-ink-primary
-                        "
-                      >
+                    <div className="min-w-0">
+                      <h4 className="font-alter uppercase text-xl sm:text-2xl font-extrabold text-white group-hover:text-signal-orange transition-colors tracking-tight truncate">
                         {project.title}
-                      </p>
+                      </h4>
+                      <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-white/50 mt-1">
+                        <span>{project.fullTitle}</span>
+                        <span>•</span>
+                        <span className="text-white/70">{project.role}</span>
+                      </div>
+                    </div>
+                  </div>
 
+                  {/* Middle / Right: Tech pills, Year, Action */}
+                  <div className="flex items-center justify-between md:justify-end gap-5 shrink-0 pt-2 md:pt-0">
+                    <div className="hidden sm:flex flex-wrap gap-1.5 max-w-xs justify-end">
+                      {project.technologies.slice(0, 3).map((t) => (
+                        <span
+                          key={t}
+                          className="px-2 py-0.5 rounded bg-[#15181C] border border-white/10 text-[10px] font-mono text-white/70"
+                        >
+                          {t}
+                        </span>
+                      ))}
                     </div>
 
-                  )}
+                    <div className="text-right text-xs font-mono text-white/50">
+                      <span className="block text-white font-medium">{project.period.split('—')[1]?.trim() || project.period}</span>
+                      <span className="text-[10px] text-white/40">{project.location ? project.location.split(',')[0] : 'Production'}</span>
+                    </div>
 
-
-                  {/* Hover Overlay */}
-                  <div
-                    className="
-                      absolute inset-0
-                      bg-black/30
-                      opacity-0
-                      group-hover:opacity-100
-                      transition-opacity duration-300
-                      flex items-center
-                      justify-center
-                    "
-                  >
-
-                    <span
-                      className="
-                        px-3.5 py-2
-                        rounded-full
-                        bg-bg-base/90
-                        border border-violet-light/35
-                        text-xs
-                        font-semibold
-                        text-ink-primary
-                        flex items-center
-                        gap-1.5
-                      "
-                    >
-                      View Detail
-
-                      <ArrowUpRight
-                        className="
-                          w-3.5 h-3.5
-                          text-violet-light
-                        "
-                      />
-                    </span>
-
+                    <div className="w-9 h-9 rounded-full bg-[#15181C] border border-white/10 flex items-center justify-center text-white/70 group-hover:text-white group-hover:border-signal-orange group-hover:bg-signal-orange transition-all">
+                      <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </div>
                   </div>
-
                 </div>
-
-
-                {/* ==================================================
-                    PROJECT CONTENT
-                    ================================================== */}
-
-                <div className="p-5 sm:p-6">
-
-                  {/* Meta */}
-                  <div
-                    className="
-                      flex
-                      items-center
-                      justify-between
-                      gap-4
-                    "
-                  >
-
-                    <span
-                      className="
-                        text-2xs
-                        uppercase
-                        tracking-[0.15em]
-                        font-semibold
-                        text-violet-light
-                        tabular-nums
-                      "
-                    >
-                      {indexStr}
-                      {' / '}
-                      {project.period
-                        .split('•')[0]
-                        .trim()}
-                    </span>
-
-                    <span
-                      className="
-                        text-2xs
-                        text-ink-muted
-                        text-right
-                      "
-                    >
-                      {project.type}
-                    </span>
-
-                  </div>
-
-
-                  {/* Title */}
-                  <div className="mt-5">
-
-                    <h4
-                      className="
-                        text-lg sm:text-xl
-                        font-bold
-                        tracking-tight
-                        text-ink-primary
-                        group-hover:text-violet-light
-                        transition-colors
-                        flex
-                        items-start
-                        justify-between
-                        gap-4
-                      "
-                    >
-
-                      <span>
-                        {project.title}
-                      </span>
-
-                      <ArrowUpRight
-                        className="
-                          w-4 h-4
-                          shrink-0
-                          mt-1
-                          text-ink-muted
-                          group-hover:text-violet-light
-                          group-hover:translate-x-0.5
-                          group-hover:-translate-y-0.5
-                          transition-all
-                        "
-                      />
-
-                    </h4>
-
-
-                    <p
-                      className="
-                        mt-1.5
-                        text-xs
-                        text-ink-muted
-                      "
-                    >
-                      {project.fullTitle.split('•')[1]?.trim() ||
-                        project.role}
-                    </p>
-
-
-                    <p
-                      className="
-                        mt-3
-                        text-xs sm:text-sm
-                        text-ink-muted
-                        leading-reading
-                        line-clamp-3
-                      "
-                    >
-                      {project.summary}
-                    </p>
-
-                  </div>
-
-
-                  {/* Tech Stack */}
-                  <div
-                    className="
-                      mt-6
-                      pt-4
-                      border-t border-border-faint
-                      flex flex-wrap
-                      gap-1.5
-                    "
-                  >
-
-                    {project.technologies
-                      .slice(0, 4)
-                      .map((technology) => (
-
-                        <span
-                          key={technology}
-                          className="tech-chip"
-                        >
-                          {technology}
-                        </span>
-
-                      ))}
-
-                    {project.technologies.length > 4 && (
-
-                      <span
-                        className="
-                          tech-chip
-                          text-ink-muted
-                        "
-                      >
-                        +{project.technologies.length - 4}
-                      </span>
-
-                    )}
-
-                  </div>
-
-                </div>
-
-              </article>
-
-            );
-
-          })}
-
+              );
+            })}
+          </div>
         </div>
 
-
-        {/* ======================================================
-            CAROUSEL PROGRESS
-            ====================================================== */}
-
-        {secondaryProjects.length > 1 && (
-
-          <div
-            className="
-              mt-5
-              flex
-              items-center
-              gap-3
-            "
-          >
-
-            <div
-              className="
-                h-1
-                flex-1
-                rounded-full
-                bg-border-faint
-                overflow-hidden
-              "
-            >
-
-              <div
-                className="
-                  h-full
-                  rounded-full
-                  bg-gradient-to-r
-                  from-violet-light
-                  to-violet-pale
-                  transition-all duration-500
-                "
-                style={{
-                  width: `${((activeSlide + 1) /
-                      secondaryProjects.length) *
-                    100
-                    }%`,
-                }}
-              />
-
-            </div>
-
-            <span
-              className="
-                text-2xs
-                text-ink-muted
-                whitespace-nowrap
-              "
-            >
-              Drag to explore
-            </span>
-
-          </div>
-
-        )}
-        </Animate>
-
+        {/* Modal Viewer */}
+        <ProjectModal
+          project={selectedProject}
+          isOpen={!!selectedProject}
+          onClose={() => setSelectedProject(null)}
+        />
       </div>
-
-
-      {/* ========================================================
-          PROJECT CASE STUDY MODAL
-          ======================================================== */}
-
-      <ProjectModal
-        project={selectedProject}
-        isOpen={Boolean(selectedProject)}
-        onClose={() => setSelectedProject(null)}
-      />
-
     </section>
   );
 };

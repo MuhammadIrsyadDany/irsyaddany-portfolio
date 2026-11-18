@@ -111,7 +111,7 @@ export const App: React.FC = () => {
   }, [isMuted, fadeIn]);
 
   return (
-    <div className="min-h-screen bg-bg-base text-ink-primary relative selection:bg-violet-base/30 selection:text-violet-pale font-sans antialiased overflow-x-hidden w-full max-w-full">
+    <div className="min-h-screen bg-[#07080A] text-[#EDEDF0] relative selection:bg-[#FF5A1F] selection:text-white font-sans antialiased overflow-x-hidden w-full max-w-full">
       <SpiderWelcome
         isOpen={showIntro}
         onClose={() => setShowIntro(false)}

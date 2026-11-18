@@ -7,15 +7,23 @@ export default {
   theme: {
     extend: {
       colors: {
-        /* --- DEEP PURPLE OBSIDIAN FOUNDATION (Inspired by iPhone 14 Pro Deep Purple) --- */
+        /* --- ALTER THEME OBSIDIAN & TACTICAL HUD COLORS --- */
         bg: {
-          base:    '#090511',
-          surface: '#110A1E',
-          raised:  '#1B102E',
-          overlay: '#24153C',
+          base:    '#07080A', // Alter deep obsidian black
+          surface: '#0E1013', // Card surface
+          raised:  '#15181C', // Elevated container
+          overlay: '#1B1E24', // Modal / drawer overlay
         },
 
-        /* --- LUMINOUS VIOLET & LILAC (Wallpaper Ambient Gradient) --- */
+        /* --- ALTER TACTICAL ACCENTS --- */
+        signal: {
+          orange: '#FF5A1F', // Signature Alter Orange
+          glow:   'rgba(255, 90, 31, 0.25)',
+          blue:   '#31A8FF', // Tactical Cyan/Blue
+          cyan:   '#00F0FF',
+        },
+
+        /* --- LUMINOUS VIOLET & LILAC (Heritage Accent) --- */
         violet: {
           dim:    'rgba(158, 92, 246, 0.12)',
           mid:    '#4A1578',
@@ -34,29 +42,32 @@ export default {
         },
         warm: {
           amber:  '#F59E0B',
-          orange: '#FF6A00',
+          orange: '#FF5A1F',
         },
 
         /* --- INK & TYPOGRAPHY --- */
         ink: {
-          primary:   '#F6F2FD',
-          secondary: '#C8BFD9',
-          muted:     '#9A8EA8',
-          faint:     '#5C4F70',
+          primary:   '#EDEDF0', // Alter primary crisp text
+          secondary: '#B5B5BE', // Readable secondary text
+          muted:     '#757582', // Muted tactical labels
+          faint:     '#43434E', // Faint watermark
         },
 
-        /* --- BORDERS (Refined Plum & Specular Lilac) --- */
+        /* --- BORDERS & TACTICAL GRID --- */
         border: {
-          faint:  '#1C102E',
-          subtle: '#2A1645',
-          soft:   '#3D2262',
-          active: '#9E5CF6',
+          faint:  'rgba(237, 237, 240, 0.06)',
+          subtle: 'rgba(237, 237, 240, 0.12)',
+          soft:   'rgba(237, 237, 240, 0.18)',
+          active: '#FF5A1F',
+          violet: '#9E5CF6',
         }
       },
       fontFamily: {
         sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+        display: ['"Big Shoulders Display"', '"Big Shoulders Text"', 'Impact', 'sans-serif'],
+        alter: ['"Big Shoulders Text"', '"Big Shoulders Display"', 'sans-serif'],
         mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
-        spidey: ['"Bebas Neue"', '"Russo One"', 'Impact', 'sans-serif'],
+        spidey: ['"Bebas Neue"', '"Big Shoulders Display"', 'sans-serif'],
         orbitron: ['"Orbitron"', 'sans-serif'],
         syne: ['"Syne"', 'sans-serif'],
       },
