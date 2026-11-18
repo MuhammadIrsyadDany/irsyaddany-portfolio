@@ -1,154 +1,82 @@
 import React from 'react';
-import { Award, BookOpen, Briefcase, FileText, ArrowUpRight, CheckCircle2, ChevronRight } from 'lucide-react';
-import { Animate, StaggerGroup, fadeUp, fadeLeft, fadeRight, scaleIn } from './ScrollAnimations';
+import { Award, BookOpen, Briefcase, FileText, ArrowUpRight, CheckCircle2 } from 'lucide-react';
+import { Animate, StaggerGroup, fadeUp, scaleIn } from './ScrollAnimations';
 
 export const AboutSection: React.FC = () => {
   const waypoints = [
-    { name: 'POLINEMA', sub: 'D4 Informatics', year: '2022' },
-    { name: 'UTERO TECH', sub: 'Mobile Intern', year: '2025' },
-    { name: 'VENDOR SAVVE', sub: 'Capstone E2E', year: '2026' },
-    { name: 'INDEPENDENT', sub: 'Full-Stack Dev', year: 'ACTIVE' },
+    { city: 'POLINEMA', role: 'D4 Informatics', year: '2022' },
+    { city: 'UTERO TECH', role: 'Mobile Intern', year: '2025' },
+    { city: 'VENDOR SAVVE', role: 'Capstone E2E', year: '2026' },
+    { city: 'INDEPENDENT', role: 'Full-Stack Dev', year: 'ACTIVE' },
   ];
 
   return (
     <section
       id="about"
-      className="py-24 sm:py-32 border-t border-white/10 overflow-hidden w-full max-w-full bg-[#07080A]"
+      className="py-28 sm:py-36 border-t border-white/10 overflow-hidden w-full max-w-full bg-[#07080A]"
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
-        {/* Alter Section Header: Origin story // 001 */}
-        <div className="mb-14 sm:mb-20">
+        {/* Alter Header: // Origin story 000% */}
+        <div className="flex items-center justify-between text-xs font-mono border-b border-white/10 pb-4 mb-12 sm:mb-16">
+          <div className="flex items-center gap-2">
+            <span className="text-signal-orange font-bold">//</span>
+            <span className="text-white uppercase font-bold tracking-wider">Origin story</span>
+          </div>
+          <span className="text-white/40">DOSSIER 001 // 100% INTEGRITY</span>
+        </div>
+
+        {/* Alter Giant Statement Typography */}
+        <div className="max-w-5xl">
           <Animate variants={fadeUp}>
-            <div className="eyebrow-tag mb-4">
-              <span>01</span>
-              <span className="text-white/20">/</span>
-              <span>ORIGIN STORY</span>
-              <span className="text-white/30 text-[10px] ml-2">// DOSSIER 001</span>
-            </div>
+            <blockquote className="font-sans text-[clamp(1.75rem,3.8vw,3.75rem)] font-medium tracking-tight text-white leading-[1.12]">
+              Empat tahun dalam rekayasa perangkat lunak mengajarkan satu prinsip: jika suatu sistem butuh berlembar-lembar instruksi untuk digunakan, <span className="text-signal-orange font-semibold">arsitekturnya belum selesai.</span>
+            </blockquote>
           </Animate>
 
           <Animate variants={fadeUp} custom={1}>
-            <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight text-white leading-[0.92] max-w-4xl">
-              BUILDING SCALABLE SYSTEMS
-              <br />
-              <span className="text-signal-orange">WITH THOUGHTFUL ENGINEERING.</span>
-            </h2>
+            <p className="mt-8 text-base sm:text-xl text-white/70 font-sans max-w-3xl leading-relaxed">
+              Saya bekerja membangun produk digital dengan standar spesialis: satu sistem, arsitektur bersih, bebas dependensi membengkak, dari skema basis data awal hingga kode yang teruji dan siap produksi.
+            </p>
           </Animate>
         </div>
 
-        {/* Narrative Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-          {/* Left Column: Bold Quote & Principle */}
-          <div className="lg:col-span-5">
-            <div className="lg:sticky lg:top-28 p-6 rounded-2xl bg-[#0E1013] border border-white/10 shadow-xl">
-              <Animate variants={fadeLeft}>
-                <div className="text-[11px] font-mono text-signal-orange uppercase tracking-wider mb-3">
-                  // THE ENGINEERING RULE
-                </div>
-                <blockquote className="text-lg sm:text-xl font-medium tracking-tight text-white leading-snug">
-                  "Empat tahun dalam rekayasa perangkat lunak mengajarkan satu prinsip: jika suatu sistem butuh berlembar-lembar instruksi untuk digunakan, arsitekturnya belum selesai."
-                </blockquote>
-              </Animate>
-
-              <div className="my-5 h-px w-full bg-white/10" />
-
-              <Animate variants={fadeUp} custom={1}>
-                <p className="text-sm text-white/60 leading-relaxed font-sans">
-                  Saya bekerja dari fondasi awal: perancangan skema basis data ternormalisasi, arsitektur backend yang tangguh, hingga antarmuka pengguna yang presisi dan cepat dimengerti.
-                </p>
-
-                {/* Waypoint ticker */}
-                <div className="mt-6 pt-5 border-t border-white/5 grid grid-cols-2 gap-3 text-xs font-mono">
-                  <div>
-                    <span className="text-white/40 block text-[10px]">CURRENT ROLE</span>
-                    <span className="text-white font-semibold">Web &amp; Mobile Dev</span>
-                  </div>
-                  <div>
-                    <span className="text-white/40 block text-[10px]">VERIFICATION</span>
-                    <span className="text-signal-orange font-semibold">100% E2E Passed</span>
-                  </div>
-                </div>
-              </Animate>
-            </div>
-          </div>
-
-          {/* Right Column: Detailed Journey Narrative */}
-          <StaggerGroup className="lg:col-span-7 space-y-6 text-sm sm:text-base text-white/70 leading-relaxed">
-            <Animate variants={fadeRight} custom={0}>
-              <div className="p-5 rounded-xl bg-white/[0.02] border border-white/5">
-                <p>
-                  Saya adalah lulusan <strong className="text-white font-semibold">D4 Teknik Informatika dari Politeknik Negeri Malang</strong> dengan raihan <strong className="text-signal-orange font-mono">IPK 3.62 / 4.00</strong> (Tingkat Cum Laude). Menyelesaikan total 151 SKS dengan rekam jejak konsisten pada rekayasa perangkat lunak web dan mobile.
-                </p>
-              </div>
-            </Animate>
-
-            <Animate variants={fadeRight} custom={1}>
-              <div className="p-5 rounded-xl bg-white/[0.02] border border-white/5">
-                <p>
-                  Dalam perjalanan akademik dan praktik industri, saya terbiasa menerjemahkan kebutuhan operasional bisnis yang kompleks menjadi solusi digital yang modular, terukur, dan aman. Keahlian utama saya meliputi backend <strong className="text-white font-semibold">Laravel &amp; PHP</strong>, basis data <strong className="text-white font-semibold">MySQL</strong>, arsitektur <strong className="text-white font-semibold">Next.js &amp; Tailwind CSS</strong>, serta mobile development menggunakan <strong className="text-white font-semibold">Flutter</strong>.
-                </p>
-              </div>
-            </Animate>
-
-            <Animate variants={fadeRight} custom={2}>
-              <div className="p-5 rounded-xl bg-white/[0.02] border border-white/5">
-                <p>
-                  Karya capstone utama saya, <strong className="text-white font-semibold">Vendor Savve System</strong>, adalah sistem informasi manajemen pergudangan dan inventaris barang sewa berskala enterprise. Sistem ini divalidasi penuh melalui <strong className="text-white font-semibold">60 skenario End-to-End Automated Testing (Cypress)</strong> dengan tingkat keberhasilan 100% di seluruh 28 spesifikasi fungsional, dan telah disahkan penggunaannya secara resmi oleh pihak manajemen.
-                </p>
-              </div>
-            </Animate>
-
-            <Animate variants={fadeRight} custom={3}>
-              <div className="p-5 rounded-xl bg-white/[0.02] border border-white/5">
-                <p>
-                  Pengalaman magang industri selama 6 bulan di <strong className="text-white font-semibold">PT Utero Kreatif Indonesia (Utero Technology)</strong> sebagai Front-End Mobile Developer memperkuat disiplin kerja saya dalam implementasi 10+ fitur utama aplikasi mobile WORECA, kolaborasi tim profesional, dan pembuatan dokumentasi teknis standar industri.
-                </p>
-              </div>
-            </Animate>
-          </StaggerGroup>
-        </div>
-
-        {/* Alter Waypoint Progression Bar */}
+        {/* Alter Stops / Waypoints Timeline */}
         <div className="mt-16 sm:mt-24 pt-8 border-t border-white/10">
-          <div className="mb-4 text-xs font-mono text-signal-orange uppercase tracking-wider flex items-center gap-2">
-            <span>// TIMELINE WAYPOINTS</span>
+          <div className="flex items-center gap-2 text-xs font-mono text-signal-orange uppercase tracking-wider mb-6">
+            <span>// TRAJECTORY STOPS</span>
             <span className="text-white/20">——</span>
-            <span className="text-white/40">CAIRO · AMSTERDAM · COPENHAGEN STYLE</span>
+            <span className="text-white/40">MALANG &amp; GRESIK REGISTRY</span>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {waypoints.map((wp, i) => (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {waypoints.map((wp, idx) => (
               <div
-                key={wp.name}
-                className="p-4 rounded-xl bg-[#0E1013] border border-white/10 flex flex-col justify-between group hover:border-signal-orange/50 transition-colors"
+                key={wp.city}
+                className="p-5 rounded-2xl bg-[#0E1013] border border-white/10 hover:border-signal-orange/50 transition-all flex flex-col justify-between group"
               >
-                <div className="flex items-center justify-between text-[11px] font-mono text-white/40 mb-2">
-                  <span>0{i + 1}</span>
-                  <span className="text-signal-orange font-semibold">{wp.year}</span>
+                <div className="flex items-center justify-between text-[11px] font-mono text-white/40 mb-4">
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-signal-orange" />
+                    <span>STOP 0{idx + 1}</span>
+                  </span>
+                  <span className="text-signal-orange font-bold">{wp.year}</span>
                 </div>
                 <div>
-                  <div className="font-alter uppercase font-bold text-base text-white group-hover:text-signal-orange transition-colors">
-                    {wp.name}
-                  </div>
-                  <div className="text-xs text-white/50 font-sans mt-0.5">{wp.sub}</div>
+                  <h4 className="font-alter uppercase text-lg sm:text-xl font-extrabold text-white group-hover:text-signal-orange transition-colors">
+                    {wp.city}
+                  </h4>
+                  <p className="text-xs text-white/50 font-sans mt-0.5">{wp.role}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Alter Milestones Cards: 01, 02, 03 */}
-        <div className="mt-12 sm:mt-16">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
-            <div>
-              <p className="eyebrow-tag mb-2">HIGHLIGHTS</p>
-              <h3 className="font-display text-3xl sm:text-4xl uppercase font-bold text-white tracking-tight">
-                KEY PILLARS &amp; MILESTONES.
-              </h3>
-            </div>
-            <p className="text-xs sm:text-sm font-mono text-white/50 max-w-xs">
-              Tiga pilar pencapaian yang merefleksikan kompetensi akademik, ketelitian pengujian, dan pengalaman industri.
-            </p>
+        {/* Alter 3 Milestone Cards */}
+        <div className="mt-16 sm:mt-20">
+          <div className="flex items-center justify-between text-xs font-mono text-white/40 uppercase tracking-wider mb-6">
+            <span>// KEY PILLARS &amp; VALIDATIONS</span>
+            <span className="text-signal-orange">03 RECORDS</span>
           </div>
 
           <StaggerGroup className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -209,7 +137,7 @@ export const AboutSection: React.FC = () => {
               </div>
             </Animate>
 
-            {/* 02: Final Project / Capstone */}
+            {/* 02: Capstone */}
             <Animate variants={scaleIn} custom={1}>
               <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-[#0E1013] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-signal-orange/40 hover:bg-[#12151B] h-full flex flex-col justify-between">
                 <span
@@ -264,7 +192,7 @@ export const AboutSection: React.FC = () => {
               </div>
             </Animate>
 
-            {/* 03: Industry Internship */}
+            {/* 03: Internship */}
             <Animate variants={scaleIn} custom={2}>
               <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-[#0E1013] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-signal-orange/40 hover:bg-[#12151B] h-full flex flex-col justify-between">
                 <span
