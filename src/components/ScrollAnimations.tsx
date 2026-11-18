@@ -201,7 +201,7 @@ export const ScrollProgressBar: React.FC = () => {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#FF5A1F] via-[#FF7A38] to-[#FFA26B] z-50 origin-left shadow-[0_0_8px_rgba(255,90,31,0.8)]"
+      className="fixed top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-violet-base via-violet-light to-fuchsia-400 z-50 origin-left shadow-[0_0_8px_rgba(184,138,248,0.7)]"
       style={{ scaleX }}
     />
   );

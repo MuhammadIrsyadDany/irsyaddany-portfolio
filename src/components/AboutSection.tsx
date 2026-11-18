@@ -1,255 +1,459 @@
 import React from 'react';
-import { Award, BookOpen, Briefcase, FileText, ArrowUpRight, CheckCircle2 } from 'lucide-react';
-import { Animate, StaggerGroup, fadeUp, scaleIn } from './ScrollAnimations';
+import { Award, BookOpen, Briefcase, FileText, ArrowUpRight } from 'lucide-react';
+import { Animate, StaggerGroup, AnimatedLine, fadeUp, fadeLeft, fadeRight, scaleIn, blurIn } from './ScrollAnimations';
 
 export const AboutSection: React.FC = () => {
-  const waypoints = [
-    { city: 'POLINEMA', role: 'D4 Informatics', year: '2022' },
-    { city: 'UTERO TECH', role: 'Mobile Intern', year: '2025' },
-    { city: 'VENDOR SAVVE', role: 'Capstone E2E', year: '2026' },
-    { city: 'INDEPENDENT', role: 'Full-Stack Dev', year: 'ACTIVE' },
-  ];
-
   return (
     <section
       id="about"
-      className="py-28 sm:py-36 border-t border-white/10 overflow-hidden w-full max-w-full bg-[#07080A]"
+      className="py-24 sm:py-32 border-t border-border-faint overflow-hidden w-full max-w-full"
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
-        {/* Alter Header: // Origin story 000% */}
-        <div className="flex items-center justify-between text-xs font-mono border-b border-white/10 pb-4 mb-12 sm:mb-16">
-          <div className="flex items-center gap-2">
-            <span className="text-signal-orange font-bold">//</span>
-            <span className="text-white uppercase font-bold tracking-wider">Origin story</span>
-          </div>
-          <span className="text-white/40">DOSSIER 001 // 100% INTEGRITY</span>
-        </div>
 
-        {/* Alter Giant Statement Typography */}
-        <div className="max-w-5xl">
+        {/* Section Header */}
+        <div className="mb-14 sm:mb-20">
           <Animate variants={fadeUp}>
-            <blockquote className="font-sans text-[clamp(1.75rem,3.8vw,3.75rem)] font-medium tracking-tight text-white leading-[1.12]">
-              Empat tahun dalam rekayasa perangkat lunak mengajarkan satu prinsip: jika suatu sistem butuh berlembar-lembar instruksi untuk digunakan, <span className="text-signal-orange font-semibold">arsitekturnya belum selesai.</span>
-            </blockquote>
+            <div className="eyebrow-tag mb-5">
+              <span>01</span>
+              <span className="text-border-soft">/</span>
+              <span>About Me</span>
+            </div>
           </Animate>
 
-          <Animate variants={fadeUp} custom={1}>
-            <p className="mt-8 text-base sm:text-xl text-white/70 font-sans max-w-3xl leading-relaxed">
-              Saya bekerja membangun produk digital dengan standar spesialis: satu sistem, arsitektur bersih, bebas dependensi membengkak, dari skema basis data awal hingga kode yang teruji dan siap produksi.
-            </p>
+          <Animate variants={blurIn} custom={1}>
+            <h2 className="text-3xl sm:text-5xl font-black tracking-[-0.04em] leading-[0.95] text-ink-primary max-w-3xl">
+              Building useful things
+              <br className="hidden sm:inline" />
+              <span className="text-violet-light"> with thoughtful engineering.</span>
+            </h2>
           </Animate>
         </div>
 
-        {/* Alter Stops / Waypoints Timeline */}
-        <div className="mt-16 sm:mt-24 pt-8 border-t border-white/10">
-          <div className="flex items-center gap-2 text-xs font-mono text-signal-orange uppercase tracking-wider mb-6">
-            <span>// TRAJECTORY STOPS</span>
-            <span className="text-white/20">——</span>
-            <span className="text-white/40">MALANG &amp; GRESIK REGISTRY</span>
+        {/* Main Narrative */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20 items-start">
+
+          {/* Statement */}
+          <div className="lg:col-span-5">
+            <div className="lg:sticky lg:top-32">
+              <Animate variants={fadeLeft}>
+                <p className="text-xl sm:text-2xl font-medium tracking-tight text-ink-primary leading-snug max-w-md">
+                  "Fokus utama saya adalah membangun aplikasi web yang
+                  fungsional, terstruktur, dan tervalidasi secara nyata."
+                </p>
+              </Animate>
+
+              <AnimatedLine className="mt-6 h-px w-14 bg-violet-base" />
+
+              <Animate variants={fadeUp} custom={1}>
+                <p className="mt-6 text-sm sm:text-base text-ink-muted leading-reading max-w-md">
+                  Saya menikmati proses mengubah kebutuhan yang kompleks
+                  menjadi sistem yang sederhana, terukur, dan mudah digunakan.
+                </p>
+              </Animate>
+            </div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {waypoints.map((wp, idx) => (
-              <div
-                key={wp.city}
-                className="p-5 rounded-2xl bg-[#0E1013] border border-white/10 hover:border-signal-orange/50 transition-all flex flex-col justify-between group"
-              >
-                <div className="flex items-center justify-between text-[11px] font-mono text-white/40 mb-4">
-                  <span className="flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-signal-orange" />
-                    <span>STOP 0{idx + 1}</span>
-                  </span>
-                  <span className="text-signal-orange font-bold">{wp.year}</span>
-                </div>
-                <div>
-                  <h4 className="font-alter uppercase text-lg sm:text-xl font-extrabold text-white group-hover:text-signal-orange transition-colors">
-                    {wp.city}
-                  </h4>
-                  <p className="text-xs text-white/50 font-sans mt-0.5">{wp.role}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+          {/* Narrative */}
+          <StaggerGroup className="lg:col-span-7 space-y-6 text-sm sm:text-base text-ink-muted leading-reading">
 
-        {/* Alter 3 Milestone Cards */}
-        <div className="mt-16 sm:mt-20">
-          <div className="flex items-center justify-between text-xs font-mono text-white/40 uppercase tracking-wider mb-6">
-            <span>// KEY PILLARS &amp; VALIDATIONS</span>
-            <span className="text-signal-orange">03 RECORDS</span>
-          </div>
-
-          <StaggerGroup className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {/* 01: Education */}
-            <Animate variants={scaleIn} custom={0}>
-              <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-[#0E1013] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-signal-orange/40 hover:bg-[#12151B] h-full flex flex-col justify-between">
-                <span
-                  className="absolute right-4 top-2 text-7xl font-display font-extrabold text-white/[0.03] select-none pointer-events-none group-hover:text-signal-orange/[0.08] transition-colors"
-                  aria-hidden="true"
-                >
-                  01
-                </span>
-
-                <div>
-                  <div className="flex items-center justify-between mb-8">
-                    <div className="w-10 h-10 rounded-xl border border-white/10 bg-[#15181C] flex items-center justify-center text-signal-orange group-hover:scale-105 transition-transform">
-                      <BookOpen className="w-5 h-5" />
-                    </div>
-                    <span className="text-xs font-mono text-white/50">2022 — 2026</span>
-                  </div>
-
-                  <p className="text-[11px] font-mono uppercase tracking-wider text-signal-orange mb-1">
-                    PENDIDIKAN RESMI
-                  </p>
-                  <h4 className="font-alter uppercase text-xl font-bold text-white tracking-tight">
-                    D4 Teknik Informatika
-                  </h4>
-                  <p className="text-sm text-white/60 mt-1">Politeknik Negeri Malang</p>
-                </div>
-
-                <div className="mt-8 pt-4 border-t border-white/10">
-                  <div className="flex items-end justify-between">
-                    <div>
-                      <p className="text-[10px] font-mono uppercase tracking-wider text-white/40">
-                        INDEKS PRESTASI
-                      </p>
-                      <p className="text-sm font-medium text-white mt-0.5">IPK Kumulatif</p>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-[10px] font-mono text-white/40 block">Skala 4.00</span>
-                      <p className="text-2xl font-mono font-bold text-signal-orange">3.62</p>
-                    </div>
-                  </div>
-
-                  <div className="mt-4 pt-3 border-t border-white/5">
-                    <a
-                      href="/documents/Transkrip_Nilai_Muhammad_Irsyad_Dany.pdf"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-mono text-white/80 hover:text-signal-orange transition-colors"
-                    >
-                      <FileText className="w-3.5 h-3.5 text-signal-orange" />
-                      <span>Transkrip Nilai Resmi</span>
-                      <ArrowUpRight className="w-3 h-3" />
-                    </a>
-                  </div>
-                </div>
-              </div>
+            <Animate variants={fadeRight} custom={0}>
+              <p>
+                Saya adalah fresh graduate{' '}
+                <strong className="text-ink-primary font-semibold">
+                  D4 Teknik Informatika dari Politeknik Negeri Malang
+                </strong>{' '}
+                dengan capaian IPK{' '}
+                <strong className="text-violet-light font-semibold tabular-nums">
+                  3.62 / 4.00
+                </strong>
+                .
+              </p>
             </Animate>
 
-            {/* 02: Capstone */}
-            <Animate variants={scaleIn} custom={1}>
-              <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-[#0E1013] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-signal-orange/40 hover:bg-[#12151B] h-full flex flex-col justify-between">
-                <span
-                  className="absolute right-4 top-2 text-7xl font-display font-extrabold text-white/[0.03] select-none pointer-events-none group-hover:text-signal-orange/[0.08] transition-colors"
-                  aria-hidden="true"
-                >
-                  02
-                </span>
-
-                <div>
-                  <div className="flex items-center justify-between mb-8">
-                    <div className="w-10 h-10 rounded-xl border border-white/10 bg-[#15181C] flex items-center justify-center text-signal-orange group-hover:scale-105 transition-transform">
-                      <Award className="w-5 h-5" />
-                    </div>
-                    <span className="text-xs font-mono text-white/50">Tugas Akhir</span>
-                  </div>
-
-                  <p className="text-[11px] font-mono uppercase tracking-wider text-signal-orange mb-1">
-                    CAPSTONE THESIS
-                  </p>
-                  <h4 className="font-alter uppercase text-xl font-bold text-white tracking-tight">
-                    Vendor Savve System
-                  </h4>
-                  <p className="text-sm text-white/60 mt-1">Inventory &amp; Storage Logistics</p>
-                </div>
-
-                <div className="mt-8 pt-4 border-t border-white/10">
-                  <div className="flex items-end justify-between">
-                    <div>
-                      <p className="text-[10px] font-mono uppercase tracking-wider text-white/40">
-                        E2E CYPRESS TESTING
-                      </p>
-                      <p className="text-sm font-medium text-white mt-0.5">60 Skenario Uji</p>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-[10px] font-mono text-white/40 block">Pass Rate</span>
-                      <p className="text-2xl font-mono font-bold text-signal-orange">100%</p>
-                    </div>
-                  </div>
-
-                  <div className="mt-4 pt-3 border-t border-white/5">
-                    <a
-                      href="#recognition"
-                      className="inline-flex items-center gap-1.5 text-xs font-mono text-white/80 hover:text-signal-orange transition-colors"
-                    >
-                      <CheckCircle2 className="w-3.5 h-3.5 text-signal-orange" />
-                      <span>Validasi Capstone Cypress</span>
-                      <ArrowUpRight className="w-3 h-3" />
-                    </a>
-                  </div>
-                </div>
-              </div>
+            <Animate variants={fadeRight} custom={1}>
+              <p>
+                Selama masa studi dan mengerjakan berbagai proyek, saya terbiasa
+                menerjemahkan kebutuhan operasional menjadi fitur perangkat lunak
+                yang praktis. Saya memiliki ketertarikan pada pengembangan web,
+                logika backend, perancangan basis data, serta implementasi
+                antarmuka yang konsisten dan mudah digunakan.
+              </p>
             </Animate>
 
-            {/* 03: Internship */}
-            <Animate variants={scaleIn} custom={2}>
-              <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-[#0E1013] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-signal-orange/40 hover:bg-[#12151B] h-full flex flex-col justify-between">
-                <span
-                  className="absolute right-4 top-2 text-7xl font-display font-extrabold text-white/[0.03] select-none pointer-events-none group-hover:text-signal-orange/[0.08] transition-colors"
-                  aria-hidden="true"
-                >
-                  03
-                </span>
-
-                <div>
-                  <div className="flex items-center justify-between mb-8">
-                    <div className="w-10 h-10 rounded-xl border border-white/10 bg-[#15181C] flex items-center justify-center text-signal-orange group-hover:scale-105 transition-transform">
-                      <Briefcase className="w-5 h-5" />
-                    </div>
-                    <span className="text-xs font-mono text-white/50">Internship</span>
-                  </div>
-
-                  <p className="text-[11px] font-mono uppercase tracking-wider text-signal-orange mb-1">
-                    MAGANG INDUSTRI
-                  </p>
-                  <h4 className="font-alter uppercase text-xl font-bold text-white tracking-tight">
-                    Front-End Mobile Dev
-                  </h4>
-                  <p className="text-sm text-white/60 mt-1">PT Utero Kreatif Indonesia</p>
-                </div>
-
-                <div className="mt-8 pt-4 border-t border-white/10">
-                  <div className="flex items-end justify-between">
-                    <div>
-                      <p className="text-[10px] font-mono uppercase tracking-wider text-white/40">
-                        IMPLEMENTASI FITUR
-                      </p>
-                      <p className="text-sm font-medium text-white mt-0.5">WORECA Mobile App</p>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-[10px] font-mono text-white/40 block">Screens &amp; Flows</span>
-                      <p className="text-2xl font-mono font-bold text-signal-orange">10+ Fitur</p>
-                    </div>
-                  </div>
-
-                  <div className="mt-4 pt-3 border-t border-white/5">
-                    <a
-                      href="/documents/certificates/sertifikat-magang.pdf"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-mono text-white/80 hover:text-signal-orange transition-colors"
-                    >
-                      <FileText className="w-3.5 h-3.5 text-signal-orange" />
-                      <span>Sertifikat Magang Resmi</span>
-                      <ArrowUpRight className="w-3 h-3" />
-                    </a>
-                  </div>
-                </div>
-              </div>
+            <Animate variants={fadeRight} custom={2}>
+              <p>
+                Salah satu pengalaman utama saya adalah mengembangkan{' '}
+                <strong className="text-ink-primary">
+                  Vendor Savve
+                </strong>
+                , sistem informasi pergudangan berbasis web sebagai bagian dari
+                tugas akhir. Sistem tersebut menggunakan kontrol akses
+                multi-peran dan alur transaksi yang terintegrasi.
+              </p>
             </Animate>
+
+            <Animate variants={fadeRight} custom={3}>
+              <p>
+                Selain proyek akademik, pengalaman magang di{' '}
+                <strong className="text-ink-primary">
+                  PT Utero Kreatif Indonesia (Utero Technology)
+                </strong>{' '}
+                memberi saya pengalaman bekerja dalam lingkungan pengembangan
+                perangkat lunak yang nyata. Pengalaman tersebut memperkuat
+                kemampuan saya untuk beradaptasi, berkomunikasi, dan bekerja
+                bersama tim.
+              </p>
+            </Animate>
+
           </StaggerGroup>
         </div>
+
+        {/* Milestones */}
+<div className="mt-20 sm:mt-28 pt-8 border-t border-border-faint">
+
+  {/* Milestones Header */}
+  <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
+    <Animate variants={fadeUp}>
+      <div>
+        <p className="text-2xs uppercase tracking-[0.18em] font-semibold text-violet-light">
+          Highlights
+        </p>
+
+        <h3 className="mt-2 text-2xl sm:text-3xl font-black tracking-[-0.035em] text-ink-primary">
+          A few milestones.
+        </h3>
+      </div>
+    </Animate>
+
+    <Animate variants={fadeUp} custom={1}>
+      <p className="text-xs sm:text-sm text-ink-muted max-w-xs leading-reading">
+        Beberapa pengalaman yang membentuk cara saya berpikir dan membangun
+        sebuah produk digital.
+      </p>
+    </Animate>
+  </div>
+
+  {/* Milestone Cards */}
+  <StaggerGroup className="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+    {/* Education */}
+    <Animate variants={scaleIn} custom={0}>
+    <div
+      className="
+        group relative overflow-hidden
+        rounded-2xl
+        border border-border-faint
+        bg-bg-surface/30
+        p-6
+        transition-all duration-300
+        hover:-translate-y-1
+        hover:border-violet-light/30
+        hover:bg-bg-surface/60
+      "
+    >
+      {/* Background Number */}
+      <span
+        className="
+          absolute right-3 top-1
+          text-6xl sm:text-7xl
+          font-black font-mono
+          leading-none
+          tracking-tighter
+          text-ink-primary/[0.04]
+          select-none
+          pointer-events-none
+          transition-colors duration-300
+          group-hover:text-violet-light/[0.08]
+        "
+        aria-hidden="true"
+      >
+        01
+      </span>
+
+      {/* Top */}
+      <div className="relative flex items-center justify-between">
+        <div
+          className="
+            w-10 h-10
+            rounded-xl
+            border border-violet-light/15
+            bg-violet-dim
+            flex items-center justify-center
+            text-violet-light
+            transition-transform duration-300
+            group-hover:scale-105
+          "
+        >
+          <BookOpen className="w-[18px] h-[18px]" />
+        </div>
+
+        <span className="text-2xs font-medium text-ink-muted tabular-nums">
+          2022 — 2026
+        </span>
+      </div>
+
+      {/* Content */}
+      <div className="relative mt-10">
+        <p className="text-2xs uppercase tracking-[0.16em] font-semibold text-violet-light">
+          Pendidikan
+        </p>
+
+        <h4 className="mt-2 text-lg font-bold tracking-tight text-ink-primary">
+          D4 Teknik Informatika
+        </h4>
+
+        <p className="mt-1.5 text-sm text-ink-muted">
+          Politeknik Negeri Malang
+        </p>
+
+        {/* Bottom Highlight */}
+        <div className="mt-7 pt-4 border-t border-border-faint flex items-end justify-between gap-4">
+          <div>
+            <p className="text-2xs uppercase tracking-wider text-ink-muted">
+              Indeks Prestasi
+            </p>
+
+            <p className="mt-1 text-sm font-semibold text-ink-primary">
+              IPK Kumulatif
+            </p>
+          </div>
+
+          <div className="text-right">
+            <span className="text-2xs text-ink-muted block font-mono">Skala 4.00</span>
+            <p className="text-2xl font-black tracking-tight text-violet-light tabular-nums">
+              3.62
+            </p>
+          </div>
+        </div>
+
+        {/* Document Action */}
+        <div className="mt-3.5 pt-3 border-t border-border-faint/60 flex items-center justify-between">
+          <a
+            href="/documents/Transkrip_Nilai_Muhammad_Irsyad_Dany.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-2xs font-semibold text-violet-light hover:text-ink-primary transition-colors"
+          >
+            <FileText className="w-3.5 h-3.5 text-violet-light" />
+            <span>Lihat Transkrip Nilai Resmi</span>
+            <ArrowUpRight className="w-3 h-3" />
+          </a>
+        </div>
+      </div>
+    </div>
+    </Animate>
+
+
+    {/* Thesis */}
+    <Animate variants={scaleIn} custom={1}>
+    <div
+      className="
+        group relative overflow-hidden
+        rounded-2xl
+        border border-border-faint
+        bg-bg-surface/30
+        p-6
+        transition-all duration-300
+        hover:-translate-y-1
+        hover:border-violet-light/30
+        hover:bg-bg-surface/60
+      "
+    >
+      {/* Background Number */}
+      <span
+        className="
+          absolute right-3 top-1
+          text-6xl sm:text-7xl
+          font-black font-mono
+          leading-none
+          tracking-tighter
+          text-ink-primary/[0.04]
+          select-none
+          pointer-events-none
+          transition-colors duration-300
+          group-hover:text-violet-light/[0.08]
+        "
+        aria-hidden="true"
+      >
+        02
+      </span>
+
+      {/* Top */}
+      <div className="relative flex items-center justify-between">
+        <div
+          className="
+            w-10 h-10
+            rounded-xl
+            border border-violet-light/15
+            bg-violet-dim
+            flex items-center justify-center
+            text-violet-light
+            transition-transform duration-300
+            group-hover:scale-105
+          "
+        >
+          <Award className="w-[18px] h-[18px]" />
+        </div>
+
+        <span className="text-2xs font-medium text-ink-muted">
+          Final Project
+        </span>
+      </div>
+
+      {/* Content */}
+      <div className="relative mt-10">
+        <p className="text-2xs uppercase tracking-[0.16em] font-semibold text-violet-light">
+          Tugas Akhir
+        </p>
+
+        <h4 className="mt-2 text-lg font-bold tracking-tight text-ink-primary">
+          Vendor Savve System
+        </h4>
+
+        <p className="mt-1.5 text-sm text-ink-muted">
+          Inventory &amp; Warehouse Management
+        </p>
+
+        {/* Bottom Highlight */}
+        <div className="mt-7 pt-4 border-t border-border-faint flex items-end justify-between gap-4">
+          <div>
+            <p className="text-2xs uppercase tracking-wider text-ink-muted">
+              End-to-End Testing
+            </p>
+
+            <p className="mt-1 text-sm font-semibold text-ink-primary">
+              Fully Passed
+            </p>
+          </div>
+
+          <p className="text-2xl font-black tracking-tight text-violet-light tabular-nums">
+            100%
+          </p>
+        </div>
+
+        {/* Document Action */}
+        <div className="mt-3.5 pt-3 border-t border-border-faint/60 flex items-center justify-between">
+          <a
+            href="#recognition"
+            className="inline-flex items-center gap-1.5 text-2xs font-semibold text-violet-light hover:text-ink-primary transition-colors"
+          >
+            <FileText className="w-3.5 h-3.5 text-violet-light" />
+            <span>Lihat Bukti Validasi Capstone</span>
+            <ArrowUpRight className="w-3 h-3" />
+          </a>
+        </div>
+      </div>
+    </div>
+    </Animate>
+
+
+    {/* Internship */}
+    <Animate variants={scaleIn} custom={2} as="article">
+    <div
+      className="
+        group relative overflow-hidden
+        rounded-2xl
+        border border-border-faint
+        bg-bg-surface/30
+        p-6
+        transition-all duration-300
+        hover:-translate-y-1
+        hover:border-violet-light/30
+        hover:bg-bg-surface/60
+      "
+    >
+      {/* Background Number */}
+      <span
+        className="
+          absolute right-3 top-1
+          text-6xl sm:text-7xl
+          font-black font-mono
+          leading-none
+          tracking-tighter
+          text-ink-primary/[0.04]
+          select-none
+          pointer-events-none
+          transition-colors duration-300
+          group-hover:text-violet-light/[0.08]
+        "
+        aria-hidden="true"
+      >
+        03
+      </span>
+
+      {/* Top */}
+      <div className="relative flex items-center justify-between">
+        <div
+          className="
+            w-10 h-10
+            rounded-xl
+            border border-violet-light/15
+            bg-violet-dim
+            flex items-center justify-center
+            text-violet-light
+            transition-transform duration-300
+            group-hover:scale-105
+          "
+        >
+          <Briefcase className="w-[18px] h-[18px]" />
+        </div>
+
+        <span className="text-2xs font-medium text-ink-muted">
+          Internship
+        </span>
+      </div>
+
+      {/* Content */}
+      <div className="relative mt-10">
+        <p className="text-2xs uppercase tracking-[0.16em] font-semibold text-violet-light">
+          Pengalaman
+        </p>
+
+        <h4 className="mt-2 text-lg font-bold tracking-tight text-ink-primary">
+          Front-End Mobile Developer
+        </h4>
+
+        <p className="mt-1.5 text-sm text-ink-muted">
+          PT Utero Kreatif Indonesia
+        </p>
+
+        {/* Bottom Highlight */}
+        <div className="mt-7 pt-4 border-t border-border-faint flex items-end justify-between gap-4">
+          <div>
+            <p className="text-2xs uppercase tracking-wider text-ink-muted">
+              Implementasi Fitur
+            </p>
+
+            <p className="mt-1 text-sm font-semibold text-ink-primary">
+              WORECA UI
+            </p>
+          </div>
+
+          <p className="text-2xl font-black tracking-tight text-violet-light tabular-nums">
+            10+ <span className="text-xs font-medium text-ink-muted tracking-normal">Fitur</span>
+          </p>
+        </div>
+
+        {/* Document Action */}
+        <div className="mt-3.5 pt-3 border-t border-border-faint/60 flex items-center justify-between">
+          <a
+            href="/documents/certificates/sertifikat-magang.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-2xs font-semibold text-violet-light hover:text-ink-primary transition-colors"
+          >
+            <FileText className="w-3.5 h-3.5 text-violet-light" />
+            <span>Lihat Sertifikat Magang</span>
+            <ArrowUpRight className="w-3 h-3" />
+          </a>
+        </div>
+      </div>
+    </div>
+    </Animate>
+
+  </StaggerGroup>
+</div>
+
       </div>
     </section>
   );

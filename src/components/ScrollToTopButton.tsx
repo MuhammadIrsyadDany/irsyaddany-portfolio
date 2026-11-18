@@ -15,14 +15,17 @@ export const ScrollToTopButton: React.FC = () => {
       const prevScrollY = lastScrollYRef.current;
       const delta = currentScrollY - prevScrollY;
 
-      setIsVisible(currentScrollY > 260);
+      // Show button once user scrolls down past 280px
+      setIsVisible(currentScrollY > 280);
 
+      // Track scroll progress percentage
       const totalScrollable = document.documentElement.scrollHeight - window.innerHeight;
       if (totalScrollable > 0) {
         const progress = Math.min(100, Math.max(0, (currentScrollY / totalScrollable) * 100));
         setScrollProgress(progress);
       }
 
+      // Check if user is scrolling UP with a slight threshold
       if (delta < -3) {
         setIsScrollingUp(true);
         if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
@@ -50,6 +53,7 @@ export const ScrollToTopButton: React.FC = () => {
     });
   };
 
+  // SVG circular progress calculation
   const radius = 19;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (scrollProgress / 100) * circumference;
@@ -80,11 +84,11 @@ export const ScrollToTopButton: React.FC = () => {
             whileTap={{ scale: 0.92 }}
             className={`
               relative group flex items-center justify-center w-12 h-12 rounded-full
-              bg-[#0E1013]/90 backdrop-blur-xl border transition-all duration-300
+              bg-[#110A1E]/90 backdrop-blur-xl border transition-all duration-300
               ${
                 isScrollingUp
-                  ? 'border-signal-orange shadow-[0_0_24px_rgba(255,90,31,0.45)] ring-2 ring-signal-orange/40'
-                  : 'border-white/10 hover:border-signal-orange/50 shadow-lg shadow-black/60'
+                  ? 'border-violet-light shadow-[0_0_24px_rgba(184,138,248,0.45)] ring-2 ring-violet-light/40'
+                  : 'border-border-soft hover:border-violet-light/50 shadow-lg shadow-black/40'
               }
             `}
           >
@@ -93,19 +97,21 @@ export const ScrollToTopButton: React.FC = () => {
               className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none"
               viewBox="0 0 44 44"
             >
+              {/* Background Track */}
               <circle
                 cx="22"
                 cy="22"
                 r={radius}
-                className="stroke-white/10"
+                className="stroke-violet-base/20"
                 strokeWidth="2.5"
                 fill="none"
               />
+              {/* Animated Progress Ring */}
               <circle
                 cx="22"
                 cy="22"
                 r={radius}
-                className="stroke-signal-orange transition-all duration-150"
+                className="stroke-violet-light transition-all duration-150"
                 strokeWidth="2.5"
                 strokeDasharray={circumference}
                 strokeDashoffset={strokeDashoffset}
@@ -120,7 +126,7 @@ export const ScrollToTopButton: React.FC = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: [0.4, 0.9, 0.4], scale: [0.95, 1.15, 0.95] }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute inset-0 rounded-full bg-signal-orange/25 filter blur-sm pointer-events-none"
+                className="absolute inset-0 rounded-full bg-violet-base/25 filter blur-sm pointer-events-none"
               />
             )}
 
@@ -132,21 +138,21 @@ export const ScrollToTopButton: React.FC = () => {
                   ? { repeat: Infinity, duration: 0.8, ease: 'easeInOut' }
                   : {}
               }
-              className="relative z-10 flex items-center justify-center text-white"
+              className="relative z-10 flex items-center justify-center text-ink-primary group-hover:text-violet-pale transition-colors"
             >
-              <ArrowUp className="w-5 h-5 text-signal-orange group-hover:text-white transition-colors" />
+              <ArrowUp className="w-5 h-5 text-violet-light group-hover:text-white transition-colors" />
             </motion.div>
 
             {/* Subtle Tooltip on Hover */}
             <span
               className="
-                absolute right-14 px-2.5 py-1 rounded-md bg-[#15181C]/95 border border-white/10
-                text-[10px] font-mono uppercase text-white tracking-wider whitespace-nowrap
+                absolute right-14 px-2.5 py-1 rounded-md bg-[#1B102E]/95 border border-violet-base/30
+                text-[11px] font-medium text-ink-primary tracking-wide whitespace-nowrap
                 opacity-0 pointer-events-none -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0
                 transition-all duration-200 shadow-xl
               "
             >
-              Top of Dossier
+              Kembali ke Atas
             </span>
           </motion.button>
         </motion.div>

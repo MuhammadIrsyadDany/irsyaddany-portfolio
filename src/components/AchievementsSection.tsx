@@ -3,8 +3,8 @@ import { achievements } from '../data/achievements';
 import { certifications } from '../data/certifications';
 import { Achievement, Certification } from '../types/portfolio';
 import { CertificateModal } from './CertificateModal';
-import { Award, ShieldCheck, ArrowUpRight, Calendar, FileText, CheckCircle2, Sparkles, ExternalLink } from 'lucide-react';
-import { Animate, StaggerGroup, fadeUp, scaleIn } from './ScrollAnimations';
+import { Award, ShieldCheck, ArrowUpRight, Calendar, FileText, Sparkles } from 'lucide-react';
+import { Animate, StaggerGroup, fadeUp, blurIn, scaleIn, fadeRight } from './ScrollAnimations';
 
 export const AchievementsSection: React.FC = () => {
   const [selectedItem, setSelectedItem] = useState<Achievement | Certification | null>(null);
@@ -15,7 +15,7 @@ export const AchievementsSection: React.FC = () => {
     'AI & Machine Learning',
     'Sertifikasi Profesi',
     'Bahasa Internasional',
-    'Magang Industri',
+    'Magang Industri'
   ];
 
   const filteredCertifications = selectedCategory === 'All'
@@ -23,166 +23,197 @@ export const AchievementsSection: React.FC = () => {
     : certifications.filter((c) => c.category === selectedCategory);
 
   return (
-    <section
-      id="recognition"
-      className="py-24 sm:py-32 border-t border-white/10 overflow-hidden w-full max-w-full bg-[#07080A]"
-    >
+    <section id="recognition" className="py-24 sm:py-32 border-t border-border-faint overflow-hidden w-full max-w-full">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
-        {/* Alter Section Header: Classified credentials // 05 */}
-        <div className="mb-14 sm:mb-20">
+
+        {/* Section Header */}
+        <div className="space-y-3 mb-16">
           <Animate variants={fadeUp}>
-            <div className="eyebrow-tag mb-4">
+            <div className="eyebrow-tag">
               <span>05</span>
-              <span className="text-white/20">/</span>
-              <span>CLASSIFIED CREDENTIALS</span>
-              <span className="text-white/30 text-[10px] ml-2">// VERIFIED HONORS</span>
+              <span className="text-border-soft">/</span>
+              <span>Recognition &amp; Credentials</span>
             </div>
           </Animate>
-
-          <Animate variants={fadeUp} custom={1}>
-            <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight text-white leading-[0.92] max-w-3xl">
-              HONORS, VALIDATIONS
-              <br />
-              <span className="text-signal-orange">&amp; CERTIFICATIONS.</span>
+          <Animate variants={blurIn} custom={1}>
+            <h2
+              className="
+                text-3xl sm:text-5xl
+                font-black
+                tracking-[-0.045em]
+                leading-[0.92]
+                text-ink-primary
+                max-w-2xl
+              "
+            >
+              Honors
+              <span className="text-violet-light"> &amp; Certificate.</span>
             </h2>
           </Animate>
-
           <Animate variants={fadeUp} custom={2}>
-            <p className="mt-5 text-sm sm:text-base text-white/60 font-sans max-w-2xl leading-relaxed">
-              Bukti kredensial terverifikasi, sertifikasi kompetensi nasional BNSP, skor TOEIC internasional, serta spesialisasi arsitektur AI modern Anthropic.
+            <p className="text-sm sm:text-base text-ink-muted max-w-xl leading-reading">
+              Bukti kredensial terverifikasi, sertifikasi kompetensi nasional BNSP, skor kemahiran bahasa internasional, serta spesialisasi arsitektur AI modern.
             </p>
           </Animate>
         </div>
 
-        {/* Part 1: Capstone Validation & Academic Honors */}
-        <div className="mb-16">
-          <div className="text-[11px] font-mono text-signal-orange uppercase tracking-wider mb-4 flex items-center gap-2">
-            <span>// CORE CAPSTONE &amp; ACADEMIC HONORS</span>
-            <span className="text-white/20">——</span>
-            <span className="text-white/50">OFFICIAL VALIDATION</span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {achievements.map((ach, idx) => (
-              <div
-                key={ach.id}
-                onClick={() => setSelectedItem(ach)}
-                className="p-6 sm:p-7 rounded-2xl bg-[#0E1013] border border-white/10 hover:border-signal-orange/40 hover:bg-[#12151B] transition-all cursor-pointer group flex flex-col justify-between relative overflow-hidden shadow-xl"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="px-2.5 py-0.5 rounded bg-signal-orange/20 text-signal-orange border border-signal-orange/30 text-[10px] font-mono font-bold uppercase tracking-wider">
-                      {ach.badge}
-                    </span>
-                    <span className="text-xs font-mono text-white/40">{ach.year}</span>
+        {/* Part 1: Academic & Capstone Honors */}
+        <StaggerGroup className={achievements.length > 1 ? "grid grid-cols-1 md:grid-cols-2 gap-6 mb-16" : "max-w-2xl mb-16"}>
+          {achievements.map((ach, i) => (
+            <Animate key={ach.id} variants={scaleIn} custom={i}>
+            <div
+              onClick={() => setSelectedItem(ach)}
+              className="card rounded-2xl p-7 space-y-5 hover:border-border-soft transition-all duration-300 cursor-pointer group flex flex-col justify-between h-full"
+            >
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="w-10 h-10 rounded-xl bg-violet-dim flex items-center justify-center text-violet-light">
+                    <Award className="w-5 h-5" />
                   </div>
-
-                  <h3 className="font-alter uppercase text-2xl font-bold text-white group-hover:text-signal-orange transition-colors flex items-center justify-between gap-2">
-                    <span>{ach.title}</span>
-                    <ArrowUpRight className="w-5 h-5 text-white/40 group-hover:text-signal-orange group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0" />
-                  </h3>
-
-                  <p className="text-xs font-mono text-signal-orange mt-1">
-                    {ach.subtitle}
-                  </p>
-
-                  <p className="text-xs sm:text-sm text-white/60 mt-3 font-sans leading-relaxed">
-                    {ach.description}
-                  </p>
+                  <span className="mono-index tabular-nums">{ach.year}</span>
                 </div>
 
-                {/* Metrics */}
-                <div className="mt-6 pt-4 border-t border-white/10 grid grid-cols-3 gap-2">
-                  {(ach.metrics ?? []).map((m) => (
-                    <div key={m.label} className="p-2 rounded-xl bg-[#15181C] border border-white/5 text-center">
-                      <span className="block text-[10px] font-mono text-white/40 truncate">{m.label}</span>
-                      <span className="block text-xs sm:text-sm font-mono font-bold text-signal-orange mt-0.5 truncate">{m.value}</span>
-                    </div>
-                  ))}
+                <div>
+                  <h3 className="text-lg font-bold text-ink-primary group-hover:text-violet-light transition-colors flex items-center justify-between">
+                    <span>{ach.title}</span>
+                    <ArrowUpRight className="w-4 h-4 text-ink-muted group-hover:text-violet-light transition-transform" />
+                  </h3>
+                  <p className="text-xs font-medium text-violet-light mt-0.5">{ach.subtitle}</p>
+                  <p className="text-xs text-ink-muted mt-2.5 leading-reading">{ach.description}</p>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
 
-        {/* Part 2: Certifications with Alter Category Filtering */}
-        <div>
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
-            <div>
-              <p className="eyebrow-tag mb-1">CERTIFIED CREDENTIALS</p>
-              <h3 className="font-alter uppercase text-2xl sm:text-3xl font-bold text-white tracking-tight">
-                PROFESSIONAL LICENSES &amp; SPECIALIZATIONS.
-              </h3>
+              {/* Metrics row */}
+              <div className="grid grid-cols-3 gap-2 pt-4 border-t border-border-faint">
+                {(ach.metrics ?? []).map((m) => (
+                  <div key={m.label} className="p-2.5 rounded-lg bg-bg-surface border border-border-faint">
+                    <p className="text-2xs text-ink-muted truncate font-medium">{m.label}</p>
+                    <p className="text-xs font-bold text-ink-primary tabular-nums mt-0.5 truncate">{m.value}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-            <span className="text-xs font-mono text-white/40">
-              {filteredCertifications.length} DOKUMEN TERDAFTAR
+            </Animate>
+          ))}
+        </StaggerGroup>
+
+        {/* Part 2: Certifications List with Filtering */}
+        <Animate variants={fadeUp}>
+        <div className="space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-border-faint">
+            <h3 className="text-base font-bold text-ink-primary flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-violet-light" />
+              <span>Sertifikasi &amp; Bukti Kredensial Terverifikasi</span>
+              <span className="text-2xs font-mono font-semibold px-2 py-0.5 rounded-full bg-violet-dim text-violet-light border border-violet-light/30">
+                {certifications.length} Dokumen
+              </span>
+            </h3>
+            <span className="text-2xs text-ink-muted font-medium flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-violet-light" />
+              Klik dokumen untuk pratinjau penuh &amp; download PDF
             </span>
           </div>
 
-          {/* Filter Pills */}
-          <div className="flex flex-wrap gap-2 mb-8 pb-4 border-b border-white/10">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider transition-all duration-200 border ${
-                  selectedCategory === cat
-                    ? 'bg-signal-orange text-white border-signal-orange shadow-[0_0_12px_rgba(255,90,31,0.3)]'
-                    : 'bg-[#0E1013] text-white/60 border-white/10 hover:text-white hover:border-white/25'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+          {/* Category Filter Tabs */}
+          <div className="flex flex-wrap items-center gap-2">
+            {categories.map((cat) => {
+              const count = cat === 'All'
+                ? certifications.length
+                : certifications.filter((c) => c.category === cat).length;
+              if (count === 0) return null;
+              const isActive = selectedCategory === cat;
+
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`px-3.5 py-1.5 rounded-full text-2xs font-semibold transition-all border ${
+                    isActive
+                      ? 'bg-violet-dim text-violet-light border-violet-light/40 shadow-sm'
+                      : 'bg-bg-surface/60 text-ink-muted border-border-faint hover:text-ink-primary hover:border-border-soft'
+                  }`}
+                >
+                  {cat === 'All' ? 'Semua Kategori' : cat} ({count})
+                </button>
+              );
+            })}
           </div>
 
           {/* Certifications Grid */}
-          <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredCertifications.map((cert) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {filteredCertifications.map((cert, i) => (
+              <Animate key={cert.id} variants={fadeRight} custom={i}>
               <div
-                key={cert.id}
                 onClick={() => setSelectedItem(cert)}
-                className="p-5 rounded-2xl bg-[#0E1013] border border-white/10 hover:border-signal-orange/40 hover:bg-[#12151B] transition-all cursor-pointer group flex flex-col justify-between"
+                className="card rounded-2xl p-4 sm:p-5 hover:border-violet-light/40 transition-all duration-200 cursor-pointer group flex items-start gap-4 h-full"
               >
-                <div>
-                  <div className="flex items-center justify-between text-[10px] font-mono text-white/40 mb-3">
-                    <span className="text-signal-orange">{cert.category}</span>
-                    <span>{cert.date}</span>
-                  </div>
-
-                  <h4 className="font-alter uppercase text-base sm:text-lg font-bold text-white group-hover:text-signal-orange transition-colors line-clamp-2">
-                    {cert.title}
-                  </h4>
-
-                  <p className="text-xs text-white/50 mt-1 font-mono">
-                    {cert.issuer}
-                  </p>
-
-                  <p className="text-xs text-white/60 mt-2.5 line-clamp-2 font-sans">
-                    {cert.description}
-                  </p>
+                {/* Certificate Thumbnail Preview */}
+                <div className="relative w-20 sm:w-24 aspect-[4/3] rounded-lg bg-bg-overlay border border-border-faint overflow-hidden shrink-0 group-hover:border-violet-light/50 transition-colors shadow-inner flex items-center justify-center">
+                  {cert.certificateImage ? (
+                    <img
+                      src={cert.certificateImage}
+                      alt={cert.title}
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <ShieldCheck className="w-6 h-6 text-violet-light" />
+                  )}
+                  {cert.certificateImages && cert.certificateImages.length > 1 && (
+                    <span className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded text-[9px] font-bold bg-bg-surface/90 text-violet-light border border-border-subtle leading-none">
+                      {cert.certificateImages.length} Hal
+                    </span>
+                  )}
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded bg-[#15181C] text-[10px] font-mono text-white/70 border border-white/10">
-                    {cert.badge}
-                  </span>
-                  <div className="w-7 h-7 rounded-full bg-[#15181C] flex items-center justify-center text-white/40 group-hover:text-white group-hover:bg-signal-orange transition-all">
-                    <ArrowUpRight className="w-3.5 h-3.5" />
+                {/* Content */}
+                <div className="min-w-0 flex-1 flex flex-col justify-between h-full space-y-2">
+                  <div>
+                    <div className="flex items-center gap-2 flex-wrap mb-1">
+                      {cert.badge && (
+                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-violet-dim text-violet-light border border-violet-light/25">
+                          {cert.badge}
+                        </span>
+                      )}
+                      {cert.pdfUrl && (
+                        <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-bg-surface text-ink-muted border border-border-faint flex items-center gap-1">
+                          <FileText className="w-2.5 h-2.5 text-violet-light" /> PDF
+                        </span>
+                      )}
+                    </div>
+
+                    <h4 className="text-sm font-bold text-ink-primary group-hover:text-violet-light transition-colors line-clamp-2 leading-snug">
+                      {cert.title}
+                    </h4>
+                    <p className="text-xs text-ink-muted mt-0.5 truncate">{cert.issuer}</p>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-2 border-t border-border-faint text-2xs text-ink-muted">
+                    <span className="flex items-center gap-1 tabular-nums font-medium">
+                      <Calendar className="w-3 h-3 text-violet-light" />
+                      {cert.date}
+                    </span>
+                    <span className="text-violet-light font-medium flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                      Lihat Bukti
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </span>
                   </div>
                 </div>
               </div>
+              </Animate>
             ))}
-          </StaggerGroup>
+          </div>
         </div>
+        </Animate>
 
-        {/* Modal */}
-        <CertificateModal
-          item={selectedItem}
-          isOpen={!!selectedItem}
-          onClose={() => setSelectedItem(null)}
-        />
       </div>
+
+      {/* Certificate / Honor Document Modal */}
+      <CertificateModal
+        item={selectedItem}
+        isOpen={Boolean(selectedItem)}
+        onClose={() => setSelectedItem(null)}
+      />
     </section>
   );
 };

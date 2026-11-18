@@ -1,140 +1,431 @@
 import React, { useState } from 'react';
-import { Calendar, MapPin, CheckCircle2, ArrowUpRight, FileText, Briefcase, Award, Users } from 'lucide-react';
+import {
+  Calendar,
+  MapPin,
+  CheckCircle2,
+  ArrowUpRight,
+  FileText,
+} from 'lucide-react';
 import { experiences } from '../data/experience';
-import { Animate, StaggerGroup, fadeUp, scaleIn } from './ScrollAnimations';
+import { Animate, fadeUp, blurIn, fadeLeft } from './ScrollAnimations';
 
 type FilterType = 'All' | 'Internship' | 'Leadership' | 'Volunteer';
 
 export const ExperienceSection: React.FC = () => {
   const [filter, setFilter] = useState<FilterType>('All');
-  const filters: FilterType[] = ['All', 'Internship', 'Leadership', 'Volunteer'];
 
-  const filtered = filter === 'All'
-    ? experiences
-    : experiences.filter((e) => e.type === filter);
+  const filters: FilterType[] = [
+    'All',
+    'Internship',
+    'Leadership',
+    'Volunteer',
+  ];
+
+  const filtered =
+    filter === 'All'
+      ? experiences
+      : experiences.filter((experience) => experience.type === filter);
 
   return (
     <section
       id="experience"
-      className="py-24 sm:py-32 border-t border-white/10 overflow-hidden w-full max-w-full bg-[#07080A]"
+      className="py-20 sm:py-24 border-t border-border-faint overflow-hidden w-full max-w-full"
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
-        {/* Alter Section Header: Field archives // 06 records */}
-        <div className="mb-14 sm:mb-20">
+
+        {/* ============================================================
+            SECTION HEADER
+            ============================================================ */}
+        <div className="space-y-3 mb-10 sm:mb-12">
+
+          {/* Eyebrow */}
           <Animate variants={fadeUp}>
-            <div className="eyebrow-tag mb-4">
+            <div className="eyebrow-tag">
               <span>04</span>
-              <span className="text-white/20">/</span>
-              <span>FIELD ARCHIVES</span>
-              <span className="text-white/30 text-[10px] ml-2">// WORK &amp; LEADERSHIP</span>
+              <span className="text-border-soft">/</span>
+              <span>The Journey So Far</span>
             </div>
           </Animate>
 
-          <Animate variants={fadeUp} custom={1}>
-            <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight text-white leading-[0.92] max-w-3xl">
-              WHERE I'VE CONTRIBUTED.
-              <br />
-              <span className="text-signal-orange">INDUSTRY &amp; LEADERSHIP.</span>
+          {/* Heading */}
+          <Animate variants={blurIn} custom={1}>
+            <h2
+              className="
+                text-3xl sm:text-5xl
+                font-black
+                tracking-[-0.045em]
+                leading-[0.92]
+                text-ink-primary
+                max-w-2xl
+              "
+            >
+              Where I've
+              <br className="hidden sm:inline" />
+              <span className="text-violet-light"> contributed.</span>
             </h2>
           </Animate>
 
+          {/* Description */}
           <Animate variants={fadeUp} custom={2}>
-            <p className="mt-5 text-sm sm:text-base text-white/60 font-sans max-w-2xl leading-relaxed">
-              Rekam jejak pengalaman magang industri, kepemimpinan kepanitiaan kampus, serta kontribusi lapangan yang membentuk kapabilitas komunikasi dan eksekusi tim.
+            <p
+              className="
+                text-sm sm:text-base
+                text-ink-muted
+                max-w-2xl
+                leading-reading
+              "
+            >
+              Perjalanan magang industri, pengalaman organisasi, dan berbagai
+              kontribusi yang membentuk cara saya bekerja, berkomunikasi, dan
+              menyelesaikan masalah.
             </p>
           </Animate>
+
         </div>
 
-        {/* Filter Pills */}
-        <div className="flex flex-wrap gap-2 mb-10 pb-5 border-b border-white/10">
-          {filters.map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setFilter(tab)}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider transition-all duration-200 border ${
-                filter === tab
-                  ? 'bg-signal-orange text-white border-signal-orange shadow-[0_0_12px_rgba(255,90,31,0.3)]'
-                  : 'bg-[#0E1013] text-white/60 border-white/10 hover:text-white hover:border-white/25'
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
+        {/* ============================================================
+            FILTER
+            ============================================================ */}
+        <div
+          className="
+            flex flex-wrap items-center
+            gap-1.5
+            mb-10 sm:mb-12
+            pb-5
+            border-b border-border-faint
+          "
+        >
+          {filters.map((tab) => {
+            const isActive = filter === tab;
 
-        {/* Experience Timeline Grid */}
-        <StaggerGroup className="space-y-4">
-          {filtered.map((exp, idx) => {
-            const num = (idx + 1).toString().padStart(2, '0');
             return (
-              <Animate key={exp.id} variants={fadeUp} custom={idx}>
-                <div className="p-6 sm:p-7 rounded-2xl bg-[#0E1013] border border-white/10 hover:border-signal-orange/40 hover:bg-[#12151B] transition-all relative overflow-hidden group">
-                  <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
-                    {/* Role & Org */}
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="font-mono text-xs font-bold text-signal-orange">
-                          ARC-{num}
+              <button
+                key={tab}
+                type="button"
+                onClick={() => setFilter(tab)}
+                className={`
+                  px-3.5 py-1.5
+                  rounded-full
+                  text-2xs sm:text-xs
+                  font-semibold
+                  transition-all duration-200
+                  border
+                  ${isActive
+                    ? `
+                        bg-violet-dim
+                        border-violet-light/35
+                        text-violet-light
+                      `
+                    : `
+                        bg-transparent
+                        border-transparent
+                        text-ink-muted
+                        hover:text-ink-primary
+                        hover:border-border-faint
+                        hover:bg-bg-surface/40
+                      `
+                  }
+                `}
+              >
+                {tab === 'All' ? 'Semua Riwayat' : tab}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* ============================================================
+            EXPERIENCE TIMELINE
+            ============================================================ */}
+        <div className="relative">
+
+          {/* Vertical Timeline Line */}
+          <div
+            className="
+              absolute
+              left-[7px] sm:left-[9px]
+              top-3 bottom-3
+              w-px
+              bg-border-faint
+            "
+            aria-hidden="true"
+          />
+
+          <div className="space-y-8 sm:space-y-10">
+
+            {filtered.map((exp, index) => (
+              <Animate
+                key={exp.id}
+                variants={fadeLeft}
+                custom={index}
+                as="article"
+                className="
+                  relative
+                  pl-8 sm:pl-12
+                  group
+                "
+              >
+
+                {/* Timeline Dot */}
+                <div
+                  className="
+                    absolute
+                    left-0
+                    top-2
+                    w-[15px] h-[15px]
+                    sm:w-[19px] sm:h-[19px]
+                    rounded-full
+                    bg-bg-base
+                    border
+                    border-border-soft
+                    flex items-center justify-center
+                    z-10
+                    transition-all duration-300
+                    group-hover:border-violet-light/60
+                  "
+                >
+                  <span
+                    className="
+                      w-1.5 h-1.5
+                      sm:w-2 sm:h-2
+                      rounded-full
+                      bg-violet-light
+                      opacity-60
+                      group-hover:opacity-100
+                      transition-opacity
+                    "
+                  />
+                </div>
+
+                {/* Experience Content */}
+                <div
+                  className="
+                    relative
+                    rounded-2xl
+                    border border-border-faint
+                    bg-bg-surface/20
+                    p-5 sm:p-7
+                    transition-all duration-300
+                    hover:border-border-soft
+                    hover:bg-bg-surface/35
+                  "
+                >
+
+                  {/* Top Row */}
+                  <div
+                    className="
+                      flex flex-col
+                      lg:flex-row
+                      lg:items-start
+                      lg:justify-between
+                      gap-4
+                    "
+                  >
+
+                    {/* Main Identity */}
+                    <div className="min-w-0">
+
+                      {/* Index + Type */}
+                      <div className="flex flex-wrap items-center gap-2.5 mb-3">
+
+                        <span
+                          className="
+                            text-2xs
+                            uppercase
+                            tracking-[0.16em]
+                            font-semibold
+                            text-violet-light
+                            tabular-nums
+                          "
+                        >
+                          {String(index + 1).padStart(2, '0')}
                         </span>
-                        <span className="text-white/30">•</span>
-                        <span className="px-2 py-0.5 rounded bg-[#15181C] text-[10px] font-mono uppercase text-white/70 border border-white/10">
+
+                        <span className="w-1 h-1 rounded-full bg-border-soft" />
+
+                        <span
+                          className="
+                            text-2xs
+                            uppercase
+                            tracking-[0.14em]
+                            font-medium
+                            text-ink-muted
+                          "
+                        >
                           {exp.type}
                         </span>
                       </div>
 
-                      <h3 className="font-alter uppercase text-2xl font-bold text-white group-hover:text-signal-orange transition-colors">
+                      {/* Role */}
+                      <h3
+                        className="
+                          text-xl sm:text-2xl
+                          font-black
+                          tracking-[-0.025em]
+                          text-ink-primary
+                          group-hover:text-violet-light
+                          transition-colors duration-200
+                        "
+                      >
                         {exp.role}
                       </h3>
-                      <p className="text-sm font-semibold text-white/90 mt-0.5">
+
+                      {/* Organization */}
+                      <p
+                        className="
+                          mt-1
+                          text-sm sm:text-base
+                          font-medium
+                          text-violet-light
+                        "
+                      >
                         {exp.organization}
                       </p>
+
                     </div>
 
-                    {/* Timeline & Location */}
-                    <div className="text-left md:text-right shrink-0 font-mono text-xs text-white/50 space-y-1">
-                      <div className="flex md:justify-end items-center gap-1.5">
-                        <Calendar className="w-3.5 h-3.5 text-signal-orange" />
-                        <span className="text-white font-medium">{exp.period}</span>
+                    {/* Meta */}
+                    <div
+                      className="
+                        shrink-0
+                        flex flex-col
+                        lg:items-end
+                        gap-2
+                        text-xs
+                        text-ink-muted
+                      "
+                    >
+
+                      {/* Period */}
+                      <div
+                        className="
+                          flex items-center gap-1.5
+                          tabular-nums
+                        "
+                      >
+                        <Calendar className="w-3.5 h-3.5 text-violet-light" />
+                        <span>{exp.period.replace('•', '—')}</span>
                       </div>
-                      <div className="flex md:justify-end items-center gap-1.5 text-white/40">
-                        <MapPin className="w-3.5 h-3.5" />
+
+                      {/* Location */}
+                      <div className="flex items-center gap-1.5">
+                        <MapPin className="w-3.5 h-3.5 text-violet-light" />
                         <span>{exp.location}</span>
                       </div>
+
                     </div>
+
                   </div>
 
-                  {/* Highlights Bullet List */}
-                  {exp.highlights && exp.highlights.length > 0 && (
-                    <div className="mt-5 pt-4 border-t border-white/10 space-y-2">
-                      {exp.highlights.map((h, i) => (
-                        <div key={i} className="flex items-start gap-2.5 text-xs text-white/75 font-sans leading-relaxed">
-                          <CheckCircle2 className="w-4 h-4 text-signal-orange shrink-0 mt-0.5" />
-                          <span>{h}</span>
-                        </div>
+                  {/* Divider */}
+                  <div className="my-5 h-px bg-border-faint" />
+
+                  {/* Highlights */}
+                  <div className="space-y-3">
+
+                    {exp.highlights.map((highlight, highlightIndex) => (
+                      <div
+                        key={highlightIndex}
+                        className="
+                          flex items-start
+                          gap-2.5
+                          text-xs sm:text-sm
+                          text-ink-muted
+                          leading-reading
+                        "
+                      >
+                        <CheckCircle2
+                          className="
+                            w-4 h-4
+                            mt-0.5
+                            shrink-0
+                            text-violet-light
+                          "
+                        />
+
+                        <span>{highlight}</span>
+                      </div>
+                    ))}
+
+                  </div>
+
+                  {/* Documentation / Certificate preview if available */}
+                  {exp.documentation && exp.documentation.length > 0 && (
+                    <div className="mt-4 pt-3 border-t border-border-faint flex flex-wrap gap-2">
+                      {exp.documentation.map((doc, dIdx) => (
+                        <a
+                          key={dIdx}
+                          href={doc.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-2xs font-semibold bg-violet-dim text-violet-light border border-violet-light/35 hover:bg-violet-dim/80 hover:border-violet-light/60 transition-all shadow-sm"
+                        >
+                          <FileText className="w-3 h-3 text-violet-light" />
+                          <span>{doc.caption}</span>
+                          <ArrowUpRight className="w-3 h-3" />
+                        </a>
                       ))}
                     </div>
                   )}
 
-                  {/* Document Link */}
-                  {exp.documentation && exp.documentation.length > 0 && (
-                    <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between">
-                      <a
-                        href="/documents/certificates/sertifikat-magang.pdf"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-mono text-signal-orange hover:text-white transition-colors"
-                      >
-                        <FileText className="w-3.5 h-3.5" />
-                        <span>Lihat Dokumen Sertifikat Magang</span>
-                        <ArrowUpRight className="w-3 h-3" />
-                      </a>
-                    </div>
-                  )}
+                  {/* Bottom Accent */}
+                  <div
+                    className="
+                      mt-5
+                      pt-4
+                      border-t border-border-faint
+                      flex items-center justify-between
+                    "
+                  >
+                    <span
+                      className="
+                        text-2xs
+                        uppercase
+                        tracking-[0.14em]
+                        text-ink-faint
+                      "
+                    >
+                      Experience {String(index + 1).padStart(2, '0')}
+                    </span>
+
+                    <ArrowUpRight
+                      className="
+                        w-4 h-4
+                        text-ink-faint
+                        group-hover:text-violet-light
+                        group-hover:translate-x-0.5
+                        group-hover:-translate-y-0.5
+                        transition-all duration-200
+                      "
+                    />
+                  </div>
+
                 </div>
               </Animate>
-            );
-          })}
-        </StaggerGroup>
+            ))}
+
+          </div>
+
+        </div>
+
+        {/* ============================================================
+            EMPTY STATE
+            ============================================================ */}
+        {filtered.length === 0 && (
+          <div
+            className="
+              py-14
+              text-center
+              border border-border-faint
+              rounded-2xl
+              bg-bg-surface/20
+            "
+          >
+            <p className="text-sm text-ink-muted">
+              Belum ada pengalaman pada kategori ini.
+            </p>
+          </div>
+        )}
+
       </div>
     </section>
   );
